@@ -55,7 +55,7 @@ const SignUp = () => {
           onChange={(e) => setPassword(e.target.value)}
         />{' '}
         <br />
-        <button onSubmit={handleSignup}>확인</button>
+        <button>확인</button>
       </form>
     </div>
   );
