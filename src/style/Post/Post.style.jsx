@@ -31,9 +31,12 @@ S.PostInput = styled.input`
 
 S.FileLabel = styled.label`
   width: 570px;
+  display: flex;
   border: 1px solid;
   height: 21px;
   background-color: white;
+  font-size: 15px;
+  align-items: center;
 `;
 
 S.PostLabel = styled.label`

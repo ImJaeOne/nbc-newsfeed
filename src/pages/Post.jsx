@@ -9,7 +9,6 @@ const Post = () => {
     postContent: '',
     postFile: null,
   });
-  console.log(post);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,8 +18,24 @@ const Post = () => {
     }));
   };
 
+  const handleFileChange = (e) => {
+    const fileImage = URL.createObjectURL(e.target.files[0]);
+    setPost((prev) => ({ ...prev, postFile: fileImage }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('postTitle', post.postTitle);
+    formData.append('postCategory', post.postCategory);
+    formData.append('postContent', post.postContent);
+    if (post.postFile) {
+      formData.append('postFile', post.postFile);
+    }
+  };
+
   return (
-    <S.FormContainer onSubmit={() => {}}>
+    <S.FormContainer onSubmit={handleSubmit}>
       <S.PostSection>
         <S.PostLabel>제목</S.PostLabel>
         <select
@@ -55,9 +70,8 @@ const Post = () => {
         <label htmlFor="input-file">업로드</label>
         <input
           type="file"
-          name=""
           id="input-file"
-          onChange={handleChange}
+          onChange={handleFileChange}
           style={{ display: 'none' }}
         />
       </S.PostSection>
