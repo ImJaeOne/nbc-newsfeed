@@ -43,7 +43,7 @@ const Login = () => {
         alert(`로그인 실패: ${result.error.message}`);
       } else {
         alert('로그인 성공!');
-        navigate('/');
+        // navigate('/');
       }
     } catch (err) {
       console.error(err.message);
