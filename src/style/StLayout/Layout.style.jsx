@@ -14,7 +14,7 @@ S.Main = styled.main`
   flex: 1;
   padding: 20px;
   margin: 0 10%;
-  margin-top: 150px;
+  margin-top: 100px;
   width: 80%;
 
   @media (max-width: 768px) {
