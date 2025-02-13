@@ -11,7 +11,6 @@ export default function AuthProvider({ children }) {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log(event, session);
       if (session) {
         setUser((prev) => ({ ...prev, id: session.user.id }));
         setIsLogin(true);
@@ -37,7 +36,6 @@ export default function AuthProvider({ children }) {
       if (error) {
         console.error(error);
       } else {
-        console.log(userData);
         setUser((prev) => ({ ...prev, nickname: userData.user_nickname }));
       }
     };
