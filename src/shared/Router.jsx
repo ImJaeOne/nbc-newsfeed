@@ -4,32 +4,21 @@ import Detail from '../pages/Detail';
 import Post from '../pages/Post';
 import MyPage from '../pages/MyPage';
 import Login from '../pages/Login';
-import SignUp from '../pages/Signup';
+import SignUp from '../pages/SignUp';
+import Layout from '../components/Layout/Layout';
 
 const commonRoute = [
   {
     path: '/',
-    element: <Home />,
-  },
-  {
-    path: '/detail',
-    element: <Detail />,
-  },
-  {
-    path: '/post',
-    element: <Post />,
-  },
-  {
-    path: '/mypage',
-    element: <MyPage />,
-  },
-  {
-    path: '/login',
-    element: <Login />,
-  },
-  {
-    path: '/signup',
-    element: <SignUp />,
+    element: <Layout />,
+    children: [
+      { path: '/', element: <Home /> },
+      { path: '/detail', element: <Detail /> },
+      { path: '/post', element: <Post /> },
+      { path: '/mypage', element: <MyPage /> },
+      { path: '/login', element: <Login /> },
+      { path: '/signup', element: <SignUp /> },
+    ],
   },
 ];
 
