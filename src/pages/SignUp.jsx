@@ -1,16 +1,33 @@
 import { useState } from 'react';
+import { supabase } from '../supabase/client';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const [userNickname, setUserNickname] = useState('');
-  const [userEmail, setUserEmail] = useState('');
-  const [userPwd, setUserPwd] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleLogin = () => {};
+  const navigate = useNavigate();
 
+  // form 제출 시 Supabase를 통해 회원가입을 하는 함수
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    try {
+      await supabase.auth.signUp({
+        email,
+        password,
+      });
+      alert('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
+      navigate('/login');
+    } catch (error) {
+      alert(error.message);
+      console.error('회원가입 오류:', error);
+    }
+  };
   return (
     <div>
       <div>회원가입</div>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleSignup}>
         닉네임:{' '}
         <input
           type="text"
@@ -25,8 +42,8 @@ const SignUp = () => {
           type="text"
           name="email"
           id="email"
-          value={userEmail}
-          onChange={(e) => setUserEmail(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />{' '}
         <br />
         비밀번호:{' '}
@@ -34,11 +51,11 @@ const SignUp = () => {
           type="text"
           name="pwd"
           id="pwd"
-          value={userPwd}
-          onChange={(e) => setUserPwd(e.target.value)}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />{' '}
         <br />
-        <button onSubmit={handleLogin}>확인</button>
+        <button onSubmit={handleSignup}>확인</button>
       </form>
     </div>
   );
