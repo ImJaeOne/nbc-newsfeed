@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import S from './Post.style';
+import S from '../style/Post/Post.style';
 const MOCK_DATA = ['일상', '운동', '취미', '맛집', '기타'];
 
 const Post = () => {
