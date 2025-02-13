@@ -1,8 +1,19 @@
-import { useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { S } from '../../style/StLayout/Header.style';
+import { AuthContext } from '../../contexts/AuthProvider';
 
 const Nav = () => {
-  const [isLogin, setIsLogin] = useState('false');
+  const { isLogin } = useContext(AuthContext);
+
+  useEffect(() => {
+    const getSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      console.log(session.user);
+    };
+    getSession();
+  }, []);
   return (
     <S.Nav>
       {isLogin ? (
@@ -15,13 +26,6 @@ const Nav = () => {
           <S.Link to="/signup">회원가입</S.Link>
         </S.AuthLinks>
       )}
-      <button
-        onClick={() => {
-          setIsLogin(!isLogin);
-        }}
-      >
-        버튼
-      </button>
     </S.Nav>
   );
 };
