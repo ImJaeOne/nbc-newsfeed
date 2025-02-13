@@ -23,7 +23,7 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font: inherit;
+	font: omyu_pretty;
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
@@ -48,13 +48,6 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
-}
-
-@font-face {
-  font-family: 'omyu_pretty';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
 }
 `;
 
