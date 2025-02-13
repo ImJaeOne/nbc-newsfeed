@@ -9,7 +9,6 @@ const Post = () => {
     postContent: '',
     postFile: null,
   });
-  console.log(post);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,45 +18,65 @@ const Post = () => {
     }));
   };
 
+  const handleFileChange = (e) => {
+    const fileImage = URL.createObjectURL(e.target.files[0]);
+    setPost((prev) => ({ ...prev, postFile: fileImage }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('postTitle', post.postTitle);
+    formData.append('postCategory', post.postCategory);
+    formData.append('postContent', post.postContent);
+    if (post.postFile) {
+      formData.append('postFile', post.postFile);
+    }
+  };
+
   return (
-    <S.FormContainer onSubmit={() => {}}>
+    <S.FormContainer onSubmit={handleSubmit}>
       <S.PostSection>
-        <S.PostLabel>제목</S.PostLabel>
-        <select
-          name="postCategory"
-          value={post.postCategory}
-          onChange={handleChange}
-        >
-          <option value="">카테고리를 선택하세요</option>
-          {MOCK_DATA.map((item) => (
-            <option value={item}>{item}</option>
-          ))}
-        </select>
-        <S.PostInput
-          name="postTitle"
-          type="text"
-          value={post.postTitle}
-          onChange={handleChange}
-        />
+        <S.PostLabel htmlFor="post-title">
+          제목
+          <select
+            name="postCategory"
+            value={post.postCategory}
+            onChange={handleChange}
+          >
+            <option value="">카테고리를 선택하세요</option>
+            {MOCK_DATA.map((item) => (
+              <option value={item}>{item}</option>
+            ))}
+          </select>
+          <S.PostInput
+            id="post-title"
+            name="postTitle"
+            type="text"
+            value={post.postTitle}
+            onChange={handleChange}
+          />
+        </S.PostLabel>
       </S.PostSection>
       <S.PostSection>
-        <S.PostLabel>내용</S.PostLabel>
-        <S.PostInput
-          name="postContent"
-          type="text"
-          value={post.postContent}
-          onChange={handleChange}
-        />
+        <S.PostLabel>
+          내용
+          <S.PostInput
+            name="postContent"
+            type="text"
+            value={post.postContent}
+            onChange={handleChange}
+          />
+        </S.PostLabel>
       </S.PostSection>
       <S.PostSection>
-        <label>첨부파일</label>
+        <label htmlFor="input-file">첨부파일</label>
         <S.FileLabel htmlFor="input-file">{post.postFile}</S.FileLabel>
         <label htmlFor="input-file">업로드</label>
         <input
           type="file"
-          name=""
           id="input-file"
-          onChange={handleChange}
+          onChange={handleFileChange}
           style={{ display: 'none' }}
         />
       </S.PostSection>

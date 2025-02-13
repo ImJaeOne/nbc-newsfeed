@@ -14,6 +14,7 @@ S.FormContainer = styled.form`
   justify-content: center;
   align-content: center;
   gap: 20px;
+  padding-top: 20px;
 `;
 
 S.PostSection = styled.section`
@@ -27,17 +28,24 @@ S.PostSection = styled.section`
 
 S.PostInput = styled.input`
   width: ${(props) => (props.name === 'postTitle' ? '500px' : '640px')};
+  transform: ${(props) =>
+    props.name === 'postTitle' ? 'translateX(-45px)' : ''};
 `;
 
 S.FileLabel = styled.label`
   width: 570px;
+  display: flex;
   border: 1px solid;
   height: 21px;
   background-color: white;
+  font-size: 15px;
+  align-items: center;
 `;
 
 S.PostLabel = styled.label`
-  margin-right: 45px;
+  display: flex;
+  flex-direction: row;
+  gap: 55px;
 `;
 
 S.PostSubmitButton = styled.button`
