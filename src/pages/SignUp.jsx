@@ -3,7 +3,7 @@ import { supabase } from '../supabase/client';
 import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
-  const [userNickname, setUserNickname] = useState('');
+  const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -18,10 +18,22 @@ const SignUp = () => {
       return;
     }
     try {
-      await supabase.auth.signUp({
+      // Supabase auth를 통해 회원가입
+      const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
         password,
       });
+
+      if (authError) throw authError;
+
+      // 회원가입 성공 시, users 테이블에 닉네임 저장
+      const { error: userError } = await supabase.from('users').insert({
+        user_num: authData.user.id,
+        user_nickname: nickname,
+      });
+
+      if (userError) throw userError;
+
       alert('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
       navigate('/login');
     } catch (error) {
@@ -38,8 +50,8 @@ const SignUp = () => {
           type="text"
           name="nickname"
           id="nickname"
-          value={userNickname}
-          onChange={(e) => setUserNickname(e.target.value)}
+          value={nickname}
+          onChange={(e) => setNickname(e.target.value)}
         />
         <br />
         이메일:
