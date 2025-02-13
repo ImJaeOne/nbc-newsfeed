@@ -1,49 +1,68 @@
 import React, { useState } from 'react';
+import S from './Post.style';
 const MOCK_DATA = ['일상', '운동', '취미', '맛집', '기타'];
 
 const Post = () => {
-  const [postFile, setPostFile] = useState('');
-  const [postTitle, setPostTitle] = useState('');
-  const [postContent, setPostContent] = useState('');
+  const [post, setPost] = useState({
+    postTitle: '',
+    postCategory: '',
+    postContent: '',
+    postFile: null,
+  });
+  console.log(post);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setPost((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   return (
-    <form onSubmit={() => {}}>
-      <section>
-        <label>제목</label>
-        <select name="" id="">
+    <S.FormContainer onSubmit={() => {}}>
+      <S.PostSection>
+        <S.PostLabel>제목</S.PostLabel>
+        <select
+          name="postCategory"
+          value={post.postCategory}
+          onChange={handleChange}
+        >
           <option value="">카테고리를 선택하세요</option>
           {MOCK_DATA.map((item) => (
-            <option>{item}</option>
+            <option value={item}>{item}</option>
           ))}
         </select>
-        <input
+        <S.PostInput
+          name="postTitle"
           type="text"
-          value={postTitle}
-          onChange={(e) => setPostTitle(e.target.value)}
+          value={post.postTitle}
+          onChange={handleChange}
         />
-      </section>
-      <section>
-        <label>내용</label>
-        <input
+      </S.PostSection>
+      <S.PostSection>
+        <S.PostLabel>내용</S.PostLabel>
+        <S.PostInput
+          name="postContent"
           type="text"
-          value={postContent}
-          onChange={(e) => setPostContent(e.target.value)}
+          value={post.postContent}
+          onChange={handleChange}
         />
-      </section>
-      <section>
+      </S.PostSection>
+      <S.PostSection>
         <label>첨부파일</label>
-        <label htmlFor="input-file">{postFile}</label>
+        <S.FileLabel htmlFor="input-file">{post.postFile}</S.FileLabel>
         <label htmlFor="input-file">업로드</label>
         <input
           type="file"
           name=""
           id="input-file"
-          onChange={(e) => setPostFile(e.target.value)}
+          onChange={handleChange}
           style={{ display: 'none' }}
         />
-      </section>
-      <button type="submit">제출</button>
-    </form>
+      </S.PostSection>
+      <S.PostSubmitButton type="submit">제출</S.PostSubmitButton>
+    </S.FormContainer>
   );
 };
 
