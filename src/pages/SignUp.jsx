@@ -6,12 +6,17 @@ const SignUp = () => {
   const [userNickname, setUserNickname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const navigate = useNavigate();
 
   // form 제출 시 Supabase를 통해 회원가입을 하는 함수
   const handleSignup = async (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      alert('비밀번호를 다시 확인해주세요!');
+      return;
+    }
     try {
       await supabase.auth.signUp({
         email,
@@ -28,32 +33,41 @@ const SignUp = () => {
     <div>
       <div>회원가입</div>
       <form onSubmit={handleSignup}>
-        닉네임:{' '}
+        닉네임:
         <input
           type="text"
           name="nickname"
           id="nickname"
           value={userNickname}
           onChange={(e) => setUserNickname(e.target.value)}
-        />{' '}
+        />
         <br />
-        이메일:{' '}
+        이메일:
         <input
-          type="text"
+          type="email"
           name="email"
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-        />{' '}
+        />
         <br />
-        비밀번호:{' '}
+        비밀번호:
         <input
-          type="text"
+          type="password"
           name="pwd"
           id="pwd"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-        />{' '}
+        />
+        <br />
+        비밀번호 확인:
+        <input
+          type="password"
+          name="confirmPwd"
+          id="confirmPwd"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
         <br />
         <button>확인</button>
       </form>
