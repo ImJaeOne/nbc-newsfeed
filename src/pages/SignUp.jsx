@@ -33,41 +33,41 @@ const SignUp = () => {
     <div>
       <div>회원가입</div>
       <form onSubmit={handleSignup}>
-        닉네임:{' '}
+        닉네임:
         <input
           type="text"
           name="nickname"
           id="nickname"
           value={userNickname}
           onChange={(e) => setUserNickname(e.target.value)}
-        />{' '}
+        />
         <br />
-        이메일:{' '}
+        이메일:
         <input
           type="email"
           name="email"
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-        />{' '}
+        />
         <br />
-        비밀번호:{' '}
+        비밀번호:
         <input
           type="password"
           name="pwd"
           id="pwd"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-        />{' '}
+        />
         <br />
-        비밀번호 확인:{' '}
+        비밀번호 확인:
         <input
           type="password"
           name="confirmPwd"
           id="confirmPwd"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-        />{' '}
+        />
         <br />
         <button>확인</button>
       </form>
