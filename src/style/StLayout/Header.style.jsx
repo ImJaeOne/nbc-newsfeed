@@ -42,23 +42,24 @@ S.UserMenu = styled.div`
 S.UserName = styled(Link)`
   font-size: 1.2rem;
   font-weight: bold;
-  color: #c35a5a;
+  color: ${({ theme }) => theme.colors.haeder_text_color};
   text-decoration: none;
   padding: 10px;
   border-radius: 5px;
+  transition: 0.3s;
 
   &:hover {
-    background-color: #f0f0f0;
+    scale: 1.2;
   }
 `;
 
 S.Link = styled(Link)`
   font-size: 16px;
-  color: black;
+  color: ${({ theme }) => theme.colors.haeder_text_color};
   text-decoration: none;
   font-weight: bold;
-
+  transition: 0.3s;
   &:hover {
-    text-decoration: underline;
+    scale: 1.2;
   }
 `;
