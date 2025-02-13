@@ -1,18 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { supabase } from '../supabase/client';
 
 const Login = () => {
   const [inputEmail, setInputEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const navigate = useNavigate();
+
   const isValidEmail = (email) => {
-    // 이메일 주소 유효 여부 판단 - 정규 표현식 활용
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
     const trimmedInputEmail = inputEmail.trim();
@@ -28,14 +30,25 @@ const Login = () => {
       return;
     }
 
-    // 회원가입 조건에 따라 추후 변경 예정
     if (password.length < 8) {
       alert('비밀번호는 최소 8자 이상 입력해야 합니다.');
     }
 
-    // 임시 - 추후 홈 컴포넌트로 리다이렉트 예정
-    // useNavigate
-    alert('로그인 성공!');
+    try {
+      const result = await supabase.auth.signInWithPassword({
+        email: trimmedInputEmail,
+        password: trimmedPassword,
+      });
+      if (result.error) {
+        alert(`로그인 실패: ${result.error.message}`);
+      } else {
+        alert('로그인 성공!');
+        // navigate('/');
+      }
+    } catch (err) {
+      console.error(err.message);
+      alert('로그인 실패 - 외부 에러 발생');
+    }
   };
 
   return (
