@@ -12,28 +12,33 @@ import SignUp from '../pages/SignUp';
 import Layout from '../components/Layout/Layout';
 import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthProvider';
+import ProtectedRoute from './ProtectedRoute';
 
 const Router = () => {
-  const { isLogin } = useContext(AuthContext);
   const commonRoute = [
     {
       path: '/',
       element: <Layout />,
       children: [
-        { path: '/', element: isLogin ? <Home /> : <Navigate to="/login" /> },
         {
-          path: '/detail',
-          element: isLogin ? <Detail /> : <Navigate to="/login" />,
+          element: <ProtectedRoute />,
+          children: [
+            { path: '/', element: <Home /> },
+            {
+              path: '/detail',
+              element: <Detail />,
+            },
+            {
+              path: '/post',
+              element: <Post />,
+            },
+            {
+              path: '/mypage',
+              element: <MyPage />,
+            },
+          ],
         },
-        {
-          path: '/post',
-          element: isLogin ? <Post /> : <Navigate to="/login" />,
-        },
-        {
-          path: '/mypage',
-          element: isLogin ? <MyPage /> : <Navigate to="/login" />,
-        },
-        { path: '/login', element: isLogin ? <Home /> : <Login /> },
+        { path: '/login', element: <Login /> },
         { path: '/signup', element: <SignUp /> },
       ],
     },
