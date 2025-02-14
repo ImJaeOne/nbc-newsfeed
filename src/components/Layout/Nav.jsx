@@ -19,8 +19,8 @@ const Nav = () => {
         </S.UserMenu>
       ) : (
         <S.AuthLinks>
-          <S.Link to="/login">로그인</S.Link>
-          <S.Link to="/signup">회원가입</S.Link>
+          <S.AuthLink to="/login">로그인</S.AuthLink>
+          <S.AuthLink to="/signup">회원가입</S.AuthLink>
         </S.AuthLinks>
       )}
     </S.Nav>

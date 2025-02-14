@@ -68,7 +68,7 @@ S.UserName = styled(Link)`
   }
 `;
 
-S.Link = styled(Link)`
+S.AuthLink = styled(Link)`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.haeder_text_color};
   text-decoration: none;
