@@ -28,8 +28,12 @@ S.HeaderContainer = styled.header`
 S.Logo = styled.img`
   height: 100px; /* ✅ 로고 크기 조정 */
 `;
+S.Link = styled(Link)`
+  display: flex;
+  gap: 15px;
+`;
 
-S.LinksWrapper = styled(Link)`
+S.LinksWrapper = styled.div`
   display: flex;
   gap: 15px;
 `;

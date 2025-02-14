@@ -44,8 +44,8 @@ S.DropdownMenuWrapper = styled.div`
     transform 0.3s ease;
   pointer-events: none;
 
-  ${({ isOpen }) =>
-    isOpen &&
+  ${({ $isOpen }) =>
+    $isOpen &&
     css`
       opacity: 1;
       transform: translateY(0);

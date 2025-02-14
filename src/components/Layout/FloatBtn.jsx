@@ -7,24 +7,32 @@ const FloatBtn = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
+  const toggleBtnMenuHandler = () => {
+    setIsOpen(!isOpen);
+  };
+  const moveToPageHandler = (page) => {
+    navigate(page);
+    setIsOpen(!isOpen);
+  };
+
   return (
     <S.FloatBtnContainer>
       {/* 메인 버튼 */}
-      <S.FloatMainBtn onClick={() => setIsOpen(!isOpen)}>
+      <S.FloatMainBtn onClick={toggleBtnMenuHandler}>
         <FaBars size={24} />
       </S.FloatMainBtn>
 
       {/* 드롭다운 메뉴 */}
-      <S.DropdownMenuWrapper isOpen={isOpen}>
+      <S.DropdownMenuWrapper $isOpen={isOpen}>
         <S.IconButton
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
           <FaArrowUp />
         </S.IconButton>
-        <S.IconButton onClick={() => navigate('/mypage')}>
+        <S.IconButton onClick={() => moveToPageHandler('/mypage')}>
           <FaUser />
         </S.IconButton>
-        <S.IconButton onClick={() => navigate('/post')}>
+        <S.IconButton onClick={() => moveToPageHandler('/post')}>
           <FaPen />
         </S.IconButton>
       </S.DropdownMenuWrapper>
