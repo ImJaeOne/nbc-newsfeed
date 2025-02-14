@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import sampleImg from '../assets/다운로드.jpeg';
 import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthProvider';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { supabase } from '../supabase/client';
 
 const dummyArr = Array.from({ length: 4 }, (_, idx) => ({
   post_num: idx + 1,
@@ -13,7 +16,35 @@ const dummyArr = Array.from({ length: 4 }, (_, idx) => ({
 }));
 
 const MyPage = () => {
-  const { isLogin, user, setIsLogin } = useContext(AuthContext);
+  const { isLogin, user, setIsLogin, setUser } = useContext(AuthContext);
+  const [editedNickname, setEditedNickname] = useState('');
+  const [editedIntro, setEditedIntro] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleUserInfoChange = () => {
+    if (isEditing) {
+      setUser({ ...user, nickname: editedNickname, intro: editedIntro });
+    }
+    setIsEditing(!isEditing);
+  };
+
+  useEffect(() => {
+    if (!user.num) return;
+    const changeUserInfo = async () => {
+      try {
+        const { error } = await supabase
+          .from('users')
+          .update({ user_nickname: user.nickname, user_intro: user.intro })
+          .eq('user_num', user.num);
+        if (error) throw error;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    console.log('제대로 출력됨');
+    changeUserInfo();
+  }, [user.num, user.nickname, user.intro]);
 
   return (
     <div>
@@ -21,9 +52,30 @@ const MyPage = () => {
         <RoundButton></RoundButton>
         <StMyInfoWrapper>
           <StNickname>{user.nickname}</StNickname>
+          {isEditing ? (
+            <input
+              type="text"
+              value={editedNickname}
+              onChange={(e) => setEditedNickname(e.target.value)}
+            />
+          ) : (
+            ''
+          )}
           <StIntroduce>{user.intro}</StIntroduce>
+          {isEditing ? (
+            <textarea
+              name=""
+              id=""
+              value={editedIntro}
+              onChange={(e) => setEditedIntro(e.target.value)}
+            ></textarea>
+          ) : (
+            ''
+          )}
         </StMyInfoWrapper>
-        <StEditBtn>내 정보 수정하기</StEditBtn>
+        <StEditBtn value={isEditing} onClick={handleUserInfoChange}>
+          내 정보 수정하기
+        </StEditBtn>
       </StMyInfoChange>
       <StMyPostList>
         {dummyArr.map((post) => {
