@@ -6,6 +6,7 @@ export const AuthContext = createContext(false);
 export default function AuthProvider({ children }) {
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState({ num: null, nickname: '', intro: '' });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const {
@@ -18,6 +19,7 @@ export default function AuthProvider({ children }) {
         setUser({ num: null, nickname: '' });
         setIsLogin(false);
       }
+      setLoading(false);
     });
 
     return () => subscription.unsubscribe();
@@ -49,7 +51,7 @@ export default function AuthProvider({ children }) {
   }, [isLogin, user.num]);
 
   return (
-    <AuthContext.Provider value={{ isLogin, user, setIsLogin }}>
+    <AuthContext.Provider value={{ isLogin, user, setIsLogin, loading }}>
       {children}
     </AuthContext.Provider>
   );

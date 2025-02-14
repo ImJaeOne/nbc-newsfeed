@@ -15,7 +15,6 @@ import { AuthContext } from '../contexts/AuthProvider';
 
 const Router = () => {
   const { isLogin } = useContext(AuthContext);
-
   const commonRoute = [
     {
       path: '/',
@@ -34,12 +33,11 @@ const Router = () => {
           path: '/mypage',
           element: isLogin ? <MyPage /> : <Navigate to="/login" />,
         },
-        { path: '/login', element: <Login /> },
+        { path: '/login', element: isLogin ? <Home /> : <Login /> },
         { path: '/signup', element: <SignUp /> },
       ],
     },
   ];
-  console.log(commonRoute);
 
   const router = createBrowserRouter([...commonRoute]);
   return <RouterProvider router={router} />;
