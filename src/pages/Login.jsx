@@ -1,13 +1,20 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { supabase } from '../supabase/client';
+import { AuthContext } from '../contexts/AuthProvider';
 
 const Login = () => {
   const [inputEmail, setInputEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const { isLogin } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLogin) {
+      navigate('/');
+    }
+  }, [isLogin, navigate]);
 
   const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

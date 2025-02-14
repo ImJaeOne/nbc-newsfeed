@@ -28,6 +28,10 @@ S.HeaderContainer = styled.header`
 S.Logo = styled.img`
   height: 100px; /* ✅ 로고 크기 조정 */
 `;
+S.Link = styled(Link)`
+  display: flex;
+  gap: 15px;
+`;
 
 S.LinksWrapper = styled.div`
   display: flex;
@@ -62,7 +66,6 @@ S.UserName = styled(Link)`
   padding: 10px;
   border-radius: 5px;
   transition: 0.3s;
-
   &:hover {
     scale: 1.2;
   }
