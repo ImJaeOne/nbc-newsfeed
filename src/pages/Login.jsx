@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { supabase } from '../supabase/client';
 import InputForAuth from '../components/InputForAuth';
 

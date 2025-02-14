@@ -4,14 +4,13 @@ import { supabase } from '../supabase/client';
 export const AuthContext = createContext(false);
 
 export default function AuthProvider({ children }) {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState('initial');
   const [user, setUser] = useState({
     num: null,
     nickname: '',
     intro: '',
     profile: '',
   });
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const {
@@ -24,7 +23,6 @@ export default function AuthProvider({ children }) {
         setUser({ num: null, nickname: '' });
         setIsLogin(false);
       }
-      setLoading(false);
     });
 
     return () => subscription.unsubscribe();
@@ -39,7 +37,6 @@ export default function AuthProvider({ children }) {
         .select('user_nickname, user_intro, user_profile')
         .eq('user_num', user.num)
         .single();
-
       if (error) {
         console.error(error);
       } else {
@@ -54,12 +51,10 @@ export default function AuthProvider({ children }) {
     if (isLogin) {
       getAdditionalUserInfo();
     }
-  }, [isLogin, user.num]);
+  }, [isLogin, user.id]);
 
   return (
-    <AuthContext.Provider
-      value={{ isLogin, user, setIsLogin, loading, setUser }}
-    >
+    <AuthContext.Provider value={{ isLogin, user, setIsLogin, setUser }}>
       {children}
     </AuthContext.Provider>
   );

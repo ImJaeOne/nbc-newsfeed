@@ -3,8 +3,8 @@ import sampleImg from '../assets/다운로드.jpeg';
 import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthProvider';
 import { useState } from 'react';
-import { useEffect } from 'react';
 import { supabase } from '../supabase/client';
+import { useEffect } from 'react';
 
 const dummyArr = Array.from({ length: 4 }, (_, idx) => ({
   post_num: idx + 1,
@@ -16,7 +16,7 @@ const dummyArr = Array.from({ length: 4 }, (_, idx) => ({
 }));
 
 const MyPage = () => {
-  const { isLogin, user, setIsLogin, setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const [editedNickname, setEditedNickname] = useState('');
   const [editedIntro, setEditedIntro] = useState('');
   const [isEditing, setIsEditing] = useState(false);
@@ -28,14 +28,14 @@ const MyPage = () => {
 
   const uploadFileAndGetUrl = async () => {
     if (!file || !user.num) return null;
-    const filePath = `test-bucket/${user.num}_${file.name}`;
+    const filePath = `test-bucket/${crypto.randomUUID()}_${file.name}`;
 
     const { error: uploadError } = await supabase.storage
       .from('test-bucket')
       .upload(filePath, file);
     if (uploadError) {
       console.error('파일 업로드 에러:', uploadError);
-      return null;
+      return;
     }
 
     const { data, error } = supabase.storage
@@ -43,15 +43,15 @@ const MyPage = () => {
       .getPublicUrl(filePath);
     if (error) {
       console.error('public URL 가져오기 에러:', error);
-      return null;
+      return;
     }
     return data.publicUrl;
   };
 
   const handleUserInfoChange = async () => {
     if (isEditing) {
-      if (editedNickname.replaceAll(' ', '') === '') {
-        alert('닉네임을 1자 이상 입력해주세요');
+      if (!editedNickname.replaceAll(' ', '')) {
+        alert('닉네임을 1자 이상 입력해주세요!!');
         return;
       }
       let updatedProfileImg = user.profile;
@@ -74,7 +74,7 @@ const MyPage = () => {
   };
 
   useEffect(() => {
-    if (!user.num) return;
+    if (!user.num || !user.nickname) return;
 
     const updateUserInfo = async () => {
       try {
@@ -88,7 +88,7 @@ const MyPage = () => {
           .eq('user_num', user.num);
         if (error) throw error;
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 
@@ -98,15 +98,14 @@ const MyPage = () => {
   return (
     <div>
       <StMyInfoChange>
-        <RoundButton></RoundButton>
-        {user.profile && (
-          <img
-            src={user.profile}
-            alt="Profile"
-            style={{ width: 100, height: 100 }}
-          />
-        )}
-        <input type="file" onChange={handleFileChange} />
+        <StProfileWrapper>
+          {user.profile ? (
+            <RoundImage src={user.profile} alt="Profile" />
+          ) : (
+            <RoundButton></RoundButton>
+          )}
+          {isEditing ? <input type="file" onChange={handleFileChange} /> : ''}
+        </StProfileWrapper>
         <StMyInfoWrapper>
           <StNickname>{user.nickname}</StNickname>
           {isEditing ? (
@@ -152,6 +151,19 @@ const MyPage = () => {
   );
 };
 
+const RoundImage = styled.img`
+  width: 160px;
+  height: 160px;
+  margin: auto 40px;
+  border-radius: 50%;
+  object-fit: cover;
+`;
+
+const StProfileWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const MyPostWrapper = styled.div`
   margin: 10px;
 `;
@@ -186,8 +198,9 @@ const PostImage = styled.div`
 `;
 
 const StMyInfoChange = styled.div`
+  padding: 20px 0;
   background-color: #fee3a2;
-  height: 200px;
+  height: auto;
   border-radius: 30px;
   display: flex;
   position: relative;
