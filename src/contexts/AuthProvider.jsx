@@ -1,10 +1,10 @@
 import { useState, useEffect, createContext } from 'react';
 import { supabase } from '../supabase/client';
 
-export const AuthContext = createContext(null);
+export const AuthContext = createContext(false);
 
 export default function AuthProvider({ children }) {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(null);
   const [user, setUser] = useState({ num: null, nickname: '', intro: '' });
 
   useEffect(() => {
@@ -43,7 +43,6 @@ export default function AuthProvider({ children }) {
         }));
       }
     };
-
     if (isLogin) {
       getAdditionalUserInfo();
     }
