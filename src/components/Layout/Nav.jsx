@@ -1,20 +1,10 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { S } from '../../style/StLayout/Header.style';
 import { AuthContext } from '../../contexts/AuthProvider';
-import { supabase } from '../../supabase/client';
 
 const Nav = () => {
   const { isLogin, user } = useContext(AuthContext);
 
-  useEffect(() => {
-    const getSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      console.log(session);
-    };
-    getSession();
-  }, []);
   console.log(user);
   return (
     <S.Nav>
