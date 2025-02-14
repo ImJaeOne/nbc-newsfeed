@@ -1,23 +1,25 @@
 import { useState, useEffect, createContext } from 'react';
 import { supabase } from '../supabase/client';
 
-export const AuthContext = createContext(null);
+export const AuthContext = createContext(false);
 
 export default function AuthProvider({ children }) {
   const [isLogin, setIsLogin] = useState(false);
-  const [user, setUser] = useState({ id: null, nickname: '' });
+  const [user, setUser] = useState({ num: null, nickname: '', intro: '' });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
-        setUser((prev) => ({ ...prev, id: session.user.id }));
+        setUser((prev) => ({ ...prev, num: session.user.id }));
         setIsLogin(true);
       } else {
-        setUser({ id: null, nickname: '' });
+        setUser({ num: null, nickname: '' });
         setIsLogin(false);
       }
+      setLoading(false);
     });
 
     return () => subscription.unsubscribe();
@@ -25,28 +27,31 @@ export default function AuthProvider({ children }) {
 
   useEffect(() => {
     const getAdditionalUserInfo = async () => {
-      if (!user.id) return;
+      if (!user.num) return;
 
       const { data: userData, error } = await supabase
         .from('users')
-        .select('user_nickname')
-        .eq('user_num', user.id)
+        .select('user_nickname, user_intro')
+        .eq('user_num', user.num)
         .single();
 
       if (error) {
         console.error(error);
       } else {
-        setUser((prev) => ({ ...prev, nickname: userData.user_nickname }));
+        setUser((prev) => ({
+          ...prev,
+          nickname: userData.user_nickname,
+          intro: userData.user_intro,
+        }));
       }
     };
-
     if (isLogin) {
       getAdditionalUserInfo();
     }
-  }, [isLogin, user.id]);
+  }, [isLogin, user.num]);
 
   return (
-    <AuthContext.Provider value={{ isLogin, user, setIsLogin }}>
+    <AuthContext.Provider value={{ isLogin, user, setIsLogin, loading }}>
       {children}
     </AuthContext.Provider>
   );

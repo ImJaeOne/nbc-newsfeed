@@ -1,13 +1,11 @@
-import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { supabase } from '../supabase/client';
 import InputForAuth from '../components/InputForAuth';
 
 const Login = () => {
   const [inputEmail, setInputEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const navigate = useNavigate();
 
   const isValidEmail = (email) => {

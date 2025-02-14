@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const S = {};
 
-S.Nav = styled.nav`
+S.NavContainer = styled.nav`
   display: flex;
   align-items: center;
   gap: 20px; /* ✅ 버튼과 링크 간격 */
@@ -28,8 +28,12 @@ S.HeaderContainer = styled.header`
 S.Logo = styled.img`
   height: 100px; /* ✅ 로고 크기 조정 */
 `;
+S.Link = styled(Link)`
+  display: flex;
+  gap: 15px;
+`;
 
-S.AuthLinks = styled.div`
+S.LinksWrapper = styled.div`
   display: flex;
   gap: 15px;
 `;
@@ -37,6 +41,21 @@ S.AuthLinks = styled.div`
 S.UserMenu = styled.div`
   display: flex;
   align-items: center;
+`;
+
+S.Logoutbtn = styled.button`
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.haeder_text_color};
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 10px;
+  border: none;
+  transition: 0.3s;
+
+  &:hover {
+    scale: 1.2;
+  }
 `;
 
 S.UserName = styled(Link)`
@@ -47,13 +66,12 @@ S.UserName = styled(Link)`
   padding: 10px;
   border-radius: 5px;
   transition: 0.3s;
-
   &:hover {
     scale: 1.2;
   }
 `;
 
-S.Link = styled(Link)`
+S.AuthLink = styled(Link)`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.haeder_text_color};
   text-decoration: none;

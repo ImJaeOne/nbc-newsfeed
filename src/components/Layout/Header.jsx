@@ -7,7 +7,7 @@ const Header = () => {
       <S.Link to="/">
         <S.Logo src="/src/assets/logo.png " alt="Logo" />
       </S.Link>
-      <Nav />{' '}
+      <Nav />
     </S.HeaderContainer>
   );
 };
