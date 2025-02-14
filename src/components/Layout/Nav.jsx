@@ -11,19 +11,19 @@ const Nav = () => {
   }
 
   return (
-    <S.Nav>
+    <S.NavContainer>
       {isLogin ? (
         <S.UserMenu>
           <S.UserName to="/mypage">{user.nickname}</S.UserName>
           <S.Logoutbtn onClick={handleLogout}>로그아웃</S.Logoutbtn>
         </S.UserMenu>
       ) : (
-        <S.AuthLinks>
+        <S.AuthLinkWrapper>
           <S.AuthLink to="/login">로그인</S.AuthLink>
           <S.AuthLink to="/signup">회원가입</S.AuthLink>
-        </S.AuthLinks>
+        </S.AuthLinkWrapper>
       )}
-    </S.Nav>
+    </S.NavContainer>
   );
 };
 

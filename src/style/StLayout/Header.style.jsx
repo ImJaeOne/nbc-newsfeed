@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const S = {};
 
-S.Nav = styled.nav`
+S.NavContainer = styled.nav`
   display: flex;
   align-items: center;
   gap: 20px; /* ✅ 버튼과 링크 간격 */
@@ -29,7 +29,7 @@ S.Logo = styled.img`
   height: 100px; /* ✅ 로고 크기 조정 */
 `;
 
-S.AuthLinks = styled.div`
+S.AuthLinkWrapper = styled.div`
   display: flex;
   gap: 15px;
 `;
