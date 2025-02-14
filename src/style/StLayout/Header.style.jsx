@@ -29,7 +29,7 @@ S.Logo = styled.img`
   height: 100px; /* ✅ 로고 크기 조정 */
 `;
 
-S.LinksWrapper = styled.div`
+S.LinksWrapper = styled(Link)`
   display: flex;
   gap: 15px;
 `;
