@@ -10,7 +10,7 @@ const Nav = () => {
     <S.Nav>
       {isLogin ? (
         <S.UserMenu>
-          <S.UserName to="/mypage">우혁님</S.UserName>
+          <S.UserName to="/mypage">{user.nickname}</S.UserName>
         </S.UserMenu>
       ) : (
         <S.AuthLinks>
