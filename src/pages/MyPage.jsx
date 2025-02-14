@@ -20,50 +20,103 @@ const MyPage = () => {
   const [editedNickname, setEditedNickname] = useState('');
   const [editedIntro, setEditedIntro] = useState('');
   const [isEditing, setIsEditing] = useState(false);
+  const [file, setFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
-  const handleUserInfoChange = () => {
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const uploadFileAndGetUrl = async () => {
+    if (!file || !user.num) return null;
+    const filePath = `test-bucket/${user.num}_${file.name}`;
+    setUploading(true);
+
+    // 파일 업로드
+    const { error: uploadError } = await supabase.storage
+      .from('test-bucket')
+      .upload(filePath, file);
+    if (uploadError) {
+      console.error('파일 업로드 에러:', uploadError);
+      setUploading(false);
+      return null;
+    }
+
+    // public URL 가져오기
+    const { data, error: urlError } = supabase.storage
+      .from('test-bucket')
+      .getPublicUrl(filePath);
+    if (urlError) {
+      console.error('public URL 가져오기 에러:', urlError);
+      setUploading(false);
+      return null;
+    }
+    setUploading(false);
+    return data.publicUrl;
+  };
+
+  // 수정 버튼 클릭 시 처리: 파일 업로드 후 user state 업데이트
+  const handleUserInfoChange = async () => {
     if (isEditing) {
       if (editedNickname.replaceAll(' ', '') === '') {
         alert('닉네임을 1자 이상 입력해주세요');
         return;
       }
-      setUser({ ...user, nickname: editedNickname, intro: editedIntro });
+      let updatedProfileImg = user.profile; // 기존 프로필 사진 유지
+
+      // 파일이 선택되어 있으면 업로드 진행 후 URL 받기
+      if (file) {
+        const url = await uploadFileAndGetUrl();
+        if (url) {
+          updatedProfileImg = url;
+        }
+      }
+
+      // 로컬 state 업데이트 (옵티미스틱 업데이트)
+      setUser({
+        ...user,
+        nickname: editedNickname,
+        intro: editedIntro,
+        profile: updatedProfileImg,
+      });
     }
     setIsEditing(!isEditing);
   };
 
   useEffect(() => {
     if (!user.num) return;
-    if (!user.num || !user.nickname || !user.intro) return;
 
-    const updateAndFetchUserInfo = async () => {
+    const updateUserInfo = async () => {
       try {
         const { error: updateError } = await supabase
           .from('users')
           .update({
             user_nickname: user.nickname,
             user_intro: user.intro,
+            user_profile: user.profile,
           })
           .eq('user_num', user.num);
         if (updateError) throw updateError;
-
-        const { data, error: selectError } = await supabase
-          .from('users')
-          .select('*')
-          .eq('user_num', user.num);
-        if (selectError) throw selectError;
       } catch (err) {
         console.log(err);
       }
     };
 
-    updateAndFetchUserInfo();
-  }, [user.num, user.nickname, user.intro]);
+    updateUserInfo();
+  }, [user.num, user.nickname, user.intro, user.profile]);
 
   return (
     <div>
       <StMyInfoChange>
         <RoundButton></RoundButton>
+        {user.profile && (
+          <img
+            src={user.profile}
+            alt="Profile"
+            style={{ width: 100, height: 100 }}
+          />
+        )}
+        <input type="file" onChange={handleFileChange} />
         <StMyInfoWrapper>
           <StNickname>{user.nickname}</StNickname>
           {isEditing ? (
@@ -109,6 +162,11 @@ const MyPage = () => {
   );
 };
 
+// const { data, error: selectError } = await supabase
+//   .from('users')
+//   .select('*')
+//   .eq('user_num', user.num);
+// if (selectError) throw selectError;
 const MyPostWrapper = styled.div`
   margin: 10px;
 `;
