@@ -32,6 +32,7 @@ const Login = () => {
 
     if (password.length < 8) {
       alert('비밀번호는 최소 8자 이상 입력해야 합니다.');
+      return;
     }
 
     try {
@@ -41,6 +42,7 @@ const Login = () => {
       });
       if (result.error) {
         alert(`로그인 실패: ${result.error.message}`);
+        return;
       } else {
         alert('로그인 성공!');
         // navigate('/');
