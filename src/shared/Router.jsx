@@ -39,6 +39,7 @@ const Router = () => {
       ],
     },
   ];
+  console.log(commonRoute);
 
   const router = createBrowserRouter([...commonRoute]);
   return <RouterProvider router={router} />;
