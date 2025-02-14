@@ -21,7 +21,6 @@ const MyPage = () => {
   const [editedIntro, setEditedIntro] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [file, setFile] = useState(null);
-  const [uploading, setUploading] = useState(false);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -30,26 +29,22 @@ const MyPage = () => {
   const uploadFileAndGetUrl = async () => {
     if (!file || !user.num) return null;
     const filePath = `test-bucket/${user.num}_${file.name}`;
-    setUploading(true);
 
     const { error: uploadError } = await supabase.storage
       .from('test-bucket')
       .upload(filePath, file);
     if (uploadError) {
       console.error('파일 업로드 에러:', uploadError);
-      setUploading(false);
       return null;
     }
 
-    const { data, error: urlError } = supabase.storage
+    const { data, error } = supabase.storage
       .from('test-bucket')
       .getPublicUrl(filePath);
-    if (urlError) {
-      console.error('public URL 가져오기 에러:', urlError);
-      setUploading(false);
+    if (error) {
+      console.error('public URL 가져오기 에러:', error);
       return null;
     }
-    setUploading(false);
     return data.publicUrl;
   };
 
@@ -59,7 +54,7 @@ const MyPage = () => {
         alert('닉네임을 1자 이상 입력해주세요');
         return;
       }
-      let updatedProfileImg = user.profile; // 기존 프로필 사진 유지
+      let updatedProfileImg = user.profile;
 
       if (file) {
         const url = await uploadFileAndGetUrl();
@@ -83,7 +78,7 @@ const MyPage = () => {
 
     const updateUserInfo = async () => {
       try {
-        const { error: updateError } = await supabase
+        const { error } = await supabase
           .from('users')
           .update({
             user_nickname: user.nickname,
@@ -91,9 +86,9 @@ const MyPage = () => {
             user_profile: user.profile,
           })
           .eq('user_num', user.num);
-        if (updateError) throw updateError;
-      } catch (err) {
-        console.log(err);
+        if (error) throw error;
+      } catch (error) {
+        console.log(error);
       }
     };
 
