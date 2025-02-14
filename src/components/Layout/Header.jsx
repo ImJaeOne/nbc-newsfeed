@@ -4,9 +4,9 @@ import { S } from '../../style/StLayout/Header.style';
 const Header = () => {
   return (
     <S.HeaderContainer>
-      <S.Link to="/">
+      <S.LinksWrapper to="/">
         <S.Logo src="/src/assets/logo.png " alt="Logo" />
-      </S.Link>
+      </S.LinksWrapper>
       <Nav />
     </S.HeaderContainer>
   );
