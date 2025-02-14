@@ -23,6 +23,10 @@ const MyPage = () => {
 
   const handleUserInfoChange = () => {
     if (isEditing) {
+      if (editedNickname.replaceAll(' ', '') === '') {
+        alert('닉네임을 1자 이상 입력해주세요');
+        return;
+      }
       setUser({ ...user, nickname: editedNickname, intro: editedIntro });
     }
     setIsEditing(!isEditing);
@@ -30,20 +34,31 @@ const MyPage = () => {
 
   useEffect(() => {
     if (!user.num) return;
-    const changeUserInfo = async () => {
+
+    const updateAndFetchUserInfo = async () => {
       try {
-        const { error } = await supabase
+        const { error: updateError } = await supabase
           .from('users')
-          .update({ user_nickname: user.nickname, user_intro: user.intro })
+          .update({
+            user_nickname: user.nickname,
+            user_intro: user.intro,
+          })
           .eq('user_num', user.num);
-        if (error) throw error;
-      } catch (error) {
-        console.log(error);
+        if (updateError) throw updateError;
+
+        const { data, error: selectError } = await supabase
+          .from('users')
+          .select('*')
+          .eq('user_num', user.num);
+        if (selectError) throw selectError;
+
+        console.log(data);
+      } catch (err) {
+        console.log(err);
       }
     };
 
-    console.log('제대로 출력됨');
-    changeUserInfo();
+    updateAndFetchUserInfo();
   }, [user.num, user.nickname, user.intro]);
 
   return (
