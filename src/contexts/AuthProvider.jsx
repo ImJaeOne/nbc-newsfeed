@@ -8,23 +8,19 @@ export default function AuthProvider({ children }) {
   const [user, setUser] = useState({ id: null, nickname: '' });
 
   useEffect(() => {
-    const { data: subscription } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        console.log(event, session);
-        if (session?.user) {
-          setUser((prev) => ({ ...prev, id: session.user.id }));
-          setIsLogin(true);
-        } else {
-          setUser({ id: null, nickname: '' });
-          setIsLogin(false);
-        }
-      },
-    );
-    console.log(user);
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session) {
+        setUser((prev) => ({ ...prev, id: session.user.id }));
+        setIsLogin(true);
+      } else {
+        setUser({ id: null, nickname: '' });
+        setIsLogin(false);
+      }
+    });
 
-    // return () => {
-    //   subscription?.unsubscribe();
-    // };
+    return () => subscription.unsubscribe();
   }, []);
 
   useEffect(() => {
@@ -34,13 +30,13 @@ export default function AuthProvider({ children }) {
       const { data: userData, error } = await supabase
         .from('users')
         .select('user_nickname')
-        .eq('user_num', user.id);
+        .eq('user_num', user.id)
+        .single();
 
       if (error) {
         console.error(error);
       } else {
         setUser((prev) => ({ ...prev, nickname: userData.user_nickname }));
-        console.log(userData);
       }
     };
 
