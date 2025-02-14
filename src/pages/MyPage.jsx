@@ -22,7 +22,7 @@ const MyPage = () => {
         <RoundButton></RoundButton>
         <StMyInfoWrapper>
           <StNickname>{user.nickname}</StNickname>
-          <StIntroduce>소개글</StIntroduce>
+          <StIntroduce>{user.introduce}</StIntroduce>
         </StMyInfoWrapper>
         <StEditBtn>내 정보 수정하기</StEditBtn>
       </StMyInfoChange>
