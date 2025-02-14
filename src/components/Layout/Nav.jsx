@@ -18,10 +18,10 @@ const Nav = () => {
           <S.Logoutbtn onClick={handleLogout}>로그아웃</S.Logoutbtn>
         </S.UserMenu>
       ) : (
-        <S.AuthLinkWrapper>
+        <S.LinksWrapper>
           <S.AuthLink to="/login">로그인</S.AuthLink>
           <S.AuthLink to="/signup">회원가입</S.AuthLink>
-        </S.AuthLinkWrapper>
+        </S.LinksWrapper>
       )}
     </S.NavContainer>
   );
