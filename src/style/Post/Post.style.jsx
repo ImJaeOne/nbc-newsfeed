@@ -15,6 +15,7 @@ S.FormContainer = styled.form`
   align-content: center;
   gap: 20px;
   padding-top: 20px;
+  border-radius: 30px;
 `;
 
 S.PostSection = styled.section`
@@ -25,11 +26,15 @@ S.PostSection = styled.section`
   gap: 10px;
   font-size: 30px;
 `;
+S.postSelect = styled.select`
+  border-radius: 30px;
+`;
 
 S.PostInput = styled.input`
-  width: ${(props) => (props.name === 'postTitle' ? '500px' : '640px')};
+  width: ${(props) => (props.name === 'post_title' ? '500px' : '640px')};
   transform: ${(props) =>
-    props.name === 'postTitle' ? 'translateX(-45px)' : ''};
+    props.name === 'post_title' ? 'translateX(-45px)' : ''};
+  border-radius: 30px;
 `;
 
 S.FileLabel = styled.label`
@@ -40,6 +45,7 @@ S.FileLabel = styled.label`
   background-color: white;
   font-size: 15px;
   align-items: center;
+  border-radius: 30px;
 `;
 
 S.PostLabel = styled.label`
@@ -53,7 +59,7 @@ S.PostSubmitButton = styled.button`
   width: 100px;
   height: 40px;
   font-size: 30px;
-  border-radius: 8px;
+  border-radius: 30px;
 `;
 
 export default S;
