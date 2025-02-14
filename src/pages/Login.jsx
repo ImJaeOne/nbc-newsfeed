@@ -45,7 +45,7 @@ const Login = () => {
         return;
       } else {
         alert('로그인 성공!');
-        // navigate('/');
+        navigate('/');
       }
     } catch (err) {
       console.error(err.message);
