@@ -1,7 +1,7 @@
-import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect, useContext } from 'react';
+import { useState } from 'react';
 import { supabase } from '../supabase/client';
+import InputForAuth from '../components/InputForAuth';
 
 const Login = () => {
   const [inputEmail, setInputEmail] = useState('');
@@ -56,7 +56,7 @@ const Login = () => {
     <div>
       <h2>로그인</h2>
       <form onSubmit={submitHandler}>
-        <input
+        <InputForAuth
           type="email"
           placeholder="이메일"
           onChange={(e) => {
@@ -64,7 +64,7 @@ const Login = () => {
           }}
           value={inputEmail}
         />
-        <input
+        <InputForAuth
           type="password"
           placeholder="비밀번호"
           onChange={(e) => {
