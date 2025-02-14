@@ -39,6 +39,21 @@ S.UserMenu = styled.div`
   align-items: center;
 `;
 
+S.Logoutbtn = styled.button`
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.haeder_text_color};
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 10px;
+  border: none;
+  transition: 0.3s;
+
+  &:hover {
+    scale: 1.2;
+  }
+`;
+
 S.UserName = styled(Link)`
   font-size: 1.2rem;
   font-weight: bold;
