@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { supabase } from '../supabase/client';
-import InputForSignup from '../components/InputForSignup';
+import InputForAuth from '../components/InputForAuth';
 
 const Login = () => {
   const [inputEmail, setInputEmail] = useState('');
@@ -33,6 +33,7 @@ const Login = () => {
 
     if (password.length < 8) {
       alert('비밀번호는 최소 8자 이상 입력해야 합니다.');
+      return;
     }
 
     try {
@@ -42,9 +43,10 @@ const Login = () => {
       });
       if (result.error) {
         alert(`로그인 실패: ${result.error.message}`);
+        return;
       } else {
         alert('로그인 성공!');
-        // navigate('/');
+        navigate('/');
       }
     } catch (err) {
       console.error(err.message);
@@ -56,7 +58,7 @@ const Login = () => {
     <div>
       <h2>로그인</h2>
       <form onSubmit={submitHandler}>
-        <InputForSignup
+        <InputForAuth
           type="email"
           placeholder="이메일"
           onChange={(e) => {
@@ -64,7 +66,7 @@ const Login = () => {
           }}
           value={inputEmail}
         />
-        <InputForSignup
+        <InputForAuth
           type="password"
           placeholder="비밀번호"
           onChange={(e) => {
