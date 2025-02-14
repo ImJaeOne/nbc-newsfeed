@@ -5,7 +5,7 @@ export const AuthContext = createContext(null);
 
 export default function AuthProvider({ children }) {
   const [isLogin, setIsLogin] = useState(false);
-  const [user, setUser] = useState({ id: null, nickname: '' });
+  const [user, setUser] = useState({ id: null, nickname: '', introduce: '' });
 
   useEffect(() => {
     const {
@@ -29,14 +29,18 @@ export default function AuthProvider({ children }) {
 
       const { data: userData, error } = await supabase
         .from('users')
-        .select('user_nickname')
+        .select('user_nickname, user_intro')
         .eq('user_num', user.id)
         .single();
 
       if (error) {
         console.error(error);
       } else {
-        setUser((prev) => ({ ...prev, nickname: userData.user_nickname }));
+        setUser((prev) => ({
+          ...prev,
+          nickname: userData.user_nickname,
+          introduce: userData.user_intro,
+        }));
       }
     };
 
