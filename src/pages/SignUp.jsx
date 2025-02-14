@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { supabase } from '../supabase/client';
 import { useNavigate } from 'react-router-dom';
 import InputForAuth from '../components/InputForAuth';
+import styled from 'styled-components';
 
 const SignUp = () => {
   const [nickname, setNickname] = useState('');
@@ -35,57 +36,121 @@ const SignUp = () => {
 
       if (userError) throw userError;
 
-      alert('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
-      navigate('/login');
+      alert('회원가입이 완료되었습니다.');
+      navigate('/');
     } catch (error) {
       alert(error.message);
       console.error('회원가입 오류:', error);
     }
   };
   return (
-    <div>
-      <div>회원가입</div>
-      <form onSubmit={handleSignup}>
-        닉네임:
-        <InputForAuth
-          type="text"
-          name="nickname"
-          id="nickname"
-          value={nickname}
-          onChange={(e) => setNickname(e.target.value)}
-        />
-        <br />
-        이메일:
-        <InputForAuth
-          type="email"
-          name="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <br />
-        비밀번호:
-        <InputForAuth
-          type="password"
-          name="pwd"
-          id="pwd"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <br />
-        비밀번호 확인:
-        <InputForAuth
-          type="password"
-          name="confirmPwd"
-          id="confirmPwd"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
-        <br />
-        <button>확인</button>
-      </form>
-    </div>
+    <StWrapper>
+      <StSignupContainer>
+        <StTitle>회원가입</StTitle>
+        <StForm onSubmit={handleSignup}>
+          <StInputWrapper>
+            <StInputText>닉네임:</StInputText>
+            <InputForAuth
+              type="text"
+              name="nickname"
+              id="nickname"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+            />
+          </StInputWrapper>
+          <StInputWrapper>
+            <StInputText>이메일:</StInputText>
+            <InputForAuth
+              type="email"
+              name="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </StInputWrapper>
+          <StInputWrapper>
+            <StInputText>비밀번호:</StInputText>
+            <InputForAuth
+              type="password"
+              name="pwd"
+              id="pwd"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </StInputWrapper>
+          <StInputWrapper>
+            <StInputText>비밀번호 확인:</StInputText>
+            <InputForAuth
+              type="password"
+              name="confirmPwd"
+              id="confirmPwd"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </StInputWrapper>
+          <StSubmitBtn type="submit">확인</StSubmitBtn>
+        </StForm>
+      </StSignupContainer>
+    </StWrapper>
   );
 };
+
+const StTitle = styled.h2`
+  font-size: 40px;
+`;
+
+const StForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const StSubmitBtn = styled.button`
+  border: none;
+  width: 100px;
+  height: 50px;
+  font-size: 25px;
+  border-radius: 30px;
+  cursor: pointer;
+  display: block;
+  transition: all, 0.2s;
+
+  &:hover {
+    scale: 1.05;
+  }
+`;
+
+const StWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 0;
+`;
+
+const StSignupContainer = styled.div`
+  width: 70%;
+  padding: 20px 0;
+  background-color: #fffefa;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+`;
+
+const StInputWrapper = styled.div`
+  margin: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const StInputText = styled.p`
+  width: 170px;
+  text-align: right;
+  font-size: 35px;
+  margin-right: 20px;
+`;
 
 export default SignUp;
