@@ -32,7 +32,6 @@ const MyPage = () => {
     const filePath = `test-bucket/${user.num}_${file.name}`;
     setUploading(true);
 
-    // 파일 업로드
     const { error: uploadError } = await supabase.storage
       .from('test-bucket')
       .upload(filePath, file);
@@ -42,7 +41,6 @@ const MyPage = () => {
       return null;
     }
 
-    // public URL 가져오기
     const { data, error: urlError } = supabase.storage
       .from('test-bucket')
       .getPublicUrl(filePath);
@@ -55,7 +53,6 @@ const MyPage = () => {
     return data.publicUrl;
   };
 
-  // 수정 버튼 클릭 시 처리: 파일 업로드 후 user state 업데이트
   const handleUserInfoChange = async () => {
     if (isEditing) {
       if (editedNickname.replaceAll(' ', '') === '') {
@@ -64,7 +61,6 @@ const MyPage = () => {
       }
       let updatedProfileImg = user.profile; // 기존 프로필 사진 유지
 
-      // 파일이 선택되어 있으면 업로드 진행 후 URL 받기
       if (file) {
         const url = await uploadFileAndGetUrl();
         if (url) {
@@ -72,7 +68,6 @@ const MyPage = () => {
         }
       }
 
-      // 로컬 state 업데이트 (옵티미스틱 업데이트)
       setUser({
         ...user,
         nickname: editedNickname,
@@ -162,11 +157,6 @@ const MyPage = () => {
   );
 };
 
-// const { data, error: selectError } = await supabase
-//   .from('users')
-//   .select('*')
-//   .eq('user_num', user.num);
-// if (selectError) throw selectError;
 const MyPostWrapper = styled.div`
   margin: 10px;
 `;
