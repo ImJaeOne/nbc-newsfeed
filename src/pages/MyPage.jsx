@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import sampleImg from '../assets/다운로드.jpeg';
+import { useContext } from 'react';
+import { AuthContext } from '../contexts/AuthProvider';
 
 const dummyArr = Array.from({ length: 4 }, (_, idx) => ({
   post_num: idx + 1,
@@ -11,12 +13,15 @@ const dummyArr = Array.from({ length: 4 }, (_, idx) => ({
 }));
 
 const MyPage = () => {
+  const { isLogin, user, setIsLogin } = useContext(AuthContext);
+  console.log(user);
+
   return (
     <div>
       <StMyInfoChange>
         <RoundButton></RoundButton>
         <StMyInfoWrapper>
-          <StNickname>닉네임</StNickname>
+          <StNickname>{user.nickname}</StNickname>
           <StIntroduce>소개글</StIntroduce>
         </StMyInfoWrapper>
         <StEditBtn>내 정보 수정하기</StEditBtn>
