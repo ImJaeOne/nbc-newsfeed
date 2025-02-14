@@ -5,17 +5,17 @@ export const AuthContext = createContext(null);
 
 export default function AuthProvider({ children }) {
   const [isLogin, setIsLogin] = useState(false);
-  const [user, setUser] = useState({ id: null, nickname: '', introduce: '' });
+  const [user, setUser] = useState({ num: null, nickname: '', intro: '' });
 
   useEffect(() => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
-        setUser((prev) => ({ ...prev, id: session.user.id }));
+        setUser((prev) => ({ ...prev, num: session.user.id }));
         setIsLogin(true);
       } else {
-        setUser({ id: null, nickname: '' });
+        setUser({ num: null, nickname: '' });
         setIsLogin(false);
       }
     });
@@ -25,12 +25,12 @@ export default function AuthProvider({ children }) {
 
   useEffect(() => {
     const getAdditionalUserInfo = async () => {
-      if (!user.id) return;
+      if (!user.num) return;
 
       const { data: userData, error } = await supabase
         .from('users')
         .select('user_nickname, user_intro')
-        .eq('user_num', user.id)
+        .eq('user_num', user.num)
         .single();
 
       if (error) {
@@ -39,7 +39,7 @@ export default function AuthProvider({ children }) {
         setUser((prev) => ({
           ...prev,
           nickname: userData.user_nickname,
-          introduce: userData.user_intro,
+          intro: userData.user_intro,
         }));
       }
     };
@@ -47,7 +47,7 @@ export default function AuthProvider({ children }) {
     if (isLogin) {
       getAdditionalUserInfo();
     }
-  }, [isLogin, user.id]);
+  }, [isLogin, user.num]);
 
   return (
     <AuthContext.Provider value={{ isLogin, user, setIsLogin }}>
