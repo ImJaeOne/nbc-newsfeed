@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { supabase } from '../supabase/client';
 import { useNavigate } from 'react-router-dom';
+import InputForAuth from '../components/InputForAuth';
 
 const SignUp = () => {
   const [nickname, setNickname] = useState('');
@@ -46,7 +47,7 @@ const SignUp = () => {
       <div>회원가입</div>
       <form onSubmit={handleSignup}>
         닉네임:
-        <input
+        <InputForAuth
           type="text"
           name="nickname"
           id="nickname"
@@ -55,7 +56,7 @@ const SignUp = () => {
         />
         <br />
         이메일:
-        <input
+        <InputForAuth
           type="email"
           name="email"
           id="email"
@@ -64,7 +65,7 @@ const SignUp = () => {
         />
         <br />
         비밀번호:
-        <input
+        <InputForAuth
           type="password"
           name="pwd"
           id="pwd"
@@ -73,7 +74,7 @@ const SignUp = () => {
         />
         <br />
         비밀번호 확인:
-        <input
+        <InputForAuth
           type="password"
           name="confirmPwd"
           id="confirmPwd"
