@@ -19,7 +19,7 @@ const Post = () => {
     const { name, value } = e.target;
     setPost((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value.trim(),
     }));
   };
 
@@ -37,10 +37,15 @@ const Post = () => {
       return;
     }
 
-    await supabase.from('posts').insert(post).select();
+    const { error } = await supabase.from('posts').insert(post);
+    if (error) {
+      alert('게시물 게시 실패');
+      console.log('게시물 게시 실패: ', error);
+      return;
+    }
     alert('게시되었습니다.');
     setPost(resetPost);
-    // navigate('/');
+    navigate('/');
   };
 
   return (

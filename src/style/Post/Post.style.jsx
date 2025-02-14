@@ -14,7 +14,7 @@ S.FormContainer = styled.form`
   justify-content: center;
   align-content: center;
   gap: 20px;
-  padding-top: 20px;
+  padding: 20px;
   border-radius: 30px;
 `;
 
