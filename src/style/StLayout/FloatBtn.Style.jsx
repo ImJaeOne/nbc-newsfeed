@@ -13,11 +13,11 @@ S.FloatBtnContainer = styled.div`
 `;
 
 S.FloatMainBtn = styled.button`
-  background-color: #3498db;
+  background-color: ${({ theme }) => theme.colors.haeder_text_color};
   color: white;
   border: none;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -26,7 +26,7 @@ S.FloatMainBtn = styled.button`
   transition: background 0.3s;
 
   &:hover {
-    background-color: #2980b9;
+    background-color: #f25151;
   }
 `;
 
@@ -54,7 +54,7 @@ S.DropdownMenuWrapper = styled.div`
 `;
 
 S.IconButton = styled.button`
-  background-color: #2ecc71;
+  background-color: #f2c450;
   color: white;
   border: none;
   width: 40px;
