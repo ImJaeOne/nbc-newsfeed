@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { supabase } from '../supabase/client';
+import InputForSignup from '../components/InputForSignup';
 
 const Login = () => {
   const [inputEmail, setInputEmail] = useState('');
@@ -55,7 +56,7 @@ const Login = () => {
     <div>
       <h2>로그인</h2>
       <form onSubmit={submitHandler}>
-        <input
+        <InputForSignup
           type="email"
           placeholder="이메일"
           onChange={(e) => {
@@ -63,7 +64,7 @@ const Login = () => {
           }}
           value={inputEmail}
         />
-        <input
+        <InputForSignup
           type="password"
           placeholder="비밀번호"
           onChange={(e) => {
