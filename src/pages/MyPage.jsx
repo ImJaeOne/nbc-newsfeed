@@ -34,6 +34,7 @@ const MyPage = () => {
 
   useEffect(() => {
     if (!user.num) return;
+    if (!user.num || !user.nickname || !user.intro) return;
 
     const updateAndFetchUserInfo = async () => {
       try {
@@ -51,8 +52,6 @@ const MyPage = () => {
           .select('*')
           .eq('user_num', user.num);
         if (selectError) throw selectError;
-
-        console.log(data);
       } catch (err) {
         console.log(err);
       }
