@@ -14,7 +14,6 @@ const dummyArr = Array.from({ length: 4 }, (_, idx) => ({
 
 const MyPage = () => {
   const { isLogin, user, setIsLogin } = useContext(AuthContext);
-  console.log(user);
 
   return (
     <div>
