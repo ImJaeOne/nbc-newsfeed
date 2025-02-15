@@ -4,6 +4,7 @@ import { AuthContext } from '../contexts/AuthProvider';
 import { useState } from 'react';
 import { supabase } from '../supabase/client';
 import { useEffect } from 'react';
+import UserProfile from '../components/common/UserProfile';
 
 const dummyArr = Array.from({ length: 4 }, (_, idx) => ({
   post_num: idx + 1,
@@ -98,10 +99,13 @@ const MyPage = () => {
     <div>
       <StMyInfoChange>
         <StProfileWrapper>
-          {user.profile ? (
-            <RoundImage src={user.profile} alt="Profile" />
-          ) : (
-            <RoundButton></RoundButton>
+          {user.profile && (
+            <UserProfile
+              src={user.profile}
+              alt={'Profile'}
+              size="160px"
+              margin="30px"
+            />
           )}
           {isEditing ? <input type="file" onChange={handleFileChange} /> : ''}
         </StProfileWrapper>
@@ -149,14 +153,6 @@ const MyPage = () => {
     </div>
   );
 };
-
-const RoundImage = styled.img`
-  width: 160px;
-  height: 160px;
-  margin: auto 40px;
-  border-radius: 50%;
-  object-fit: cover;
-`;
 
 const StProfileWrapper = styled.div`
   display: flex;
