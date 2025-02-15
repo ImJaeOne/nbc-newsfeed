@@ -91,14 +91,12 @@ const MyPage = () => {
     <div>
       <StMyInfoChange>
         <StProfileWrapper>
-          {user.profile && (
-            <UserProfile
-              src={user.profile}
-              alt="프로필 사진"
-              size="160px"
-              margin="30px"
-            />
-          )}
+          <UserProfile
+            src={user.profile}
+            alt="프로필 사진"
+            size="160px"
+            margin="30px"
+          />
           {isEditing && <input type="file" onChange={handleFileChange} />}
         </StProfileWrapper>
         <StMyInfoWrapper>
@@ -138,13 +136,12 @@ const StProfileWrapper = styled.div`
 
 const StMyPostList = styled.div`
   background-color: #fee3a2;
-  height: 500px;
   border-radius: 30px;
-  margin: 40px auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 80px;
+  margin-top: 20px;
 `;
 
 const StMyInfoChange = styled.div`

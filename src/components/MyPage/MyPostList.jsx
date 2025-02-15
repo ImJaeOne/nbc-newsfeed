@@ -35,60 +35,116 @@ const MyPostList = () => {
     };
     fetchPostData();
   });
-
   return (
     <StMyPostList>
       {myPosts.map((post) => {
         return (
-          <Link key={post.post_num} to={`/detail?post_id=${post.post_num}`}>
+          <StLink key={post.post_num} to={`/detail?post_id=${post.post_num}`}>
             <CardContainer>
-              {post.post_img_url && (
-                <PostImage src={post.post_img_url} alt="이미지" />
-              )}
+              <ImageWrapper>
+                {post.post_img_url && (
+                  <PostImage src={post.post_img_url} alt="이미지" />
+                )}
+              </ImageWrapper>
               <MyPostWrapper>
                 <MyPostTitle>{post.post_title}</MyPostTitle>
-                <div>{post.post_date}</div>
-                <div>좋아요</div>
+                <PostDate>{post.post_date}</PostDate>
+                <Like>좋아요</Like>
               </MyPostWrapper>
             </CardContainer>
-          </Link>
+          </StLink>
         );
       })}
     </StMyPostList>
   );
 };
 
+const ImageWrapper = styled.div`
+  width: 100%;
+  height: 60%;
+  background-color: #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+`;
+
+const StLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+`;
+
 const MyPostWrapper = styled.div`
-  margin: 10px;
+  flex: 1;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const MyPostTitle = styled.div`
-  font-size: 30px;
+  font-size: 20px;
+  font-weight: bold;
 `;
 
 const CardContainer = styled.div`
-  width: 450px;
-  background-color: #b4972b;
-  height: 150px;
-  border-radius: 5px;
+  width: 200px;
+  height: 280px;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  @media (max-width: 768px) {
+    width: 150px;
+    height: 210px;
+  }
+
+  @media (max-width: 480px) {
+    width: 120px;
+    height: 168px;
+  }
 `;
+
 const PostImage = styled.img`
-  width: 150px;
-  height: 150px;
-  background-color: white;
-  border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
 `;
 
 const StMyPostList = styled.div`
+  width: 100%;
   background-color: #fee3a2;
-  height: auto;
   border-radius: 30px;
-  margin: 40px auto;
+  margin: 10px auto;
+  padding: 10px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 80px;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+  overflow: scroll;
+`;
+
+const PostDate = styled.div`
+  font-size: 14px;
+  color: #666;
+`;
+
+const Like = styled.div`
+  font-size: 14px;
+  color: #999;
 `;
 
 export default MyPostList;
