@@ -1,8 +1,8 @@
 import { supabase } from '../supabase/client';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import useInput from '../components/SignUp/useInput';
 import SignUpInput from '../components/SignUp/SignUpInput';
+import useInput from '../hooks/useInput';
 
 const SignUp = () => {
   const inputEmail = useInput('');
