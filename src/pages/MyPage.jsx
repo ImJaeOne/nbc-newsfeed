@@ -6,15 +6,6 @@ import { supabase } from '../supabase/client';
 import { useEffect } from 'react';
 import MyPostList from '../components/MyPage/MyPostList';
 
-const dummyArr = Array.from({ length: 4 }, (_, idx) => ({
-  post_num: idx + 1,
-  post_title: '춥고 배고프고 졸려',
-  post_date: '1 hours ago',
-  post_img: '',
-  post_like: 1,
-  user_id: '임재원',
-}));
-
 const MyPage = () => {
   const { user, setUser } = useContext(AuthContext);
   const [editedNickname, setEditedNickname] = useState('');
