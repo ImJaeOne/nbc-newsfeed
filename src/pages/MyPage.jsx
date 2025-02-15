@@ -19,10 +19,10 @@ const MyPage = () => {
 
   const uploadFileAndGetUrl = async () => {
     if (!file || !user.num) return null;
-    const filePath = `user-profile/${crypto.randomUUID()}_${file.lastModified}`;
+    const filePath = `test-bucket/${crypto.randomUUID()}_${file.name}`;
 
     const { error: uploadError } = await supabase.storage
-      .from('user-profile')
+      .from('test-bucket')
       .upload(filePath, file);
     if (uploadError) {
       console.error('파일 업로드 에러:', uploadError);
@@ -30,7 +30,7 @@ const MyPage = () => {
     }
 
     const { data, error } = supabase.storage
-      .from('user-profile')
+      .from('test-bucket')
       .getPublicUrl(filePath);
     if (error) {
       console.error('public URL 가져오기 에러:', error);
@@ -95,32 +95,38 @@ const MyPage = () => {
           ) : (
             <RoundButton></RoundButton>
           )}
-          {isEditing && <input type="file" onChange={handleFileChange} />}
+          {isEditing ? <input type="file" onChange={handleFileChange} /> : ''}
         </StProfileWrapper>
         <StMyInfoWrapper>
           <StNickname>{user.nickname}</StNickname>
-          {isEditing && (
+          {isEditing ? (
             <input
               type="text"
               value={editedNickname}
               onChange={(e) => setEditedNickname(e.target.value)}
             />
+          ) : (
+            ''
           )}
           <StIntroduce>{user.intro}</StIntroduce>
-          {isEditing && (
+          {isEditing ? (
             <textarea
               name=""
               id=""
               value={editedIntro}
               onChange={(e) => setEditedIntro(e.target.value)}
             ></textarea>
+          ) : (
+            ''
           )}
         </StMyInfoWrapper>
         <StEditBtn value={isEditing} onClick={handleUserInfoChange}>
           내 정보 수정하기
         </StEditBtn>
       </StMyInfoChange>
-      <MyPostList></MyPostList>
+      <StMyPostList>
+        <MyPostList />
+      </StMyPostList>
     </div>
   );
 };
@@ -136,6 +142,17 @@ const RoundImage = styled.img`
 const StProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const StMyPostList = styled.div`
+  background-color: #fee3a2;
+  height: 500px;
+  border-radius: 30px;
+  margin: 40px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 80px;
 `;
 
 const StMyInfoChange = styled.div`
