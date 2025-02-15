@@ -11,7 +11,7 @@ const Layout = () => {
     <S.Layout>
       <Header />
       <S.Main>
-        <Outlet /> {/* 각 페이지의 컨텐츠가 여기에 렌더링됨 */}
+        <Outlet />
       </S.Main>
       {isLogin && <FloatBtn />}
       <footer>📌 공통 푸터</footer>
