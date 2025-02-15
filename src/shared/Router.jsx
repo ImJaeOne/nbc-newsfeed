@@ -10,8 +10,6 @@ import MyPage from '../pages/MyPage';
 import Login from '../pages/Login';
 import SignUp from '../pages/SignUp';
 import Layout from '../components/Layout/Layout';
-import { useContext } from 'react';
-import { AuthContext } from '../contexts/AuthProvider';
 import ProtectedRoute from './ProtectedRoute';
 
 const Router = () => {
