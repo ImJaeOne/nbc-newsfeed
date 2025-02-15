@@ -98,9 +98,9 @@ export default Home;
 
 const HomeContainer = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px 10px;
   gap: 30px;
   background-color: #fffbf0;
 `;
