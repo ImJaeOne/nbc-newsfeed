@@ -65,7 +65,6 @@ const Home = () => {
                 <RoundButton />
                 {post.users.user_nickname}
               </CardProfile>
-              더 보기
             </CardHeader>
             <CardTitle>{post.post_title}</CardTitle>
             <CardWrapper>
