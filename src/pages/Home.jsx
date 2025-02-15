@@ -1,66 +1,89 @@
 import styled from 'styled-components';
 import sampleImg from '../assets/다운로드.jpeg';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FaRegComment, FaRegHeart, FaHeart } from 'react-icons/fa';
+import { supabase } from '../supabase/client';
+import { AuthContext } from '../contexts/AuthProvider';
 
-const dummyArr = Array.from({ length: 50 }, (_, idx) => ({
-  post_num: idx + 1,
-  post_title: '춥고 배고프고 졸려',
-  post_date: '1 hours ago',
-  post_img: sampleImg,
-  post_like: 1,
-  user_id: '임재원',
-}));
+const getTimeAgo = (dateString) => {
+  const now = new Date();
+  const date = new Date(dateString);
 
-const user = {
-  user_num: 0,
-  user_email: 'asd123@naver.com',
-  user_nickname: '임재원',
-  user_joindate: '2025.01.01',
-  post_like: [1, 2, 3],
+  const diffInSeconds = Math.floor((now - date) / 1000);
+  const diffInMinutes = Math.floor(diffInSeconds / 60);
+  const diffInHours = Math.floor(diffInMinutes / 60);
+  const diffInDays = Math.floor(diffInHours / 24);
+  const diffInMonths = Math.floor(diffInDays / 30);
+  const diffInYears = Math.floor(diffInDays / 365);
+
+  if (diffInSeconds < 60) {
+    return `방금 전`;
+  } else if (diffInMinutes < 60) {
+    return `${diffInMinutes} minutes ago`;
+  } else if (diffInHours < 24) {
+    return `${diffInHours} hours ago`;
+  } else if (diffInDays < 30) {
+    return `${diffInDays} days ago`;
+  } else if (diffInMonths < 12) {
+    return `${diffInMonths} months ago`;
+  } else {
+    return `${diffInYears} years ago`;
+  }
 };
 
 const Home = () => {
-  const [posts, setPosts] = useState(dummyArr);
-  const [userLikes, setUserLikes] = useState(user.post_like);
+  const [posts, setPosts] = useState([]);
 
-  const handleClickLike = (postNum) => {
-    setUserLikes((prevLikes) =>
-      prevLikes.includes(postNum)
-        ? prevLikes.filter((num) => num !== postNum)
-        : [...prevLikes, postNum],
-    );
-  };
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    const fetchPostData = async () => {
+      try {
+        const { data, error } = await supabase.from('posts').select(`
+    *, 
+    users:user_num(user_nickname), 
+    post_like(post_num)
+  `);
+        const sortedPosts = data
+          .map((post) => ({
+            ...post,
+            post_date: getTimeAgo(post.post_date),
+          }))
+          .reverse();
+        setPosts(sortedPosts);
+        if (error) {
+          throw error;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchPostData();
+  }, []);
 
   return (
     <HomeContainer>
-      {posts.map((post, idx) => {
-        const isLiked = userLikes.includes(post.post_num);
-
+      {posts.map((post) => {
+        const isLiked = post.post_like.includes(
+          (user_num) => user_num === user.user_num,
+        );
         return (
-          <Card key={idx}>
+          <Card key={post.post_num}>
             <CardHeader>
               <CardProfile>
                 <RoundButton />
-                {post.user_id}
+                {post.users.user_nickname}
               </CardProfile>
               더 보기
             </CardHeader>
             <CardTitle>{post.post_title}</CardTitle>
-            <CardImg src={post.post_img} alt="사진" />
+            <CardWrapper>
+              <CardImg src={post.post_img_url} alt="사진" />
+            </CardWrapper>
             <CardFooter>
               <CardIconContainer>
-                {isLiked ? (
-                  <FaHeart
-                    color="red"
-                    onClick={() => handleClickLike(post.post_num)}
-                  />
-                ) : (
-                  <FaRegHeart onClick={() => handleClickLike(post.post_num)} />
-                )}
-                {userLikes.includes(post.post_num)
-                  ? post.post_like + 1
-                  : post.post_like}
+                {isLiked ? <FaHeart color="red" /> : <FaRegHeart />}
+                {post.post_like.length}
                 <FaRegComment /> 1
               </CardIconContainer>
               {post.post_date}
@@ -112,9 +135,16 @@ const CardTitle = styled.div`
   color: #333;
 `;
 
+const CardWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+  overflow: hidden;
+`;
+
 const CardImg = styled.img`
-  height: 100%;
-  max-height: 150px;
+  height: 150px;
   object-fit: cover;
   border-radius: 8px;
 `;
