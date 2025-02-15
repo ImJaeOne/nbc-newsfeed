@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import sampleImg from '../assets/다운로드.jpeg';
 import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthProvider';
 import { useState } from 'react';
@@ -10,7 +9,7 @@ const dummyArr = Array.from({ length: 4 }, (_, idx) => ({
   post_num: idx + 1,
   post_title: '춥고 배고프고 졸려',
   post_date: '1 hours ago',
-  post_img: sampleImg,
+  post_img: '',
   post_like: 1,
   user_id: '임재원',
 }));
