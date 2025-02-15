@@ -206,21 +206,6 @@ const StMyInfoWrapper = styled.div`
   margin-top: 40px;
 `;
 
-const RoundButton = styled.button`
-  width: 160px;
-  height: 160px;
-  margin: auto 40px;
-  border-radius: 50%;
-  border: none;
-  background-color: #857040;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #a67d40;
-  }
-`;
-
 const StNickname = styled.p`
   font-size: 40px;
 `;
