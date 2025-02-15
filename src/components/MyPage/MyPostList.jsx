@@ -3,40 +3,54 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { AuthContext } from '../../contexts/AuthProvider';
 import { supabase } from '../../supabase/client';
-
-const dummyArr = Array.from({ length: 4 }, (_, idx) => ({
-  post_num: idx + 1,
-  post_title: '춥고 배고프고 졸려',
-  post_date: '1 hours ago',
-  post_like: 1,
-  user_id: '임재원',
-}));
+import { getTimeAgo } from '../../utils/dateUtils';
 
 const MyPostList = () => {
-  const { user, setUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [myPosts, setMyPosts] = useState([]);
 
-  console.log(user.num);
-
   useEffect(() => {
-    const getUserPostData = async () => {
-      const { data, error } = supabase
-        .from('posts')
-        .select('*')
-        .eq('user_num', user.num);
-      console.log(data);
-      if (error) console.log(error.message);
-    };
+    const fetchPostData = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('posts')
+          .select(
+            `
+    *, 
+    users: user_num(user_nickname), 
+    post_like(post_num)
+  `,
+          )
+          .eq('user_num', user.num);
 
-    getUserPostData();
+        const sortedMyPosts = data
+          .map((post) => ({
+            ...post,
+            post_date: getTimeAgo(post.post_date),
+          }))
+          .reverse();
+
+        setMyPosts(sortedMyPosts);
+
+        if (error) {
+          throw error;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchPostData();
   });
 
   return (
     <StMyPostList>
-      {dummyArr.map((post) => {
+      {myPosts.map((post) => {
+        // console.log(post);
         return (
           <CardContainer key={post.post_num}>
-            <PostImage>이미지</PostImage>
+            {post.post_img_url && (
+              <PostImage src={post.post_img_url} alt="이미지" />
+            )}
             <MyPostWrapper>
               <MyPostTitle>제목</MyPostTitle>
               <div>날짜</div>
@@ -64,7 +78,7 @@ const CardContainer = styled.div`
   border-radius: 5px;
   display: flex;
 `;
-const PostImage = styled.div`
+const PostImage = styled.img`
   width: 150px;
   height: 150px;
   background-color: white;

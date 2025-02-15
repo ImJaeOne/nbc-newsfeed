@@ -19,7 +19,7 @@ const MyPage = () => {
 
   const uploadFileAndGetUrl = async () => {
     if (!file || !user.num) return null;
-    const filePath = `test-bucket/${crypto.randomUUID()}_${file.lastModified}`;
+    const filePath = `user-profile/${crypto.randomUUID()}_${file.lastModified}`;
 
     const { error: uploadError } = await supabase.storage
       .from('user-profile')
