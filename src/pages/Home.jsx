@@ -35,6 +35,8 @@ const Home = () => {
     fetchPostData();
   }, []);
 
+  console.log(posts);
+
   return (
     <HomeContainer>
       {posts.map((post) => {
@@ -52,7 +54,11 @@ const Home = () => {
             </CardHeader>
             <CardTitle>{post.post_title}</CardTitle>
             <CardWrapper>
-              <CardImg src={post.post_img_url} alt="사진" />
+              {post.post_img_url !== '' && post.post_img_url !== null ? (
+                <CardImg src={post.post_img_url} alt="사진" />
+              ) : (
+                <CardImgSkeleton>No Image</CardImgSkeleton>
+              )}
             </CardWrapper>
             <CardFooter>
               <CardIconContainer>
@@ -121,6 +127,18 @@ const CardImg = styled.img`
   height: 150px;
   object-fit: cover;
   border-radius: 8px;
+`;
+
+const CardImgSkeleton = styled.div`
+  width: 100%;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffda85;
+  background-size: 400% 100%;
+  color: ${({ theme }) => theme.colors.haeder_text_color};
+  border-radius: 5px;
 `;
 
 const CardFooter = styled.div`
