@@ -3,19 +3,24 @@ import { supabase } from '../supabase/client';
 import { useNavigate } from 'react-router-dom';
 import InputForAuth from '../components/InputForAuth';
 import styled from 'styled-components';
+import useInput from '../components/SignUp/useInput';
+import SignUpInput from '../components/SignUp/SignUpInput';
 
 const SignUp = () => {
-  const [nickname, setNickname] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const inputEmail = useInput('');
+  const inputNickname = useInput('');
+  const inputPwd = useInput('');
+  const inputConfirmPwd = useInput('');
 
   const navigate = useNavigate();
 
   // form 제출 시 Supabase를 통해 회원가입을 하는 함수
   const handleSignup = async (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
+    const email = inputEmail.value;
+    const password = inputPwd.value;
+    const confirmPwd = inputConfirmPwd.value;
+    if (password !== confirmPwd) {
       alert('비밀번호를 다시 확인해주세요!');
       return;
     }
@@ -31,7 +36,7 @@ const SignUp = () => {
       // 회원가입 성공 시, users 테이블에 닉네임 저장
       const { error: userError } = await supabase.from('users').insert({
         user_num: authData.user.id,
-        user_nickname: nickname,
+        user_nickname: inputNickname.value,
       });
 
       if (userError) throw userError;
@@ -43,51 +48,26 @@ const SignUp = () => {
       console.error('회원가입 오류:', error);
     }
   };
+
   return (
     <StWrapper>
       <StSignupContainer>
         <StTitle>회원가입</StTitle>
         <StForm onSubmit={handleSignup}>
-          <StInputWrapper>
-            <StInputText>닉네임:</StInputText>
-            <InputForAuth
-              type="text"
-              name="nickname"
-              id="nickname"
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
-            />
-          </StInputWrapper>
-          <StInputWrapper>
-            <StInputText>이메일:</StInputText>
-            <InputForAuth
-              type="email"
-              name="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </StInputWrapper>
-          <StInputWrapper>
-            <StInputText>비밀번호:</StInputText>
-            <InputForAuth
-              type="password"
-              name="pwd"
-              id="pwd"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </StInputWrapper>
-          <StInputWrapper>
-            <StInputText>비밀번호 확인:</StInputText>
-            <InputForAuth
-              type="password"
-              name="confirmPwd"
-              id="confirmPwd"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </StInputWrapper>
+          <SignUpInput
+            type="text"
+            name="닉네임"
+            id="nickname"
+            {...inputNickname}
+          />
+          <SignUpInput type="email" name="이메일" id="email" {...inputEmail} />
+          <SignUpInput type="password" name="비밀번호" id="pwd" {...inputPwd} />
+          <SignUpInput
+            type="password"
+            name="비밀번호확인"
+            id="confirmPwd"
+            {...inputConfirmPwd}
+          />
           <StSubmitBtn type="submit">확인</StSubmitBtn>
         </StForm>
       </StSignupContainer>
@@ -137,20 +117,6 @@ const StSignupContainer = styled.div`
   align-items: center;
   border-radius: 8px;
   border: 2px solid #ddd;
-`;
-
-const StInputWrapper = styled.div`
-  margin: 20px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
-const StInputText = styled.p`
-  width: 170px;
-  text-align: right;
-  font-size: 35px;
-  margin-right: 20px;
 `;
 
 export default SignUp;
