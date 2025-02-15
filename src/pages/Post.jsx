@@ -31,7 +31,6 @@ const Post = () => {
   const validateSubmit = () => {
     if (!post.post_title || !post.post_category || !post.post_detail) {
       alert('모든 항목을 입력해 주세요.');
-      setUser({ num: null, nickname: '' });
       return false;
     }
 
