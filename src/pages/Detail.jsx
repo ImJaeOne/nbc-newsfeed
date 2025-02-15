@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { supabase } from '../supabase/client';
-
+import { useLocation } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthProvider';
 const Detail = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const targetId = queryParams.get('post_id');
+
   const [newComment, setNewComment] = useState('');
   const [comments, setComments] = useState([]);
+  const { user } = useContext(AuthContext);
 
   const [post, setPost] = useState({
     title: '',
@@ -20,9 +26,9 @@ const Detail = () => {
       const { data, error } = await supabase
         .from('posts')
         .select('*, users: user_num(user_nickname),comments(*)')
-        .eq('post_num', 87)
+        .eq('post_num', targetId)
         .single();
-
+      // data.comments => [{},{},{}]
       if (error) {
         console.error('포스팅에러', error);
       } else {
@@ -34,14 +40,11 @@ const Detail = () => {
           nickname: data.users.user_nickname,
           url: data.post_img_url,
         });
-        setComments(data.comments);
+        setComments(data.comments); // [{},{} ]
       }
     };
     getPostAndComments();
   }, []);
-
-  console.log(post);
-  console.log(comments);
 
   const commentSubmitHandler = async (e) => {
     e.preventDefault();
@@ -51,19 +54,21 @@ const Detail = () => {
       setNewComment('');
       return;
     }
-
-    const { data, error } = await supabase.from('comments').insert({
-      post_num: 87,
-      comment_content: newComment,
-    });
-
+    const { data, error } = await supabase
+      .from('comments')
+      .insert({
+        post_num: targetId,
+        comment_content: newComment,
+        user_num: user.num,
+      })
+      .select();
     if (error) {
       console.error(error);
-    } else {
-      alert('게시성공');
-      setComments((comments) => [...comments, data]);
-      setNewComment('');
     }
+
+    alert('게시성공');
+    setComments((prev) => [...prev, ...data]);
+    setNewComment('');
   };
 
   const { title, detail, category, nickname, url } = post;
@@ -90,14 +95,16 @@ const Detail = () => {
             <p>{detail}</p>
           </StPostContent>
           <div>댓글영역</div>
-          {comments.map((comment) => (
-            <div key={comment.id}>
-              <p>
-                <span>{comment.user_num}</span>
-                {comment.comment_content}
-              </p>
-            </div>
-          ))}
+          {comments.map((comment) => {
+            return (
+              <div key={crypto.randomUUID()}>
+                <p>
+                  <span>{comment.user_num}</span>
+                  {comment.comment_content}
+                </p>
+              </div>
+            );
+          })}
           <StCommentBox>
             <form onSubmit={commentSubmitHandler}>
               <div>
