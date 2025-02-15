@@ -31,6 +31,7 @@ const Post = () => {
   const validateSubmit = () => {
     if (!post.post_title || !post.post_category || !post.post_detail) {
       alert('모든 항목을 입력해 주세요.');
+      setUser({ num: null, nickname: '' });
       return false;
     }
 
@@ -71,7 +72,7 @@ const Post = () => {
       }
     } catch (error) {
       alert('이미지 게시 실패');
-      console.error('이미지 게시 실패:', imgError);
+      console.error('이미지 게시 실패:', error);
       return { uploadSuccess: false };
     }
 
@@ -105,7 +106,7 @@ const Post = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateSubmit) return;
+    if (!validateSubmit()) return;
 
     const { postSuccess, post_num } = await withoutImgPost();
     if (!postSuccess) return;
