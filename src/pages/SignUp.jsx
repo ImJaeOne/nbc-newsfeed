@@ -22,6 +22,12 @@ const SignUp = () => {
       alert('비밀번호를 다시 확인해주세요!');
       return;
     }
+
+    if (password.length < 8) {
+      alert('비밀번호를 8자 이상 입력해주세요!');
+      return;
+    }
+
     try {
       // Supabase auth를 통해 회원가입
       const { data: authData, error: authError } = await supabase.auth.signUp({
@@ -35,6 +41,7 @@ const SignUp = () => {
       const { error: userError } = await supabase.from('users').insert({
         user_num: authData.user.id,
         user_nickname: inputNickname.value,
+        user_email: email,
       });
 
       if (userError) throw userError;
