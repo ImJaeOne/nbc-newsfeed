@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import { supabase } from '../supabase/client';
 import { useNavigate } from 'react-router-dom';
-import InputForAuth from '../components/InputForAuth';
 import styled from 'styled-components';
 import useInput from '../components/SignUp/useInput';
 import SignUpInput from '../components/SignUp/SignUpInput';
