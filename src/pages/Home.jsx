@@ -19,15 +19,15 @@ const getTimeAgo = (dateString) => {
   if (diffInSeconds < 60) {
     return `방금 전`;
   } else if (diffInMinutes < 60) {
-    return `${diffInMinutes} minutes ago`;
+    return `${diffInMinutes}분 전`;
   } else if (diffInHours < 24) {
-    return `${diffInHours} hours ago`;
+    return `${diffInHours}시간 전`;
   } else if (diffInDays < 30) {
-    return `${diffInDays} days ago`;
+    return `${diffInDays}일 전`;
   } else if (diffInMonths < 12) {
-    return `${diffInMonths} months ago`;
+    return `${diffInMonths}달 전`;
   } else {
-    return `${diffInYears} years ago`;
+    return `${diffInYears}년 전`;
   }
 };
 
