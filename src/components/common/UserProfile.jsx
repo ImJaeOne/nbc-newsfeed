@@ -3,7 +3,7 @@ import basic_image from '../../assets/basic-profile.png';
 
 const BASIC_IMAGE = basic_image;
 
-const UserProfile = ({ src, alt, size, margin }) => {
+const UserProfile = ({ src, alt, size, margin = '0' }) => {
   return !src ? (
     <StUserProfile
       src={BASIC_IMAGE}
