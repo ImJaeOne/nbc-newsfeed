@@ -83,7 +83,7 @@ const Home = () => {
               <CardIconContainer>
                 {isLiked ? <FaHeart color="red" /> : <FaRegHeart />}
                 {post.post_like.length}
-                <FaRegComment /> 1
+                <FaRegComment /> {post.post_like.length}
               </CardIconContainer>
               {post.post_date}
             </CardFooter>
