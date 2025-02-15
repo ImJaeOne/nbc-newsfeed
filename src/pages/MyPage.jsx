@@ -19,10 +19,10 @@ const MyPage = () => {
 
   const uploadFileAndGetUrl = async () => {
     if (!file || !user.num) return null;
-    const filePath = `test-bucket/${crypto.randomUUID()}_${file.name}`;
+    const filePath = `test-bucket/${crypto.randomUUID()}_${file.lastModified}`;
 
     const { error: uploadError } = await supabase.storage
-      .from('test-bucket')
+      .from('user-profile')
       .upload(filePath, file);
     if (uploadError) {
       console.error('파일 업로드 에러:', uploadError);
@@ -30,7 +30,7 @@ const MyPage = () => {
     }
 
     const { data, error } = supabase.storage
-      .from('test-bucket')
+      .from('user-profile')
       .getPublicUrl(filePath);
     if (error) {
       console.error('public URL 가져오기 에러:', error);
