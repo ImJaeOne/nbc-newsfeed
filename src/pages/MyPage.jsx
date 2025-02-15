@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { supabase } from '../supabase/client';
 import { useEffect } from 'react';
 import MyPostList from '../components/MyPage/MyPostList';
+import UserProfile from '../components/common/UserProfile';
 
 const MyPage = () => {
   const { user, setUser } = useContext(AuthContext);
@@ -90,34 +91,33 @@ const MyPage = () => {
     <div>
       <StMyInfoChange>
         <StProfileWrapper>
-          {user.profile ? (
-            <RoundImage src={user.profile} alt="Profile" />
-          ) : (
-            <RoundButton></RoundButton>
+          {user.profile && (
+            <UserProfile
+              src={user.profile}
+              alt="프로필 사진"
+              size="160px"
+              margin="30px"
+            />
           )}
-          {isEditing ? <input type="file" onChange={handleFileChange} /> : ''}
+          {isEditing && <input type="file" onChange={handleFileChange} />}
         </StProfileWrapper>
         <StMyInfoWrapper>
           <StNickname>{user.nickname}</StNickname>
-          {isEditing ? (
+          {isEditing && (
             <input
               type="text"
               value={editedNickname}
               onChange={(e) => setEditedNickname(e.target.value)}
             />
-          ) : (
-            ''
           )}
           <StIntroduce>{user.intro}</StIntroduce>
-          {isEditing ? (
+          {isEditing && (
             <textarea
               name=""
               id=""
               value={editedIntro}
               onChange={(e) => setEditedIntro(e.target.value)}
             ></textarea>
-          ) : (
-            ''
           )}
         </StMyInfoWrapper>
         <StEditBtn value={isEditing} onClick={handleUserInfoChange}>
@@ -130,14 +130,6 @@ const MyPage = () => {
     </div>
   );
 };
-
-const RoundImage = styled.img`
-  width: 160px;
-  height: 160px;
-  margin: auto 40px;
-  border-radius: 50%;
-  object-fit: cover;
-`;
 
 const StProfileWrapper = styled.div`
   display: flex;
@@ -158,7 +150,7 @@ const StMyPostList = styled.div`
 const StMyInfoChange = styled.div`
   padding: 20px 0;
   background-color: #fee3a2;
-  height: auto;
+  height: 200px;
   border-radius: 30px;
   display: flex;
   position: relative;
@@ -167,21 +159,6 @@ const StMyInfoChange = styled.div`
 const StMyInfoWrapper = styled.div`
   margin-left: 20px;
   margin-top: 40px;
-`;
-
-const RoundButton = styled.button`
-  width: 160px;
-  height: 160px;
-  margin: auto 40px;
-  border-radius: 50%;
-  border: none;
-  background-color: #857040;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #a67d40;
-  }
 `;
 
 const StNickname = styled.p`
