@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import sampleImg from '../assets/다운로드.jpeg';
 import { useContext, useEffect, useState } from 'react';
 import { FaRegComment, FaRegHeart, FaHeart } from 'react-icons/fa';
 import { supabase } from '../supabase/client';
