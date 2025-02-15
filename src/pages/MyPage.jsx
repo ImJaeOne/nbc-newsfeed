@@ -97,7 +97,6 @@ const MyPage = () => {
             size="160px"
             margin="30px"
           />
-          {/* 파일 업로드 인풋 */}
           {isEditing && (
             <>
               <StFileInput
@@ -111,7 +110,6 @@ const MyPage = () => {
         </StProfileWrapper>
 
         <StMyInfoWrapper>
-          {/* 닉네임/소개글 (보기 모드) */}
           {!isEditing && (
             <>
               <StNickname>{user.nickname}</StNickname>
@@ -119,7 +117,6 @@ const MyPage = () => {
             </>
           )}
 
-          {/* 닉네임/소개글 (수정 모드) */}
           {isEditing && (
             <>
               <StInput
@@ -176,7 +173,7 @@ const StMyInfoWrapper = styled.div`
   margin-left: 20px;
   margin-top: 40px;
   display: flex;
-  flex-direction: column; /* 닉네임, 소개글, 인풋 등을 세로로 쌓기 */
+  flex-direction: column;
   gap: 10px;
 `;
 
@@ -198,6 +195,7 @@ const StInput = styled.input`
   border-radius: 8px;
   outline: none;
 `;
+
 const StTextarea = styled.textarea`
   width: 300px;
   height: 80px;
@@ -210,7 +208,7 @@ const StTextarea = styled.textarea`
 `;
 
 const StFileInput = styled.input`
-  display: none; /* 기본 인풋은 숨기고 */
+  display: none;
 `;
 const StFileLabel = styled.label`
   margin-top: 10px;
@@ -229,8 +227,6 @@ const StEditBtn = styled.button`
   position: absolute;
   top: 20px;
   right: 20px;
-
-  /* 파일 선택 라벨과 비슷한 배경/컬러/폰트 크기 */
   background-color: #f9d077;
   color: #fff;
   font-size: 25px;
