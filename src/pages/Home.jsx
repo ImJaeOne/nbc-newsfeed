@@ -118,7 +118,7 @@ const CardContainer = styled(Link)`
     border 0.3s,
     box-shadow 0.3s;
   cursor: pointer;
-
+  text-decoration: none;
   &:hover {
     border: 1px solid #b88650;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
@@ -135,9 +135,11 @@ const CardProfile = styled.div`
   display: flex;
   gap: 10px;
   align-items: center;
+  color: #ce9b68;
 `;
 
 const CardTitle = styled.div`
+  margin-left: 10px;
   font-weight: bolder;
   font-size: larger;
   color: #333;
