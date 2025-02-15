@@ -5,7 +5,12 @@ export const AuthContext = createContext(false);
 
 export default function AuthProvider({ children }) {
   const [isLogin, setIsLogin] = useState('initial');
-  const [user, setUser] = useState({ num: null, nickname: '', intro: '' });
+  const [user, setUser] = useState({
+    num: null,
+    nickname: '',
+    intro: '',
+    profile: '',
+  });
 
   useEffect(() => {
     const {
@@ -29,7 +34,7 @@ export default function AuthProvider({ children }) {
 
       const { data: userData, error } = await supabase
         .from('users')
-        .select('user_nickname, user_intro')
+        .select('user_nickname, user_intro, user_profile')
         .eq('user_num', user.num)
         .single();
       if (error) {
@@ -39,6 +44,7 @@ export default function AuthProvider({ children }) {
           ...prev,
           nickname: userData.user_nickname,
           intro: userData.user_intro,
+          profile: userData.user_profile,
         }));
       }
     };
@@ -48,7 +54,7 @@ export default function AuthProvider({ children }) {
   }, [isLogin, user.id]);
 
   return (
-    <AuthContext.Provider value={{ isLogin, user, setIsLogin }}>
+    <AuthContext.Provider value={{ isLogin, user, setIsLogin, setUser }}>
       {children}
     </AuthContext.Provider>
   );
