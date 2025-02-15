@@ -1,9 +1,9 @@
-import { useContext } from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { AuthContext } from '../../contexts/AuthProvider';
 import { supabase } from '../../supabase/client';
 import { getTimeAgo } from '../../utils/dateUtils';
+import { Link } from 'react-router-dom';
 
 const MyPostList = () => {
   const { user } = useContext(AuthContext);
@@ -14,13 +14,7 @@ const MyPostList = () => {
       try {
         const { data, error } = await supabase
           .from('posts')
-          .select(
-            `
-    *, 
-    users: user_num(user_nickname), 
-    post_like(post_num)
-  `,
-          )
+          .select('*,  users: user_num(user_nickname), post_like(post_num)')
           .eq('user_num', user.num);
 
         const sortedMyPosts = data
@@ -45,18 +39,19 @@ const MyPostList = () => {
   return (
     <StMyPostList>
       {myPosts.map((post) => {
-        // console.log(post);
         return (
-          <CardContainer key={post.post_num}>
-            {post.post_img_url && (
-              <PostImage src={post.post_img_url} alt="이미지" />
-            )}
-            <MyPostWrapper>
-              <MyPostTitle>제목</MyPostTitle>
-              <div>날짜</div>
-              <div>좋아요</div>
-            </MyPostWrapper>
-          </CardContainer>
+          <Link key={post.post_num} to={`/detail?post_id=${post.post_num}`}>
+            <CardContainer>
+              {post.post_img_url && (
+                <PostImage src={post.post_img_url} alt="이미지" />
+              )}
+              <MyPostWrapper>
+                <MyPostTitle>{post.post_title}</MyPostTitle>
+                <div>{post.post_date}</div>
+                <div>좋아요</div>
+              </MyPostWrapper>
+            </CardContainer>
+          </Link>
         );
       })}
     </StMyPostList>
@@ -87,7 +82,7 @@ const PostImage = styled.img`
 
 const StMyPostList = styled.div`
   background-color: #fee3a2;
-  height: 500px;
+  height: auto;
   border-radius: 30px;
   margin: 40px auto;
   display: flex;
