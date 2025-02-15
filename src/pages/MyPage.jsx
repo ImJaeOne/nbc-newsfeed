@@ -9,8 +9,8 @@ import UserProfile from '../components/common/UserProfile';
 
 const MyPage = () => {
   const { user, setUser } = useContext(AuthContext);
-  const [editedNickname, setEditedNickname] = useState('');
-  const [editedIntro, setEditedIntro] = useState('');
+  const [editedNickname, setEditedNickname] = useState(user.nickname);
+  const [editedIntro, setEditedIntro] = useState(user.intro);
   const [isEditing, setIsEditing] = useState(false);
   const [file, setFile] = useState(null);
 
@@ -97,31 +97,49 @@ const MyPage = () => {
             size="160px"
             margin="30px"
           />
-          {isEditing && <input type="file" onChange={handleFileChange} />}
-        </StProfileWrapper>
-        <StMyInfoWrapper>
-          <StNickname>{user.nickname}</StNickname>
+          {/* 파일 업로드 인풋 */}
           {isEditing && (
-            <input
-              type="text"
-              value={editedNickname}
-              onChange={(e) => setEditedNickname(e.target.value)}
-            />
+            <>
+              <StFileInput
+                id="fileUpload"
+                type="file"
+                onChange={handleFileChange}
+              />
+              <StFileLabel htmlFor="fileUpload">파일 선택</StFileLabel>
+            </>
           )}
-          <StIntroduce>{user.intro}</StIntroduce>
+        </StProfileWrapper>
+
+        <StMyInfoWrapper>
+          {/* 닉네임/소개글 (보기 모드) */}
+          {!isEditing && (
+            <>
+              <StNickname>{user.nickname}</StNickname>
+              <StIntroduce>{user.intro}</StIntroduce>
+            </>
+          )}
+
+          {/* 닉네임/소개글 (수정 모드) */}
           {isEditing && (
-            <textarea
-              name=""
-              id=""
-              value={editedIntro}
-              onChange={(e) => setEditedIntro(e.target.value)}
-            ></textarea>
+            <>
+              <StInput
+                type="text"
+                value={editedNickname}
+                onChange={(e) => setEditedNickname(e.target.value)}
+              />
+              <StTextarea
+                value={editedIntro}
+                onChange={(e) => setEditedIntro(e.target.value)}
+              />
+            </>
           )}
         </StMyInfoWrapper>
-        <StEditBtn value={isEditing} onClick={handleUserInfoChange}>
-          내 정보 수정하기
+
+        <StEditBtn onClick={handleUserInfoChange}>
+          {isEditing ? '수정 완료' : '내 정보 수정하기'}
         </StEditBtn>
       </StMyInfoChange>
+
       <StMyPostList>
         <MyPostList />
       </StMyPostList>
@@ -132,6 +150,7 @@ const MyPage = () => {
 const StProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 const StMyPostList = styled.div`
@@ -147,30 +166,82 @@ const StMyPostList = styled.div`
 const StMyInfoChange = styled.div`
   padding: 20px 0;
   background-color: #fee3a2;
-  height: 200px;
   border-radius: 30px;
   display: flex;
   position: relative;
+  align-items: flex-start;
 `;
 
 const StMyInfoWrapper = styled.div`
   margin-left: 20px;
   margin-top: 40px;
+  display: flex;
+  flex-direction: column; /* 닉네임, 소개글, 인풋 등을 세로로 쌓기 */
+  gap: 10px;
 `;
 
 const StNickname = styled.p`
   font-size: 40px;
+  font-weight: bold;
 `;
 
 const StIntroduce = styled.div`
   font-size: 20px;
-  margin-top: 20px;
+  margin-top: 10px;
+`;
+
+const StInput = styled.input`
+  width: 300px;
+  font-size: 25px;
+  padding: 8px 12px;
+  border: 2px solid #f9d077;
+  border-radius: 8px;
+  outline: none;
+`;
+const StTextarea = styled.textarea`
+  width: 300px;
+  height: 80px;
+  font-size: 20px;
+  padding: 8px 12px;
+  border: 2px solid #f9d077;
+  border-radius: 8px;
+  outline: none;
+  resize: none;
+`;
+
+const StFileInput = styled.input`
+  display: none; /* 기본 인풋은 숨기고 */
+`;
+const StFileLabel = styled.label`
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #f9d077;
+  color: #fff;
+  font-size: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  &:hover {
+    background-color: #fabc3c;
+  }
 `;
 
 const StEditBtn = styled.button`
   position: absolute;
-  right: 0;
-  margin: 20px 20px;
+  top: 20px;
+  right: 20px;
+
+  /* 파일 선택 라벨과 비슷한 배경/컬러/폰트 크기 */
+  background-color: #f9d077;
+  color: #fff;
+  font-size: 25px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #fabc3c;
+  }
 `;
 
 export default MyPage;
