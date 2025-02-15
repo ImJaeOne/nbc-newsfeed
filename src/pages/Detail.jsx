@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { supabase } from '../supabase/client';
 
 const Detail = () => {
+  const [newComment, setNewComment] = useState('');
+  const [comments, setComments] = useState([]);
+
   const [post, setPost] = useState({
     title: '',
     detail: '',
@@ -13,51 +16,106 @@ const Detail = () => {
   });
 
   useEffect(() => {
-    const getPost = async () => {
+    const getPostAndComments = async () => {
       const { data, error } = await supabase
         .from('posts')
-        .select('*')
+        .select('*, users: user_num(user_nickname),comments(*)')
         .eq('post_num', 87)
         .single();
 
       if (error) {
-        console.error(error);
+        console.error('포스팅에러', error);
       } else {
         setPost({
           title: data.post_title,
           detail: data.post_detail,
           date: data.post_date,
           category: data.post_category,
-          nickname: data.user_num,
+          nickname: data.users.user_nickname,
           url: data.post_img_url,
         });
-        console.log(post);
+        setComments(data.comments);
       }
     };
-    getPost();
+    getPostAndComments();
   }, []);
 
-  const { title, detail, date, category, nickname, url } = post;
+  console.log(post);
+  console.log(comments);
+
+  const commentSubmitHandler = async (e) => {
+    e.preventDefault();
+
+    if (!newComment.trim()) {
+      alert('댓글을 입력해 주세요.');
+      setNewComment('');
+      return;
+    }
+
+    const { data, error } = await supabase.from('comments').insert({
+      post_num: 87,
+      comment_content: newComment,
+    });
+
+    if (error) {
+      console.error(error);
+    } else {
+      alert('게시성공');
+      setComments((comments) => [...comments, data]);
+      setNewComment('');
+    }
+  };
+
+  const { title, detail, category, nickname, url } = post;
 
   return (
     <StDetailContainer>
       <StHeaderInDetail>
-        <div>{title}</div>
+        <div>
+          <StBadge>{category}</StBadge>
+          {title}
+        </div>
         <StUserInfo>
           <StImageField />
           <div>{nickname}</div>
         </StUserInfo>
+        <span>수정 | 삭제</span>
       </StHeaderInDetail>
       <StMainContent>
-        <StPhotoBox>사진박스</StPhotoBox>
+        <StPhotoBox>
+          <img src={url} alt="사진" />
+        </StPhotoBox>
         <StContentBox>
-          {detail}
-          <StButtonBox>
-            <button>좋아요</button>
-            <button>코멘트</button>
-          </StButtonBox>
+          <StPostContent>
+            <p>{detail}</p>
+          </StPostContent>
+          <div>댓글영역</div>
+          {comments.map((comment) => (
+            <div key={comment.id}>
+              <p>
+                <span>{comment.user_num}</span>
+                {comment.comment_content}
+              </p>
+            </div>
+          ))}
+          <StCommentBox>
+            <form onSubmit={commentSubmitHandler}>
+              <div>
+                <span>좋아요 |</span>
+                <span> 코멘트</span>
+              </div>
+              <div>좋아요 갯수</div>
+              <input
+                name="comment_content"
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                type="text"
+                placeholder="댓글 달기..."
+              />
+              <button type="submit">게시</button>
+            </form>
+          </StCommentBox>
         </StContentBox>
-        <StCommentBox>댓글박스</StCommentBox>
       </StMainContent>
     </StDetailContainer>
   );
@@ -66,9 +124,9 @@ const Detail = () => {
 export default Detail;
 
 const StDetailContainer = styled.div`
-  width: 90%;
+  width: 100%;
+  min-height: 70vh;
   max-width: 900px;
-  height: auto;
   margin: 50px auto;
   padding: 20px;
   display: flex;
@@ -103,47 +161,52 @@ const StImageField = styled.div`
   margin-left: 10px;
 `;
 
+const StBadge = styled.span`
+  background-color: green;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 5px;
+  margin-right: 5px;
+`;
+
 const StMainContent = styled.div`
   display: flex;
-  justify-content: space-between;
   width: 100%;
   gap: 20px;
-  margin-bottom: 20px;
-  box-sizing: border-box;
 `;
 
 const StPhotoBox = styled.div`
   flex: 1;
-  height: 300px;
   background-color: lightgray;
   border-radius: 30px;
-  text-align: center;
-  line-height: 300px;
-  object-fit: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 30px;
+  }
 `;
 
 const StContentBox = styled.div`
-  flex: 1.5;
-  height: 300px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   background-color: #fff;
   border-radius: 30px;
   padding: 15px;
-  box-sizing: border-box;
+`;
+
+const StPostContent = styled.div`
+  flex: 1;
+  margin-bottom: 20px;
 `;
 
 const StCommentBox = styled.div`
   flex: 1;
-  height: 300px;
   background-color: #f3f3f3;
   border-radius: 30px;
-  text-align: center;
-  line-height: 300px;
-  box-sizing: border-box;
-`;
-
-const StButtonBox = styled.div`
-  display: flex;
-  margin-bottom: 20px;
-  margin-left: auto;
-  box-sizing: border-box;
+  padding: 15px;
 `;
