@@ -4,6 +4,7 @@ import { FaRegComment, FaRegHeart, FaHeart } from 'react-icons/fa';
 import { supabase } from '../supabase/client';
 import { AuthContext } from '../contexts/AuthProvider';
 import { getTimeAgo } from '../utils/dateUtils';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -59,7 +60,11 @@ const Home = () => {
           (user_num) => user_num === user.user_num,
         );
         return (
-          <Card key={post.post_num}>
+          // 쿼리 파라미터를 이용해 게시물 상세 페이지로 이동
+          <CardContainer
+            key={post.post_num}
+            to={`/detail?post_id=${post.post_num}`}
+          >
             <CardHeader>
               <CardProfile>
                 <RoundButton />
@@ -82,7 +87,7 @@ const Home = () => {
               </CardIconContainer>
               {post.post_date}
             </CardFooter>
-          </Card>
+          </CardContainer>
         );
       })}
     </HomeContainer>
@@ -100,7 +105,7 @@ const HomeContainer = styled.div`
   background-color: #fffbf0;
 `;
 
-const Card = styled.div`
+const CardContainer = styled(Link)`
   width: 300px;
   padding: 5px;
   display: flex;
