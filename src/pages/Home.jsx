@@ -31,11 +31,7 @@ const Home = () => {
     users: user_num(user_nickname), 
     post_like(post_num)
   `);
-        /**
-         * post_date를 변환한 후 최신 순으로 정렬
-         * 현재 시간 기준으로 시간 계산
-         * @type {Object[]}
-         */
+
         const sortedPosts = data
           .map((post) => ({
             ...post,
