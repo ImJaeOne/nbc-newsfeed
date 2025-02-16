@@ -26,14 +26,13 @@ const Home = () => {
           .from('posts')
           .select(
             `*, users: user_num(user_nickname, user_profile), post_like(post_num)`,
-          );
+          )
+          .order('post_date', { ascending: false });
 
-        const sortedPosts = data
-          .map((post) => ({
-            ...post,
-            post_date: getTimeAgo(post.post_date),
-          }))
-          .reverse();
+        const sortedPosts = data.map((post) => ({
+          ...post,
+          post_date: getTimeAgo(post.post_date),
+        }));
 
         setPosts(sortedPosts);
 
