@@ -77,9 +77,18 @@ const SignUp = () => {
             name="닉네임"
             id="nickname"
             {...inputNickname}
+            minLength="1"
+            maxLength="16"
           />
           <SignUpInput type="email" name="이메일" id="email" {...inputEmail} />
-          <SignUpInput type="password" name="비밀번호" id="pwd" {...inputPwd} />
+          <SignUpInput
+            type="password"
+            name="비밀번호"
+            id="pwd"
+            {...inputPwd}
+            minLength={LOGIN.MIN_PASSWORD_LENGTH}
+            maxLength={LOGIN.MAX_PASSWORD_LENGTH}
+          />
           <SignUpInput
             type="password"
             name="비밀번호확인"
