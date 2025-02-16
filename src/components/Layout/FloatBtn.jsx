@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FaBars, FaArrowUp, FaUser, FaPen } from 'react-icons/fa'; // FontAwesome 아이콘 사용
-import { S } from '../../style/StLayout/FloatBtn.Style';
+import { S } from '../../style/StLayout/FloatBtn.style';
 import { useNavigate } from 'react-router-dom';
 
 const FloatBtn = () => {
