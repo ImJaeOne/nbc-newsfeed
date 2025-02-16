@@ -77,7 +77,8 @@ const Login = () => {
           </S.FormGroup>
 
           <IconBtn type="submit">
-            <MdLogin size={40} color={'red'} />
+            로그인 하기
+            <MdLogin size={20} color={'#666'} />
           </IconBtn>
         </S.Form>
 
