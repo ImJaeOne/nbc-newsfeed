@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 // prop에 있어야 할 정보
 // AuthContext를 통해 가져온 user -> 로그인한 사람이 해당 게시글의 좋아요를 눌렀는지 확인
-// post -> select( post_like!inner(post_num), comments!inner(post_num)`)
+// post -> select(`post_like(post_num),comments(post_num)`)
 // ***post 가져올 때의 select 쿼리문 내의 위 구문 포함***
 
 const LikeBtn = ({ user, post }) => {
