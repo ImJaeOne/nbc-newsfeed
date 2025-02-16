@@ -17,6 +17,10 @@ S.AuthInput = styled.input.attrs((props) => ({
   padding: 10px;
   font-size: 30px;
   width: 300px;
+
+  &:focus {
+    outline: 1px solid #5e4c05;
+  }
 `;
 
 export default S;

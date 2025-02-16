@@ -19,13 +19,11 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    // 이메일 유효성 검사
     if (!isValidEmail(inputEmail)) {
       alert('유효한 이메일을 입력해 주세요.');
       return;
     }
 
-    // 공백 포함 및 미입력 검사
     if (/\s/.test(password) || /\s/.test(inputEmail)) {
       alert('공백을 포함할 수 없습니다.');
       return;
