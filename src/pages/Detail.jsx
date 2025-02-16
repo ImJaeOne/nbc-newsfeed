@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { supabase } from '../supabase/client';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
+import { theme } from '../style/theme';
+import { IoIosMore } from 'react-icons/io';
 
 const Detail = () => {
   const location = useLocation();
@@ -14,6 +16,10 @@ const Detail = () => {
   const [newComment, setNewComment] = useState('');
   const [comments, setComments] = useState([]);
   const { user } = useContext(AuthContext);
+
+  const [editedTitle, setEditedTitle] = useState('');
+  const [editedContent, setEditedContent] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
 
   const [post, setPost] = useState({
     title: '',
@@ -92,26 +98,55 @@ const Detail = () => {
     }
   };
 
-  const postDeleteHandler = async (targetId) => {
-    if (!window.confirm('이 게시물을 삭제하시겠습니까?')) return;
+  // // 현재 오류
+  // const postDeleteHandler = async (targetId) => {
+  //   if (!window.confirm('이 게시물을 삭제하시겠습니까?')) return;
+
+  //   const { error } = await supabase
+  //     .from('posts')
+  //     .delete()
+  //     .eq('post_num', targetId);
+
+  //   if (error) {
+  //     console.error(error);
+  //   } else {
+  //     setPost({
+  //       title: '',
+  //       detail: '',
+  //       date: '',
+  //       category: '',
+  //       nickname: '',
+  //       url: '',
+  //     });
+  //     navigate('/');
+  //   }
+  // };
+
+  const postingChangeHandler = async () => {
+    if (!editedTitle.trim() || !editedContent.trim()) {
+      alert('제목과 내용 모두 입력해 주세요.');
+      return;
+    }
 
     const { error } = await supabase
       .from('posts')
-      .delete()
+      .update({
+        post_title: editedTitle,
+        post_detail: editedContent,
+        post_date: new Date().toISOString(),
+      })
       .eq('post_num', targetId);
 
     if (error) {
-      console.error(error);
+      console.error('수정에러', error);
     } else {
-      setPost({
-        title: '',
-        detail: '',
-        date: '',
-        category: '',
-        nickname: '',
-        url: '',
-      });
-      navigate('/');
+      alert('수정성공');
+      setPost((prev) => ({
+        ...prev,
+        title: editedTitle,
+        detail: editedContent,
+      }));
+      setIsEditing(false);
     }
   };
 
@@ -120,17 +155,44 @@ const Detail = () => {
   return (
     <StDetailContainer>
       <StHeaderInDetail>
-        <div>
+        <StTitleContainer>
           <StBadge>{category}</StBadge>
-          {title}
-        </div>
-        <StUserInfo>
-          <StImageField />
-          <div>{nickname}</div>
-        </StUserInfo>
-        <span>수정</span>
+          {isEditing ? (
+            <input
+              type="text"
+              value={editedTitle}
+              placeholder="제목"
+              onChange={(e) => setEditedTitle(e.target.value)}
+            />
+          ) : (
+            <>{title}</>
+          )}
+        </StTitleContainer>
+        <IoIosMore />
         {user.num == post.user_num && (
-          <button onClick={() => postDeleteHandler(targetId)}>삭제</button>
+          <>
+            {isEditing ? (
+              <>
+                <button onClick={postingChangeHandler}>완료</button>
+                <button onClick={() => setIsEditing(false)}>취소</button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    setEditedTitle(post.title);
+                    setEditedContent(post.detail);
+                    setIsEditing(true);
+                  }}
+                >
+                  수정
+                </button>
+                {/* <button onClick={() => postDeleteHandler(targetId)}>
+                  삭제
+                </button> */}
+              </>
+            )}
+          </>
         )}
       </StHeaderInDetail>
       <StMainContent>
@@ -139,26 +201,41 @@ const Detail = () => {
         </StPhotoBox>
         <StContentBox>
           <StPostContent>
+            <StUserInfo>
+              <StImageField />
+              {nickname}
+            </StUserInfo>
             <p>{detail}</p>
+            {isEditing ? (
+              <input
+                type="text"
+                value={editedContent}
+                onChange={(e) => setEditedContent(e.target.value)}
+              />
+            ) : (
+              ''
+            )}
           </StPostContent>
-          <div>댓글영역</div>
-          {comments.map((comment) => {
-            return (
-              <div key={comment.comment_num}>
-                <div>
-                  <div>{comment.users.user_nickname}</div>
-                  <div>{comment.comment_content}</div>
-                  {comment.user_num == user.num && (
-                    <button
-                      onClick={() => commetDeleteHandler(comment.comment_num)}
-                    >
-                      삭제
-                    </button>
-                  )}
+          <StCommentListContainer>
+            {comments.map((comment) => {
+              return (
+                <div key={comment.comment_num}>
+                  <div>
+                    <StImageField />
+                    <StUserInfo>{comment.users.user_nickname}</StUserInfo>
+                    <div>{comment.comment_content}</div>
+                    {comment.user_num == user.num && (
+                      <button
+                        onClick={() => commetDeleteHandler(comment.comment_num)}
+                      >
+                        삭제
+                      </button>
+                    )}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </StCommentListContainer>
           <StCommentBox>
             <form onSubmit={commentSubmitHandler}>
               <div>
@@ -184,15 +261,29 @@ const Detail = () => {
 
 export default Detail;
 
+const StCommentListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-sizing: border-box;
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: gray;
+  }
+`;
+
 const StDetailContainer = styled.div`
   width: 100%;
-  min-height: 70vh;
-  max-width: 900px;
+  height: 70vh;
   margin: 50px auto;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  background-color: orange;
+  background-color: ${({ theme }) => theme.colors.nav_background_color};
   border-radius: 30px;
 `;
 
@@ -201,22 +292,34 @@ const StHeaderInDetail = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: blue;
+  /* background-color: blue; */
   padding: 10px 20px;
-  color: white;
+  color: #424242
+  /* color: white; */
   border-radius: 30px;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   box-sizing: border-box;
 `;
 
+const StTitleContainer = styled.div`
+  box-sizing: border-box;
+  font-weight: bold;
+  font-size: 20px;
+`;
+
 const StUserInfo = styled.div`
+  /* margin-top: 7px; */
   display: flex;
   align-items: center;
+  font-size: 15px;
+  font-weight: bold;
+  box-sizing: border-box;
+  gap: 5px;
 `;
 
 const StImageField = styled.div`
-  width: 50px;
-  height: 50px;
+  width: 21px;
+  height: 21px;
   border-radius: 50%;
   background-color: lightgray;
   margin-left: 10px;
@@ -233,27 +336,36 @@ const StBadge = styled.span`
 const StMainContent = styled.div`
   display: flex;
   width: 100%;
+  height: 100%;
   gap: 20px;
 `;
 
 const StPhotoBox = styled.div`
-  flex: 1;
-  background-color: lightgray;
+  /* flex: 1; */
+  width: 50%;
+  max-height: 534px;
+  /* background-color: #fff; */
   border-radius: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 
   img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
     border-radius: 30px;
   }
 `;
 
 const StContentBox = styled.div`
-  flex: 1;
+  /* flex: 1; */
   display: flex;
+  width: 50%;
+  min-height: 100%;
+  max-height: 534px;
+  box-sizing: border-box;
   flex-direction: column;
   background-color: #fff;
   border-radius: 30px;
@@ -261,13 +373,17 @@ const StContentBox = styled.div`
 `;
 
 const StPostContent = styled.div`
-  flex: 1;
+  /* flex: 1; */
   margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  min-height: 60px;
 `;
 
 const StCommentBox = styled.div`
-  flex: 1;
+  /* flex: 1; */
   background-color: #f3f3f3;
   border-radius: 30px;
   padding: 15px;
+  margin-top: auto;
+  box-sizing: border-box;
 `;
