@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import S from '../style/Post/Post.style';
 import { supabase } from '../supabase/client';
 import { useNavigate } from 'react-router-dom';
@@ -38,6 +38,7 @@ const Post = () => {
       alert('내용을 입력해주세요.');
       return false;
     }
+    return true;
   };
 
   // 사진 없을 때 포스트
