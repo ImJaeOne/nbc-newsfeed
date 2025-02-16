@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import basic_image from '../../assets/basic-profile.png';
+import basic_image from '/basic-profile.png';
 
 const BASIC_IMAGE = basic_image;
 
