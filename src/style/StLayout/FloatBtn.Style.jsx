@@ -65,7 +65,6 @@ S.IconButton = styled.button`
   justify-content: center;
   cursor: pointer;
   transition: background 0.3s;
-
   font-size: 20px;
   &:hover {
     background-color: #27ae60;
