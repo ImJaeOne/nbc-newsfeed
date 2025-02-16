@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const S = {};
 
-export const IconsButtons = ({ children, ...props }) => {
+export const IconBtn = ({ children, ...props }) => {
   return <S.IconButton {...props}>{children}</S.IconButton>;
 };
 

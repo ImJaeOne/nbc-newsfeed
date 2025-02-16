@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { supabase } from '../supabase/client';
 import InputForAuth from '../components/InputForAuth';
 import { LOGIN } from '../constants/login';
-import { IconsButtons } from '../style/StCommon/Button.Style';
 import { MdLogin } from 'react-icons/md';
+import { IconBtn } from '../components/common/IconBtn';
 
 const Login = () => {
   const [inputEmail, setInputEmail] = useState('');
@@ -71,9 +71,9 @@ const Login = () => {
           minLength={LOGIN.MIN_PASSWORD_LENGTH}
           maxLength={LOGIN.MAX_PASSWORD_LENGTH}
         />
-        <IconsButtons>
+        <IconBtn>
           <MdLogin size={40} color={'red'} />
-        </IconsButtons>
+        </IconBtn>
       </form>
       <span>
         아직 계정이 없으신가요? <Link to="/signup">회원가입 하러가기</Link>
