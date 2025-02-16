@@ -6,7 +6,8 @@ S.LoginContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  margin-top: 15vh;
+  height: 100%;
   background-color: #fffbf0;
 `;
 
@@ -43,7 +44,7 @@ S.SignupText = styled.p`
   color: #666;
 
   a {
-    color: #e44d26;
+    color: ${({ theme }) => theme.colors.haeder_text_color};
     font-weight: bold;
     text-decoration: none;
 
