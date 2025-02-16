@@ -78,7 +78,7 @@ const Login = () => {
           </S.FormGroup>
 
           <IconsButtons type="submit">
-            <MdLogin size={40} color={'red'} />
+            <MdLogin size={40} />
           </IconsButtons>
         </S.Form>
 
