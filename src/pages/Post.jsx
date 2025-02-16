@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import S from '../style/Post/Post.style';
 import { supabase } from '../supabase/client';
 import { useNavigate } from 'react-router-dom';
@@ -38,6 +38,7 @@ const Post = () => {
       alert('내용을 입력해주세요.');
       return false;
     }
+    return true;
   };
 
   // 사진 없을 때 포스트
@@ -71,7 +72,7 @@ const Post = () => {
       }
     } catch (error) {
       alert('이미지 게시 실패');
-      console.error('이미지 게시 실패:', imgError);
+      console.error('이미지 게시 실패:', error);
       return { uploadSuccess: false };
     }
 
@@ -105,7 +106,7 @@ const Post = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateSubmit) return;
+    if (!validateSubmit()) return;
 
     const { postSuccess, post_num } = await withoutImgPost();
     if (!postSuccess) return;
