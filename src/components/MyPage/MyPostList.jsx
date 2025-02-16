@@ -34,7 +34,8 @@ const MyPostList = () => {
       }
     };
     fetchPostData();
-  });
+  }, []);
+
   return (
     <StMyPostList>
       {myPosts.map((post) => {
