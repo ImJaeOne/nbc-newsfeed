@@ -1,8 +1,8 @@
-import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { supabase } from '../supabase/client';
 import { getTimeAgo } from '../utils/dateUtils';
 import PostList from '../components/Home/PostList';
+import S from '../style/Home/Home.style';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -48,20 +48,12 @@ const Home = () => {
   }, []);
 
   return (
-    <HomeContainer>
+    <S.HomeContainer>
       {posts.map((post) => {
         return <PostList key={post.post_num} post={post} />;
       })}
-    </HomeContainer>
+    </S.HomeContainer>
   );
 };
 
 export default Home;
-
-const HomeContainer = styled.div`
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px 20px;
-  background-color: #fffbf0;
-`;
