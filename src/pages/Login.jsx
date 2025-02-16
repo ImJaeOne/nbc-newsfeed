@@ -5,6 +5,7 @@ import InputForAuth from '../components/InputForAuth';
 import { LOGIN } from '../constants/login';
 import { IconsButtons } from '../style/StCommon/Button.Style';
 import { MdLogin } from 'react-icons/md';
+import { S } from '../style/Login/Login.style';
 
 const Login = () => {
   const [inputEmail, setInputEmail] = useState('');
@@ -19,13 +20,11 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    // 이메일 유효성 검사
     if (!isValidEmail(inputEmail)) {
       alert('유효한 이메일을 입력해 주세요.');
       return;
     }
 
-    // 공백 포함 및 미입력 검사
     if (/\s/.test(password) || /\s/.test(inputEmail)) {
       alert('공백을 포함할 수 없습니다.');
       return;
@@ -50,35 +49,44 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h2>로그인</h2>
-      <form style={{ display: 'flex' }} onSubmit={submitHandler}>
-        <InputForAuth
-          type="email"
-          placeholder="이메일"
-          onChange={(e) => {
-            setInputEmail(e.target.value);
-          }}
-          value={inputEmail}
-        />
-        <InputForAuth
-          type="password"
-          placeholder="비밀번호"
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-          value={password}
-          minLength={LOGIN.MIN_PASSWORD_LENGTH}
-          maxLength={LOGIN.MAX_PASSWORD_LENGTH}
-        />
-        <IconsButtons>
-          <MdLogin size={40} color={'red'} />
-        </IconsButtons>
-      </form>
-      <span>
-        아직 계정이 없으신가요? <Link to="/signup">회원가입 하러가기</Link>
-      </span>
-    </div>
+    <S.LoginContainer>
+      <S.LoginBox>
+        <h2>로그인</h2>
+        <S.Form onSubmit={submitHandler}>
+          <S.FormGroup>
+            <label htmlFor="email">이메일</label>
+            <InputForAuth
+              id="email"
+              type="email"
+              placeholder="이메일을 입력하세요"
+              onChange={(e) => setInputEmail(e.target.value)}
+              value={inputEmail}
+            />
+          </S.FormGroup>
+
+          <S.FormGroup>
+            <label htmlFor="password">비밀번호</label>
+            <InputForAuth
+              id="password"
+              type="password"
+              placeholder="비밀번호를 입력하세요"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              minLength={LOGIN.MIN_PASSWORD_LENGTH}
+              maxLength={LOGIN.MAX_PASSWORD_LENGTH}
+            />
+          </S.FormGroup>
+
+          <IconsButtons type="submit">
+            <MdLogin size={40} />
+          </IconsButtons>
+        </S.Form>
+
+        <S.SignupText>
+          아직 계정이 없으신가요? <Link to="/signup">회원가입 하러가기</Link>
+        </S.SignupText>
+      </S.LoginBox>
+    </S.LoginContainer>
   );
 };
 
