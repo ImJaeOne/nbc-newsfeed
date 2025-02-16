@@ -1,16 +1,14 @@
 import React, { useContext } from 'react';
 import UserProfile from '../common/UserProfile';
-import { FaRegComment, FaRegHeart, FaHeart } from 'react-icons/fa';
+import { FaRegComment } from 'react-icons/fa';
 import { AuthContext } from '../../contexts/AuthProvider';
 import S from '../../style/Home/PostCard.style';
 import { IconBtn } from '../common/IconBtn';
+import LikeBtn from '../common/LikeBtn';
 
 const PostList = ({ post }) => {
   const { user } = useContext(AuthContext);
 
-  const isLiked = post.post_like.includes(
-    (user_num) => user_num === user.user_num,
-  );
   return (
     <div>
       <S.CardContainer
@@ -37,10 +35,7 @@ const PostList = ({ post }) => {
         </S.CardImgWrapper>
         <S.CardFooter>
           <S.CardIconWrapper>
-            <IconBtn>
-              {isLiked ? <FaHeart color="red" /> : <FaRegHeart size={20} />}
-              <S.LenSpan>{post.post_like.length}</S.LenSpan>
-            </IconBtn>
+            <LikeBtn user={user} post={post} />
             <IconBtn>
               <FaRegComment size={20} />{' '}
               <S.LenSpan>{post.comments.length}</S.LenSpan>
