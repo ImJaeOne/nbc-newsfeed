@@ -27,7 +27,7 @@ const Detail = () => {
     date: '',
     category: '',
     nickname: '',
-    url: '',
+    img_url: '',
     user_num: '',
   });
 
@@ -50,7 +50,7 @@ const Detail = () => {
           date: data.post_date,
           category: data.post_category,
           nickname: data.users.user_nickname,
-          url: data.post_img_url,
+          img_url: data.post_img_url,
           user_num: data.user_num,
         });
         setComments(data.comments); // [{},{} ]
@@ -93,7 +93,9 @@ const Detail = () => {
     if (error) {
       console.error(error);
     } else {
-      setComments((prev) => prev.filter((c) => c.comment_num !== commentId));
+      setComments((prev) =>
+        prev.filter((comment) => comment.comment_num !== commentId),
+      );
       alert('댓글이 삭제되었습니다.');
     }
   };
@@ -197,7 +199,7 @@ const Detail = () => {
       </StHeaderInDetail>
       <StMainContent>
         <StPhotoBox>
-          <img src={url} alt="사진" />
+          <img src={img_url} alt="사진" />
         </StPhotoBox>
         <StContentBox>
           <StPostContent>
