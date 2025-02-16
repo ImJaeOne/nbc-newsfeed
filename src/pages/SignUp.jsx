@@ -48,7 +48,7 @@ const SignUp = () => {
     }
 
     //  닉네임 유효성 검사
-    if (!isValidUsername(inputNickname)) {
+    if (!isValidUsername(inputNickname.value)) {
       alert('닉네임은 1~16자의 한글, 영어, 숫자, 언더스코어(_)만 허용됩니다.');
       return;
     }
