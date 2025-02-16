@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { supabase } from '../supabase/client';
 import { useLocation } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
+
 const Detail = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -25,7 +26,9 @@ const Detail = () => {
     const getPostAndComments = async () => {
       const { data, error } = await supabase
         .from('posts')
-        .select('*, users: user_num(user_nickname),comments(*)')
+        .select(
+          '*, users: user_num(user_nickname), comments: comments(*, users: user_num(user_nickname))',
+        )
         .eq('post_num', targetId)
         .single();
       // data.comments => [{},{},{}]
@@ -40,9 +43,11 @@ const Detail = () => {
           nickname: data.users.user_nickname,
           url: data.post_img_url,
         });
+        console.log(data.comments);
         setComments(data.comments); // [{},{} ]
       }
     };
+
     getPostAndComments();
   }, []);
 
@@ -69,6 +74,20 @@ const Detail = () => {
     alert('게시성공');
     setComments((prev) => [...prev, ...data]);
     setNewComment('');
+  };
+
+  const commetDeleteHandler = async (commentId) => {
+    const { error } = await supabase
+      .from('comments')
+      .delete()
+      .eq('comment_num', commentId);
+
+    if (error) {
+      console.error(error);
+    } else {
+      setComments((prev) => prev.filter((c) => c.comment_num !== commentId));
+      alert('댓글이 삭제되었습니다.');
+    }
   };
 
   const { title, detail, category, nickname, url } = post;
@@ -98,10 +117,17 @@ const Detail = () => {
           {comments.map((comment) => {
             return (
               <div key={crypto.randomUUID()}>
-                <p>
-                  <span>{comment.user_num}</span>
-                  {comment.comment_content}
-                </p>
+                <div>
+                  <div>{comment.users.user_nickname}</div>
+                  <div>{comment.comment_content}</div>
+                  {comment.user_num == user.num && (
+                    <button
+                      onClick={() => commetDeleteHandler(comment.comment_num)}
+                    >
+                      삭제
+                    </button>
+                  )}
+                </div>
               </div>
             );
           })}
