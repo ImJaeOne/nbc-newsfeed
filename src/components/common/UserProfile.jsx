@@ -9,10 +9,10 @@ const UserProfile = ({ src, alt, size, margin = '0' }) => {
       src={BASIC_IMAGE}
       alt="기본 이미지"
       size={size}
-      margin={margin}
+      $margin={margin}
     />
   ) : (
-    <StUserProfile src={src} alt={alt} size={size} margin={margin} />
+    <StUserProfile src={src} alt={alt} size={size} $margin={margin} />
   );
 };
 
