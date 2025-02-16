@@ -36,7 +36,7 @@ const PostList = ({ post }) => {
         </S.CardImgWrapper>
         <S.CardFooter>
           <S.CardIconWrapper>
-            <LikeBtn user={user} post={post} />
+            <LikeBtn user={user} post={post} size={20} />
             <CommentBtn post={post} size={20} />
           </S.CardIconWrapper>
           {post.post_date}
