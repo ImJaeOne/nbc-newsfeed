@@ -79,6 +79,8 @@ const Login = () => {
             setPassword(e.target.value);
           }}
           value={password}
+          minLegth={LOGIN.MIN_PASSWORD_LENGTH}
+          maxLength={LOGIN.MAX_PASSWORD_LENGTH}
         />
         <button type="submit">로그인</button>
       </form>
