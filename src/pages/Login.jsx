@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { supabase } from '../supabase/client';
 import InputForAuth from '../components/InputForAuth';
 import { LOGIN } from '../constants/login';
+import { IconsButtons } from '../style/StCommon/Button.Style';
+import { MdLogin } from 'react-icons/md';
 
 const Login = () => {
   const [inputEmail, setInputEmail] = useState('');
@@ -50,7 +52,7 @@ const Login = () => {
   return (
     <div>
       <h2>로그인</h2>
-      <form onSubmit={submitHandler}>
+      <form style={{ display: 'flex' }} onSubmit={submitHandler}>
         <InputForAuth
           type="email"
           placeholder="이메일"
@@ -69,7 +71,9 @@ const Login = () => {
           minLength={LOGIN.MIN_PASSWORD_LENGTH}
           maxLength={LOGIN.MAX_PASSWORD_LENGTH}
         />
-        <button type="submit">로그인</button>
+        <IconsButtons>
+          <MdLogin size={40} color={'red'} />
+        </IconsButtons>
       </form>
       <span>
         아직 계정이 없으신가요? <Link to="/signup">회원가입 하러가기</Link>
