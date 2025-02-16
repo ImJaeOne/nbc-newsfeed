@@ -130,12 +130,11 @@ const StMyPostList = styled.div`
   border-radius: 30px;
   margin: 10px auto;
   padding: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px 10px;
   gap: 30px;
-  overflow: scroll;
+  /* overflow: scroll; */
 `;
 
 const PostDate = styled.div`
