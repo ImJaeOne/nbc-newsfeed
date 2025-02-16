@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { supabase } from '../supabase/client';
 import InputForAuth from '../components/InputForAuth';
+import { LOGIN } from '../constants/login';
 
 const Login = () => {
   const [inputEmail, setInputEmail] = useState('');
@@ -16,28 +17,22 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    const trimmedInputEmail = inputEmail.trim();
-    const trimmedPassword = password.trim();
-
-    if (!trimmedInputEmail || !trimmedPassword) {
-      alert('이메일과 비밀번호를 입력해 주세요.');
-      return;
-    }
-
-    if (!isValidEmail(trimmedInputEmail)) {
+    // 이메일 유효성 검사
+    if (!isValidEmail(inputEmail)) {
       alert('유효한 이메일을 입력해 주세요.');
       return;
     }
 
-    if (password.length < 8) {
-      alert('비밀번호는 최소 8자 이상 입력해야 합니다.');
+    // 공백 포함 및 미입력 검사
+    if (/\s/.test(password) || /\s/.test(inputEmail)) {
+      alert('공백을 포함할 수 없습니다.');
       return;
     }
 
     try {
       const result = await supabase.auth.signInWithPassword({
-        email: trimmedInputEmail,
-        password: trimmedPassword,
+        email: inputEmail,
+        password: password,
       });
       if (result.error) {
         alert(`로그인 실패: ${result.error.message}`);
@@ -71,6 +66,8 @@ const Login = () => {
             setPassword(e.target.value);
           }}
           value={password}
+          minLength={LOGIN.MIN_PASSWORD_LENGTH}
+          maxLength={LOGIN.MAX_PASSWORD_LENGTH}
         />
         <button type="submit">로그인</button>
       </form>
