@@ -23,19 +23,6 @@ const Login = () => {
       return;
     }
 
-    // 패스워드 유효성 검사
-    if (password.length < LOGIN.MIN_PASSWORD_LENGTH) {
-      alert(
-        `비밀번호는 최소 ${LOGIN.MIN_PASSWORD_LENGTH}자 이상 입력해야 합니다.`,
-      );
-      return;
-    }
-    if (password.length > LOGIN.MAX_PASSWORD_LENGTH) {
-      alert(
-        `비밀번호는 최대 ${LOGIN.MAX_PASSWORD_LENGTH}자 미만 입력해야 합니다.`,
-      );
-      return;
-    }
     // 공백 포함 및 미입력 검사
     if (/\s/.test(password) || /\s/.test(inputEmail)) {
       alert('공백을 포함할 수 없습니다.');

@@ -30,18 +30,6 @@ const SignUp = () => {
       return;
     }
 
-    if (password.length < LOGIN.MIN_PASSWORD_LENGTH) {
-      alert(
-        `비밀번호는 최소 ${LOGIN.MIN_PASSWORD_LENGTH}자 이상 입력해야 합니다.`,
-      );
-      return;
-    }
-    if (password.length > LOGIN.MAX_PASSWORD_LENGTH) {
-      alert(
-        `비밀번호는 최대 ${LOGIN.MAX_PASSWORD_LENGTH}자 이하 입력해야 합니다.`,
-      );
-      return;
-    }
     if (/\s/.test(password) || /\s/.test(email)) {
       alert('공백을 포함할 수 없습니다.');
       return;
