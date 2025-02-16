@@ -19,7 +19,7 @@ const UserProfile = ({ src, alt, size, margin = '0' }) => {
 const StUserProfile = styled.img`
   width: ${({ size }) => size};
   height: ${({ size }) => size};
-  margin: ${({ margin }) => margin};
+  margin: ${({ $margin }) => $margin};
   border-radius: 50%;
   object-fit: cover;
 `;
