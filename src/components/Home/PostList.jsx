@@ -1,9 +1,7 @@
 import React, { useContext } from 'react';
 import UserProfile from '../common/UserProfile';
-import { FaRegComment } from 'react-icons/fa';
 import { AuthContext } from '../../contexts/AuthProvider';
 import S from '../../style/Home/PostCard.style';
-import { IconBtn } from '../common/IconBtn';
 import LikeBtn from '../common/LikeBtn';
 import CommentBtn from '../common/CommentBtn';
 

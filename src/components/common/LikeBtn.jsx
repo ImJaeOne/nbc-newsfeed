@@ -10,9 +10,9 @@ import styled from 'styled-components';
 // size는 숫자만 적어주시면 됩니다.
 
 const LikeBtn = ({ user, post, size }) => {
-  const isLiked = post.post_like.includes(
-    (user_num) => user_num === user.user_num,
-  );
+  const isLiked = post.post_like.some((data) => {
+    return data.user_num === user.num;
+  });
   return (
     <IconBtn>
       {isLiked ? (
