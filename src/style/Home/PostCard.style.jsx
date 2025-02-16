@@ -37,7 +37,10 @@ S.CardProfile = styled.div`
 `;
 
 S.CardTitle = styled.div`
-  margin-left: 10px;
+  margin: 5px 10px;
+  max-width: 100%;
+  height: 20px;
+  overflow: hidden;
   font-weight: bolder;
   font-size: larger;
   color: #333;
