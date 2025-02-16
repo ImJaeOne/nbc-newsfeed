@@ -5,6 +5,7 @@ import { AuthContext } from '../../contexts/AuthProvider';
 import S from '../../style/Home/PostCard.style';
 import { IconBtn } from '../common/IconBtn';
 import LikeBtn from '../common/LikeBtn';
+import CommentBtn from '../common/CommentBtn';
 
 const PostList = ({ post }) => {
   const { user } = useContext(AuthContext);
@@ -36,10 +37,7 @@ const PostList = ({ post }) => {
         <S.CardFooter>
           <S.CardIconWrapper>
             <LikeBtn user={user} post={post} />
-            <IconBtn>
-              <FaRegComment size={20} />{' '}
-              <S.LenSpan>{post.comments.length}</S.LenSpan>
-            </IconBtn>
+            <CommentBtn post={post} size={20} />
           </S.CardIconWrapper>
           {post.post_date}
         </S.CardFooter>
