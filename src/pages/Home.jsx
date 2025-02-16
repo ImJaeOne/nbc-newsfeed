@@ -25,7 +25,7 @@ const Home = () => {
         const { data, error } = await supabase
           .from('posts')
           .select(
-            `*, users: user_num(user_nickname, user_profile), post_like(post_num)`,
+            `*, users: user_num(user_nickname, user_profile), post_like(post_num), comments!inner(post_num)`,
           )
           .order('post_date', { ascending: false });
 
@@ -45,6 +45,8 @@ const Home = () => {
     };
     fetchPostData();
   }, []);
+
+  console.log(posts);
 
   return (
     <S.HomeContainer>

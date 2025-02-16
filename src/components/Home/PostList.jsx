@@ -43,7 +43,7 @@ const PostList = ({ post }) => {
             </IconBtn>
             <IconBtn>
               <FaRegComment size={20} />{' '}
-              <S.LenSpan>{post.post_like.length}</S.LenSpan>
+              <S.LenSpan>{post.comments.length}</S.LenSpan>
             </IconBtn>
           </S.CardIconWrapper>
           {post.post_date}
