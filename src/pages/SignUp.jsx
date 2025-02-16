@@ -96,6 +96,8 @@ const SignUp = () => {
             type="password"
             name="비밀번호확인"
             id="confirmPwd"
+            minLength={LOGIN.MIN_PASSWORD_LENGTH}
+            maxLength={LOGIN.MAX_PASSWORD_LENGTH}
             {...inputConfirmPwd}
           />
           <StSubmitBtn type="submit">확인</StSubmitBtn>
