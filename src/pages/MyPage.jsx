@@ -4,21 +4,13 @@ import { AuthContext } from '../contexts/AuthProvider';
 import { useState } from 'react';
 import { supabase } from '../supabase/client';
 import { useEffect } from 'react';
+import MyPostList from '../components/MyPage/MyPostList';
 import UserProfile from '../components/common/UserProfile';
-
-const dummyArr = Array.from({ length: 4 }, (_, idx) => ({
-  post_num: idx + 1,
-  post_title: '춥고 배고프고 졸려',
-  post_date: '1 hours ago',
-  post_img: '',
-  post_like: 1,
-  user_id: '임재원',
-}));
 
 const MyPage = () => {
   const { user, setUser } = useContext(AuthContext);
-  const [editedNickname, setEditedNickname] = useState('');
-  const [editedIntro, setEditedIntro] = useState('');
+  const [editedNickname, setEditedNickname] = useState(user.nickname);
+  const [editedIntro, setEditedIntro] = useState(user.intro);
   const [isEditing, setIsEditing] = useState(false);
   const [file, setFile] = useState(null);
 
@@ -99,56 +91,54 @@ const MyPage = () => {
     <div>
       <StMyInfoChange>
         <StProfileWrapper>
-          {user.profile && (
-            <UserProfile
-              src={user.profile}
-              alt={'Profile'}
-              size="160px"
-              margin="30px"
-            />
+          <UserProfile
+            src={user.profile}
+            alt="프로필 사진"
+            size="160px"
+            margin="30px"
+          />
+          {isEditing && (
+            <>
+              <StFileInput
+                id="fileUpload"
+                type="file"
+                onChange={handleFileChange}
+              />
+              <StFileLabel htmlFor="fileUpload">파일 선택</StFileLabel>
+            </>
           )}
-          {isEditing ? <input type="file" onChange={handleFileChange} /> : ''}
         </StProfileWrapper>
+
         <StMyInfoWrapper>
-          <StNickname>{user.nickname}</StNickname>
-          {isEditing ? (
-            <input
-              type="text"
-              value={editedNickname}
-              onChange={(e) => setEditedNickname(e.target.value)}
-            />
-          ) : (
-            ''
+          {!isEditing && (
+            <>
+              <StNickname>{user.nickname}</StNickname>
+              <StIntroduce>{user.intro}</StIntroduce>
+            </>
           )}
-          <StIntroduce>{user.intro}</StIntroduce>
-          {isEditing ? (
-            <textarea
-              name=""
-              id=""
-              value={editedIntro}
-              onChange={(e) => setEditedIntro(e.target.value)}
-            ></textarea>
-          ) : (
-            ''
+
+          {isEditing && (
+            <>
+              <StInput
+                type="text"
+                value={editedNickname}
+                onChange={(e) => setEditedNickname(e.target.value)}
+              />
+              <StTextarea
+                value={editedIntro}
+                onChange={(e) => setEditedIntro(e.target.value)}
+              />
+            </>
           )}
         </StMyInfoWrapper>
-        <StEditBtn value={isEditing} onClick={handleUserInfoChange}>
-          내 정보 수정하기
+
+        <StEditBtn onClick={handleUserInfoChange}>
+          {isEditing ? '수정 완료' : '내 정보 수정하기'}
         </StEditBtn>
       </StMyInfoChange>
+
       <StMyPostList>
-        {dummyArr.map((post) => {
-          return (
-            <CardContainer key={post.post_num}>
-              <PostImage>이미지</PostImage>
-              <MyPostWrapper>
-                <MyPostTitle>제목</MyPostTitle>
-                <div>날짜</div>
-                <div>좋아요</div>
-              </MyPostWrapper>
-            </CardContainer>
-          );
-        })}
+        <MyPostList />
       </StMyPostList>
     </div>
   );
@@ -157,68 +147,97 @@ const MyPage = () => {
 const StProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const MyPostWrapper = styled.div`
-  margin: 10px;
-`;
-
-const MyPostTitle = styled.div`
-  font-size: 30px;
+  align-items: center;
 `;
 
 const StMyPostList = styled.div`
   background-color: #fee3a2;
-  height: 500px;
   border-radius: 30px;
-  margin: 40px auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 80px;
-`;
-
-const CardContainer = styled.div`
-  width: 450px;
-  background-color: #b4972b;
-  height: 150px;
-  border-radius: 5px;
-  display: flex;
-`;
-const PostImage = styled.div`
-  width: 150px;
-  height: 150px;
-  background-color: white;
-  border-radius: 5px;
+  margin-top: 20px;
 `;
 
 const StMyInfoChange = styled.div`
   padding: 20px 0;
   background-color: #fee3a2;
-  height: auto;
   border-radius: 30px;
   display: flex;
   position: relative;
+  align-items: flex-start;
 `;
 
 const StMyInfoWrapper = styled.div`
   margin-left: 20px;
   margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 const StNickname = styled.p`
   font-size: 40px;
+  font-weight: bold;
 `;
 
 const StIntroduce = styled.div`
   font-size: 20px;
-  margin-top: 20px;
+  margin-top: 10px;
+`;
+
+const StInput = styled.input`
+  width: 300px;
+  font-size: 25px;
+  padding: 8px 12px;
+  border: 2px solid #f9d077;
+  border-radius: 8px;
+  outline: none;
+`;
+
+const StTextarea = styled.textarea`
+  width: 300px;
+  height: 80px;
+  font-size: 20px;
+  padding: 8px 12px;
+  border: 2px solid #f9d077;
+  border-radius: 8px;
+  outline: none;
+  resize: none;
+`;
+
+const StFileInput = styled.input`
+  display: none;
+`;
+const StFileLabel = styled.label`
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #f9d077;
+  color: #fff;
+  font-size: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  &:hover {
+    background-color: #fabc3c;
+  }
 `;
 
 const StEditBtn = styled.button`
   position: absolute;
-  right: 0;
-  margin: 20px 20px;
+  top: 20px;
+  right: 20px;
+  background-color: #f9d077;
+  color: #fff;
+  font-size: 25px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #fabc3c;
+  }
 `;
 
 export default MyPage;

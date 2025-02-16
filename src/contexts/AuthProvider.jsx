@@ -20,7 +20,6 @@ export default function AuthProvider({ children }) {
         setUser((prev) => ({ ...prev, num: session.user.id }));
         setIsLogin(true);
       } else {
-        setUser({ num: null, nickname: '' });
         setIsLogin(false);
       }
     });

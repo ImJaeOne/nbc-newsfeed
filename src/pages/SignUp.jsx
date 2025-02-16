@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import SignUpInput from '../components/SignUp/SignUpInput';
 import useInput from '../hooks/useInput';
-
+import { LOGIN } from '../constants/login';
 const SignUp = () => {
   const inputEmail = useInput('');
   const inputNickname = useInput('');
@@ -18,10 +18,29 @@ const SignUp = () => {
     const email = inputEmail.value;
     const password = inputPwd.value;
     const confirmPwd = inputConfirmPwd.value;
+
+    const isValidUsername = (username) => {
+      const usernameRegex = /^[a-zA-Z0-9가-힣_]{1,16}$/;
+      return usernameRegex.test(username);
+    };
+
+    // 패스워드 유효성 검사
     if (password !== confirmPwd) {
       alert('비밀번호를 다시 확인해주세요!');
       return;
     }
+
+    if (/\s/.test(password) || /\s/.test(email)) {
+      alert('공백을 포함할 수 없습니다.');
+      return;
+    }
+
+    //  닉네임 유효성 검사
+    if (!isValidUsername(inputNickname.value)) {
+      alert('닉네임은 1~16자의 한글, 영어, 숫자, 언더스코어(_)만 허용됩니다.');
+      return;
+    }
+
     try {
       // Supabase auth를 통해 회원가입
       const { data: authData, error: authError } = await supabase.auth.signUp({
@@ -35,6 +54,7 @@ const SignUp = () => {
       const { error: userError } = await supabase.from('users').insert({
         user_num: authData.user.id,
         user_nickname: inputNickname.value,
+        user_email: email,
       });
 
       if (userError) throw userError;
@@ -57,13 +77,24 @@ const SignUp = () => {
             name="닉네임"
             id="nickname"
             {...inputNickname}
+            minLength="1"
+            maxLength="16"
           />
           <SignUpInput type="email" name="이메일" id="email" {...inputEmail} />
-          <SignUpInput type="password" name="비밀번호" id="pwd" {...inputPwd} />
+          <SignUpInput
+            type="password"
+            name="비밀번호"
+            id="pwd"
+            {...inputPwd}
+            minLength={LOGIN.MIN_PASSWORD_LENGTH}
+            maxLength={LOGIN.MAX_PASSWORD_LENGTH}
+          />
           <SignUpInput
             type="password"
             name="비밀번호확인"
             id="confirmPwd"
+            minLength={LOGIN.MIN_PASSWORD_LENGTH}
+            maxLength={LOGIN.MAX_PASSWORD_LENGTH}
             {...inputConfirmPwd}
           />
           <StSubmitBtn type="submit">확인</StSubmitBtn>
