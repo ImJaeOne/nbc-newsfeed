@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { supabase } from '../supabase/client';
 import InputForAuth from '../components/InputForAuth';
-
+import { LOGIN } from '../constants/login';
 const Login = () => {
   const [inputEmail, setInputEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,19 +19,27 @@ const Login = () => {
     const trimmedInputEmail = inputEmail.trim();
     const trimmedPassword = password.trim();
 
+    // 이메일&비밀번호 미입력
     if (!trimmedInputEmail || !trimmedPassword) {
       alert('이메일과 비밀번호를 입력해 주세요.');
       return;
     }
-
+    // 이메일 유효성 검사
     if (!isValidEmail(trimmedInputEmail)) {
       alert('유효한 이메일을 입력해 주세요.');
       return;
     }
-
-    if (password.length < 8) {
-      alert('비밀번호는 최소 8자 이상 입력해야 합니다.');
+    // 패스워드 유효성 검사
+    if (password.length < LOGIN.MIN_PASSWORD_LENGTH) {
+      alert(
+        `비밀번호는 최소 ${LOGIN.MIN_PASSWORD_LENGTH}자 이상 입력해야 합니다.`,
+      );
       return;
+    }
+    if (password.length <= LOGIN.MAX_PASSWORD_LENGTH) {
+      alert(
+        `비밀번호는 최대 ${LOGIN.MAX_PASSWORD_LENGTH}자 미만 입력해야 합니다.`,
+      );
     }
 
     try {

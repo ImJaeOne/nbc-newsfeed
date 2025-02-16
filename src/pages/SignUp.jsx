@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import SignUpInput from '../components/SignUp/SignUpInput';
 import useInput from '../hooks/useInput';
-
+import { LOGIN } from '../constants/login';
 const SignUp = () => {
   const inputEmail = useInput('');
   const inputNickname = useInput('');
@@ -22,6 +22,20 @@ const SignUp = () => {
       alert('비밀번호를 다시 확인해주세요!');
       return;
     }
+
+    // 패스워드 유효성 검사
+    if (password.length < LOGIN.MIN_PASSWORD_LENGTH) {
+      alert(
+        `비밀번호는 최소 ${LOGIN.MIN_PASSWORD_LENGTH}자 이상 입력해야 합니다.`,
+      );
+      return;
+    }
+    if (password.length <= LOGIN.MAX_PASSWORD_LENGTH) {
+      alert(
+        `비밀번호는 최대 ${LOGIN.MAX_PASSWORD_LENGTH}자 이하 입력해야 합니다.`,
+      );
+    }
+
     try {
       // Supabase auth를 통해 회원가입
       const { data: authData, error: authError } = await supabase.auth.signUp({

@@ -1,0 +1,4 @@
+export const LOGIN = {
+  MIN_PASSWORD_LENGTH: 8,
+  MAX_PASSWORD_LENGTH: 16,
+};
