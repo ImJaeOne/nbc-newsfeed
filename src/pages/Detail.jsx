@@ -152,7 +152,7 @@ const Detail = () => {
     }
   };
 
-  const { title, detail, category, nickname, url } = post;
+  const { title, detail, category, nickname, img_url } = post;
 
   return (
     <StDetailContainer>
