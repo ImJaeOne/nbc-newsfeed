@@ -43,7 +43,7 @@ S.CardTitle = styled.div`
   color: #333;
 `;
 
-S.CardWrapper = styled.div`
+S.CardImgWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -82,6 +82,11 @@ S.CardIconWrapper = styled.div`
   align-items: center;
   gap: 10px;
   color: #333;
+`;
+
+S.LenSpan = styled.span`
+  margin-left: 5px;
+  font-size: 20px;
 `;
 
 export default S;
