@@ -68,7 +68,7 @@ const Detail = () => {
         comment_content: newComment,
         user_num: user.num,
       })
-      .select();
+      .select('*, users: user_num(user_nickname)');
     if (error) {
       console.error(error);
     }
@@ -128,9 +128,7 @@ const Detail = () => {
           <StImageField />
           <div>{nickname}</div>
         </StUserInfo>
-        <span>수정 | 삭제</span>
-        {console.log(user.num)}
-        {console.log(post)}
+        <span>수정</span>
         {user.num == post.user_num && (
           <button onClick={() => postDeleteHandler(targetId)}>삭제</button>
         )}
@@ -146,7 +144,7 @@ const Detail = () => {
           <div>댓글영역</div>
           {comments.map((comment) => {
             return (
-              <div key={crypto.randomUUID()}>
+              <div key={comment.comment_num}>
                 <div>
                   <div>{comment.users.user_nickname}</div>
                   <div>{comment.comment_content}</div>
