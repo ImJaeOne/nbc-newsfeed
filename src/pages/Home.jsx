@@ -96,8 +96,7 @@ const HomeContainer = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px 10px;
-  gap: 30px;
+  gap: 20px 20px;
   background-color: #fffbf0;
 `;
 
