@@ -5,6 +5,7 @@ import { supabase } from '../supabase/client';
 import { AuthContext } from '../contexts/AuthProvider';
 import { getTimeAgo } from '../utils/dateUtils';
 import { Link } from 'react-router-dom';
+import UserProfile from '../components/common/UserProfile';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -63,7 +64,7 @@ const Home = () => {
           >
             <CardHeader>
               <CardProfile>
-                <RoundButton />
+                <UserProfile src={user.profile} alt="프로필 사진" size="50px" />
                 {post.users.user_nickname}
               </CardProfile>
             </CardHeader>
@@ -179,23 +180,4 @@ const CardIconContainer = styled.div`
   align-items: center;
   gap: 10px;
   color: #333;
-`;
-
-const RoundButton = styled.button`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border: none;
-  background-color: #857040;
-  color: white;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #a67d40;
-  }
 `;
