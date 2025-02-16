@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { supabase } from '../supabase/client';
 import InputForAuth from '../components/InputForAuth';
 import { LOGIN } from '../constants/login';
+
 const Login = () => {
   const [inputEmail, setInputEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,19 +17,12 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    const trimmedInputEmail = inputEmail.trim();
-    const trimmedPassword = password.trim();
-
-    // 이메일&비밀번호 미입력
-    if (!trimmedInputEmail || !trimmedPassword) {
-      alert('이메일과 비밀번호를 입력해 주세요.');
-      return;
-    }
     // 이메일 유효성 검사
-    if (!isValidEmail(trimmedInputEmail)) {
+    if (!isValidEmail(inputEmail)) {
       alert('유효한 이메일을 입력해 주세요.');
       return;
     }
+
     // 패스워드 유효성 검사
     if (password.length < LOGIN.MIN_PASSWORD_LENGTH) {
       alert(
@@ -36,16 +30,22 @@ const Login = () => {
       );
       return;
     }
-    if (password.length <= LOGIN.MAX_PASSWORD_LENGTH) {
+    if (password.length > LOGIN.MAX_PASSWORD_LENGTH) {
       alert(
         `비밀번호는 최대 ${LOGIN.MAX_PASSWORD_LENGTH}자 미만 입력해야 합니다.`,
       );
+      return;
+    }
+    // 공백 포함 및 미입력 검사
+    if (/\s/.test(password) || /\s/.test(inputEmail)) {
+      alert('공백을 포함할 수 없습니다.');
+      return;
     }
 
     try {
       const result = await supabase.auth.signInWithPassword({
-        email: trimmedInputEmail,
-        password: trimmedPassword,
+        email: inputEmail,
+        password: password,
       });
       if (result.error) {
         alert(`로그인 실패: ${result.error.message}`);

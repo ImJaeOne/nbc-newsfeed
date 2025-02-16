@@ -18,22 +18,39 @@ const SignUp = () => {
     const email = inputEmail.value;
     const password = inputPwd.value;
     const confirmPwd = inputConfirmPwd.value;
+
+    const isValidUsername = (username) => {
+      const usernameRegex = /^[a-zA-Z0-9가-힣_]{1,16}$/;
+      return usernameRegex.test(username);
+    };
+
+    // 패스워드 유효성 검사
     if (password !== confirmPwd) {
       alert('비밀번호를 다시 확인해주세요!');
       return;
     }
 
-    // 패스워드 유효성 검사
     if (password.length < LOGIN.MIN_PASSWORD_LENGTH) {
       alert(
         `비밀번호는 최소 ${LOGIN.MIN_PASSWORD_LENGTH}자 이상 입력해야 합니다.`,
       );
       return;
     }
-    if (password.length <= LOGIN.MAX_PASSWORD_LENGTH) {
+    if (password.length > LOGIN.MAX_PASSWORD_LENGTH) {
       alert(
         `비밀번호는 최대 ${LOGIN.MAX_PASSWORD_LENGTH}자 이하 입력해야 합니다.`,
       );
+      return;
+    }
+    if (/\s/.test(password) || /\s/.test(email)) {
+      alert('공백을 포함할 수 없습니다.');
+      return;
+    }
+
+    //  닉네임 유효성 검사
+    if (!isValidUsername(inputNickname)) {
+      alert('닉네임은 1~16자의 한글, 영어, 숫자, 언더스코어(_)만 허용됩니다.');
+      return;
     }
 
     try {
