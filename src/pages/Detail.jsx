@@ -1,13 +1,15 @@
 import { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { supabase } from '../supabase/client';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
 
 const Detail = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const targetId = queryParams.get('post_id');
+
+  const navigate = useNavigate();
 
   const [newComment, setNewComment] = useState('');
   const [comments, setComments] = useState([]);
@@ -20,6 +22,7 @@ const Detail = () => {
     category: '',
     nickname: '',
     url: '',
+    user_num: '',
   });
 
   useEffect(() => {
@@ -42,12 +45,11 @@ const Detail = () => {
           category: data.post_category,
           nickname: data.users.user_nickname,
           url: data.post_img_url,
+          user_num: data.user_num,
         });
-        console.log(data.comments);
         setComments(data.comments); // [{},{} ]
       }
     };
-
     getPostAndComments();
   }, []);
 
@@ -90,6 +92,29 @@ const Detail = () => {
     }
   };
 
+  const postDeleteHandler = async (targetId) => {
+    if (!window.confirm('이 게시물을 삭제하시겠습니까?')) return;
+
+    const { error } = await supabase
+      .from('posts')
+      .delete()
+      .eq('post_num', targetId);
+
+    if (error) {
+      console.error(error);
+    } else {
+      setPost({
+        title: '',
+        detail: '',
+        date: '',
+        category: '',
+        nickname: '',
+        url: '',
+      });
+      navigate('/');
+    }
+  };
+
   const { title, detail, category, nickname, url } = post;
 
   return (
@@ -104,6 +129,11 @@ const Detail = () => {
           <div>{nickname}</div>
         </StUserInfo>
         <span>수정 | 삭제</span>
+        {console.log(user.num)}
+        {console.log(post)}
+        {user.num == post.user_num && (
+          <button onClick={() => postDeleteHandler(targetId)}>삭제</button>
+        )}
       </StHeaderInDetail>
       <StMainContent>
         <StPhotoBox>
