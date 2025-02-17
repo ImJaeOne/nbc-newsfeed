@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconBtn } from './IconBtn';
 import { FaRegComment } from 'react-icons/fa';
 import styled from 'styled-components';
