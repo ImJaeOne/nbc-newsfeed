@@ -18,7 +18,7 @@ const Footer = () => {
           <FooterLink href="https://velog.io/@pureunkang/posts" target="_blank">
             강푸른
           </FooterLink>
-          <FooterLink href="https://velog.io/@bungbuung" target="_blank">
+          <FooterLink href="https://github.com/lje00220" target="_blank">
             이지은
           </FooterLink>
         </LinkContainer>

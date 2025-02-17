@@ -12,8 +12,8 @@ export const CategoryBadge = ({ category, ...props }) => {
 };
 
 S.CategoryBadge = styled.span`
-  background-color: ${(props) => props.background};
-  color: white;
+  background-color: ${(props) => props.backgroundColor};
+  color: #333;
   padding: 4px 8px;
   border-radius: 5px;
   margin-right: 5px;
@@ -22,6 +22,8 @@ S.CategoryBadge = styled.span`
 
 const getCategoryColor = (category) => {
   switch (category) {
+    case '전체':
+      return '#ffeb3b';
     case '일상':
       return '#efb2d6';
     case '운동':
