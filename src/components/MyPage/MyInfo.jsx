@@ -10,14 +10,14 @@ const MyInfo = () => {
   const [editedIntro, setEditedIntro] = useState(user.intro);
   const [isEditing, setIsEditing] = useState(false);
   const [file, setFile] = useState(null);
-  const [img, setImg] = useState('');
+  const [previewImg, setpreviewImg] = useState('');
 
   const handleFileChange = (e) => {
     const inputFile = e.target.files;
     if (!inputFile) {
       return;
     } else {
-      setImg(URL.createObjectURL(inputFile[0]));
+      setpreviewImg(URL.createObjectURL(inputFile[0]));
       setFile(inputFile[0]);
     }
   };
@@ -94,12 +94,14 @@ const MyInfo = () => {
   return (
     <S.MyInfoDashboard>
       <S.ProfileImgWrapper>
-        <UserProfile
-          src={img || user.profile}
-          alt="프로필 사진"
-          size="160px"
-          margin="30px"
-        />
+        {
+          <UserProfile
+            src={previewImg || user.profile}
+            alt="프로필 사진"
+            size="160px"
+            margin="30px"
+          />
+        }
         {isEditing && (
           <>
             <S.FileInput
@@ -112,13 +114,12 @@ const MyInfo = () => {
         )}
       </S.ProfileImgWrapper>
       <S.TextInfoWrapper>
-        {!isEditing && (
+        {!isEditing ? (
           <>
             <S.MyNickname>{user.nickname}</S.MyNickname>
             <S.MyIntro>{user.intro}</S.MyIntro>
           </>
-        )}
-        {isEditing && (
+        ) : (
           <>
             <S.NicknameInput
               type="text"
