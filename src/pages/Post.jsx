@@ -134,7 +134,10 @@ const Post = () => {
     alert('게시되었습니다.');
     setPost(resetPost);
     setPostImg(null);
-    navigate('/');
+
+    setTimeout(() => {
+      navigate('/');
+    }, 500);
 
     if (!postImg) return;
 
