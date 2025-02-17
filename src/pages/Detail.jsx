@@ -1,18 +1,16 @@
-import { AuthContext } from '../contexts/AuthProvider';
 import { supabase } from '../supabase/client';
-import { useEffect, useState, useContext } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { IconBtn } from '../components/common/IconBtn';
 import { IoIosClose } from 'react-icons/io';
-import S from '../style/Detail/Deail.style';
-import Header from '../components/Detail/Header';
-import Modal from '../components/Detail/Modal';
-import CocaCola from '../components/Detail/CocaCola';
+import S from '../style/Detail/Detail.style';
+import DetailMain from '../components/Detail/DetailMain';
+import DetailModal from '../components/Detail/DetailModal';
+import DetailHeader from '../components/Detail/DetailHeader';
 
 const Detail = () => {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const targetId = queryParams.get('post_id');
+  const [searchParam] = useSearchParams();
+  const targetId = searchParam.get('post_id');
 
   const navigate = useNavigate();
 
@@ -20,6 +18,7 @@ const Detail = () => {
   // const { user } = useContext(AuthContext);
 
   const [post, setPost] = useState({
+    post_num: targetId,
     title: '',
     detail: '',
     date: '',
@@ -38,16 +37,15 @@ const Detail = () => {
         const { data, error } = await supabase
           .from('posts')
           .select(
-            '*, users: user_num(user_nickname), comments: comments(*, users: user_num(user_nickname)),post_like(user_num)',
+            '*, users: user_num(user_nickname, user_profile), comments: comments(*, users: user_num(user_nickname, user_profile)),post_like(user_num)',
           )
           .eq('post_num', targetId)
           .single();
-        // data.comments => [{},{},{}]
-
         if (error) {
           throw error;
         }
         setPost({
+          post_num: data.post_num,
           title: data.post_title,
           detail: data.post_detail,
           date: data.post_date,
@@ -57,6 +55,7 @@ const Detail = () => {
           user_num: data.user_num,
           post_like: data.post_like,
           comments: data.comments,
+          users: data.users,
         });
         setComments(data.comments); // [{},{}]
       } catch (error) {
@@ -76,10 +75,9 @@ const Detail = () => {
       <IconBtn size={20} onClick={closeHandler}>
         <IoIosClose />
       </IconBtn>
-      <Header post={post} />
-      <Modal post={post} setPost={setPost} targetId={targetId} />
-
-      <CocaCola
+      <DetailHeader post={post} />
+      <DetailModal post={post} setPost={setPost} targetId={targetId} />
+      <DetailMain
         targetId={targetId}
         post={post}
         comments={comments}

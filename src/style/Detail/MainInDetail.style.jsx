@@ -12,11 +12,10 @@ S.UserInfo = styled.div`
   gap: 5px;
 `;
 
-S.ImageField = styled.div`
+S.ImageField = styled.img`
   width: 21px;
   height: 21px;
   border-radius: 50%;
-  background-color: lightgray;
   margin-left: 10px;
   box-sizing: border-box;
 `;

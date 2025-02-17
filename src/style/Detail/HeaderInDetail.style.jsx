@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { theme } from '../theme';
 
 const S = {};
 
@@ -20,8 +19,6 @@ S.HeaderInDetail = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background-color: blue; */
-  /* color: white; */
   padding: 10px 20px;
   color: #424242;
   border-radius: 30px;

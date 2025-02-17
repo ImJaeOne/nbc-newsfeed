@@ -11,8 +11,8 @@ const CategoryButtons = ({ selectedCategory, setSelectedCategory }) => {
       {categories.map((category) => (
         <S.CategoryButton
           key={category}
-          isSelected={category === selectedCategory}
-          category={category}
+          $isSelected={category === selectedCategory}
+          $category={category}
           onClick={() => handleClickCategory(category)}
         >
           {category}

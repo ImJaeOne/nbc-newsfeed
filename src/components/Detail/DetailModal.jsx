@@ -6,7 +6,7 @@ import { IoIosClose } from 'react-icons/io';
 import S from '../../style/Detail/ModalInDetail.style';
 import { useNavigate } from 'react-router-dom';
 
-const Modal = ({ post, setPost, targetId }) => {
+const DetailModal = ({ post, setPost, targetId }) => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -131,4 +131,4 @@ const Modal = ({ post, setPost, targetId }) => {
   );
 };
 
-export default Modal;
+export default DetailModal;

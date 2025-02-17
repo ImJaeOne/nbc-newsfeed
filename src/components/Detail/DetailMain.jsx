@@ -6,8 +6,9 @@ import LikeBtn from '../common/LikeBtn';
 import CommentBtn from '../common/CommentBtn';
 import S from '../../style/Detail/MainInDetail.style';
 import UserProfile from '../common/UserProfile';
+import profile from '../../../public/basic-profile.png';
 
-const CocaCola = ({ targetId, post, comments, setComments }) => {
+const DetailMain = ({ targetId, post, comments, setComments }) => {
   const [newComment, setNewComment] = useState('');
   const { user } = useContext(AuthContext);
 
@@ -32,11 +33,10 @@ const CocaCola = ({ targetId, post, comments, setComments }) => {
       console.error(error);
     }
 
-    alert('게시성공');
     setComments((prev) => [...prev, ...data]);
     setNewComment('');
   };
-
+  console.log(post);
   // 코멘트 삭제
   const commentDeleteHandler = async (commentId) => {
     const { error } = await supabase
@@ -59,12 +59,12 @@ const CocaCola = ({ targetId, post, comments, setComments }) => {
   return (
     <S.MainContent>
       <S.PhotoBox>
-        <img src={img_url} alt="사진" />
+        <img src={img_url || null} alt="사진" />
       </S.PhotoBox>
       <S.ContentBox>
         <S.PostContent>
           <S.UserInfo>
-            <UserProfile size="20px" src={user.profile} />
+            <UserProfile size="20px" src={post.users?.user_profile} />
             {nickname}
           </S.UserInfo>
           <p>{detail}</p>
@@ -74,7 +74,9 @@ const CocaCola = ({ targetId, post, comments, setComments }) => {
             return (
               <div key={comment.comment_num}>
                 <div>
-                  <S.ImageField />
+                  <S.ImageField
+                    src={post.comments[0].users.user_profile || profile}
+                  />
                   <S.UserInfo>{comment.users.user_nickname}</S.UserInfo>
                   <div>{comment.comment_content}</div>
                   {comment.user_num == user.num && (
@@ -103,11 +105,8 @@ const CocaCola = ({ targetId, post, comments, setComments }) => {
               onChange={(e) => setNewComment(e.target.value)}
               type="text"
               placeholder="댓글 달기..."
-              style={{ width: '350px' }}
             />
-            <button type="submit" style={{}}>
-              게시
-            </button>
+            <button type="submit">게시</button>
           </form>
         </S.CommentBox>
       </S.ContentBox>
@@ -115,4 +114,4 @@ const CocaCola = ({ targetId, post, comments, setComments }) => {
   );
 };
 
-export default CocaCola;
+export default DetailMain;

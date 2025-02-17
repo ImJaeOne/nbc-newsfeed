@@ -13,33 +13,33 @@ S.ButtonContainer = styled.div`
 `;
 
 S.CategoryButton = styled.button`
-  background: ${({ isSelected, category }) =>
-    isSelected
-      ? `linear-gradient(to right, rgba(${getRGBA(getCategoryColor(category), 0.5)}) 50%, ${getCategoryColor(category)} 50%)`
-      : getCategoryColor(category)};
+  background: ${(props) =>
+    props.$isSelected
+      ? `linear-gradient(to right, rgba(${getRGBA(getCategoryColor(props.$category), 0.5)}) 50%, ${getCategoryColor(props.$category)} 50%)`
+      : getCategoryColor(props.$category)};
   color: #333;
   font-weight: bold;
   font-size: 20px;
   border: none;
   padding: 10px 15px;
-  padding-left: ${({ isSelected }) => (isSelected ? '70px' : '40px')};
+  padding-left: ${(props) => (props.$isSelected ? '70px' : '40px')};
   border-radius: 5px;
   cursor: pointer;
-  box-shadow: ${({ isSelected }) =>
-    isSelected
+  box-shadow: ${(props) =>
+    props.$isSelected
       ? '5px 5px 8px rgba(0, 0, 0, 0.3)'
       : '3px 3px 5px rgba(0, 0, 0, 0.2)'};
-  transform: ${({ isSelected }) =>
-    isSelected ? 'translateX(10px) rotate(-2deg)' : 'rotate(2deg)'};
+  transform: ${(props) =>
+    props.$isSelected ? 'translateX(10px) rotate(-2deg)' : 'rotate(2deg)'};
   transition: all 0.2s ease-in-out;
 
   &:hover {
-    background: ${({ isSelected, category }) =>
-      isSelected
-        ? `linear-gradient(to right, rgba(${getRGBA(getCategoryColor(category), 0.5)}) 50%, ${getCategoryColor(category)} 50%)`
-        : getCategoryColor(category)};
-    transform: ${({ isSelected }) =>
-      isSelected ? 'translateX(10px) rotate(0deg)' : 'rotate(0deg)'};
+    background: ${(props) =>
+      props.$isSelected
+        ? `linear-gradient(to right, rgba(${getRGBA(getCategoryColor(props.$category), 0.5)}) 50%, ${getCategoryColor(props.$category)} 50%)`
+        : getCategoryColor(props.$category)};
+    transform: ${(props) =>
+      props.$isSelected ? 'translateX(10px) rotate(0deg)' : 'rotate(0deg)'};
   }
 `;
 

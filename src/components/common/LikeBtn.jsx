@@ -14,6 +14,7 @@ import { supabase } from '../../supabase/client';
 const LikeBtn = ({ user, post, size, able = true }) => {
   const [likesCount, setLikesCount] = useState(post.post_like.length);
   const [isLiked, setIsLiked] = useState(false);
+
   useEffect(() => {
     if (post.post_like) {
       setIsLiked(post.post_like.some((data) => data.user_num === user.num));
@@ -56,9 +57,6 @@ const LikeBtn = ({ user, post, size, able = true }) => {
       }
     }
   };
-
-  console.log('post찍히는거확인', post);
-  console.log('라잌스카운트', likesCount);
 
   return (
     <IconBtn>

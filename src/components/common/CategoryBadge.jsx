@@ -5,14 +5,14 @@ const S = {};
 export const CategoryBadge = ({ category, ...props }) => {
   const background = getCategoryColor(category);
   return (
-    <S.CategoryBadge background={background} {...props}>
+    <S.CategoryBadge $background={background} {...props}>
       {category}
     </S.CategoryBadge>
   );
 };
 
 S.CategoryBadge = styled.span`
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.$background};
   color: #333;
   padding: 4px 8px;
   border-radius: 5px;
