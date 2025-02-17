@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const S = {};
 
 S.CardContainer = styled(Link)`
-  width: 300px;
+  width: 288px;
   padding: 5px;
   display: flex;
   flex-direction: column;
