@@ -1,10 +1,10 @@
 import { useState, useEffect, createContext } from 'react';
 import { supabase } from '../supabase/client';
-
+import { LOGIN_STATUS } from '../constants/login';
 export const AuthContext = createContext(false);
 
 export default function AuthProvider({ children }) {
-  const [isLogin, setIsLogin] = useState('initial');
+  const [isLogin, setIsLogin] = useState(LOGIN_STATUS.UNAUTHORIZED);
   const [user, setUser] = useState({
     num: null,
     nickname: '',
@@ -18,9 +18,9 @@ export default function AuthProvider({ children }) {
     } = supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
         setUser((prev) => ({ ...prev, num: session.user.id }));
-        setIsLogin(true);
+        setIsLogin(LOGIN_STATUS.LOGGED_IN);
       } else {
-        setIsLogin(false);
+        setIsLogin(LOGIN_STATUS.LOGGED_OUT);
       }
     });
 

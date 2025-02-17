@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import SignUpInput from '../components/SignUp/SignUpInput';
 import useInput from '../hooks/useInput';
-import { LOGIN } from '../constants/login';
+import { LOGIN_PASSWORDLENGTH } from '../constants/login';
 const SignUp = () => {
   const inputEmail = useInput('');
   const inputNickname = useInput('');
@@ -86,15 +86,15 @@ const SignUp = () => {
             name="비밀번호"
             id="pwd"
             {...inputPwd}
-            minLength={LOGIN.MIN_PASSWORD_LENGTH}
-            maxLength={LOGIN.MAX_PASSWORD_LENGTH}
+            minLength={LOGIN_PASSWORDLENGTH.MIN_PASSWORD_LENGTH}
+            maxLength={LOGIN_PASSWORDLENGTH.MAX_PASSWORD_LENGTH}
           />
           <SignUpInput
             type="password"
             name="비밀번호확인"
             id="confirmPwd"
-            minLength={LOGIN.MIN_PASSWORD_LENGTH}
-            maxLength={LOGIN.MAX_PASSWORD_LENGTH}
+            minLength={LOGIN_PASSWORDLENGTH.MIN_PASSWORD_LENGTH}
+            maxLength={LOGIN_PASSWORDLENGTH.MAX_PASSWORD_LENGTH}
             {...inputConfirmPwd}
           />
           <StSubmitBtn type="submit">확인</StSubmitBtn>
