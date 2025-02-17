@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { AuthContext } from '../../contexts/AuthProvider';
 import { supabase } from '../../supabase/client';
 import { getTimeAgo } from '../../utils/dateUtils';
@@ -7,12 +7,38 @@ import { MdExpandMore } from 'react-icons/md';
 import S from '../../style/MyPage/MyPostList.style';
 import { IconBtn } from '../common/IconBtn';
 
+const LIMIT = 8;
+
 const MyPostList = () => {
   const { user } = useContext(AuthContext);
   const [myPosts, setMyPosts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(4);
+  const [currentPage, setCurrentPage] = useState(LIMIT);
+  const [isOpen, setIsOpen] = useState(true);
+  const postsLength = useRef(null);
 
   useEffect(() => {
+    // 컴포넌트가 마운트될 때 post의 전체 길이를 받아오는 함수
+    const fetchTotalLength = async () => {
+      try {
+        const { count, error } = await supabase
+          .from('posts')
+          .select('post_num', { count: 'exact', head: true })
+          .eq('user_num', user.num);
+
+        if (error) {
+          throw error;
+        }
+
+        postsLength.current = count;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchTotalLength();
+  }, []);
+
+  useEffect(() => {
+    // Supabase에서 posts 테이블의 데이터를 가져오는 함수
     const fetchPostData = async () => {
       try {
         const { data, error } = await supabase
@@ -41,8 +67,15 @@ const MyPostList = () => {
     fetchPostData();
   }, [currentPage]);
 
+  // 더보기 버튼을 눌렀을 때
+  // 다음 나올 페이지가 전체 포스트의 개수보다 크면 더보기 버튼이 사라지게 만듦
   const handlePageCount = () => {
-    setCurrentPage(currentPage + 4);
+    let newPage = currentPage + LIMIT;
+    if (newPage >= postsLength.current) {
+      newPage = postsLength.current;
+      setIsOpen(false);
+    }
+    setCurrentPage(newPage);
   };
 
   return (
@@ -52,9 +85,12 @@ const MyPostList = () => {
           return <MyPost post={post} key={post.post_num} />;
         })}
       </S.MyPostListContainer>
-      <IconBtn onClick={handlePageCount}>
-        <MdExpandMore size={50} />
-      </IconBtn>
+      {isOpen && (
+        <IconBtn onClick={handlePageCount}>
+          <S.MoreText>더보기</S.MoreText>
+          <MdExpandMore size={30} color="#666" />
+        </IconBtn>
+      )}
     </S.PostListDashboard>
   );
 };
