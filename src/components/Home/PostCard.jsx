@@ -5,6 +5,7 @@ import S from '../../style/Home/PostCard.style';
 import LikeBtn from '../common/LikeBtn';
 import CommentBtn from '../common/CommentBtn';
 import { useNavigate } from 'react-router-dom';
+import { CategoryBadge } from '../common/CategoryBadge';
 
 const PostCard = ({ post }) => {
   const { user } = useContext(AuthContext);
@@ -27,6 +28,7 @@ const PostCard = ({ post }) => {
           />
           {post.users.user_nickname}
         </S.CardProfile>
+        <CategoryBadge category={post.post_category} />
       </S.CardHeader>
       <S.CardTitle>{post.post_title}</S.CardTitle>
       <S.CardImgWrapper>

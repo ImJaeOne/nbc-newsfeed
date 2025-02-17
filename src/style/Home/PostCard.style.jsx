@@ -25,6 +25,8 @@ S.CardHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #b9976d;
+  padding: 5px;
 `;
 
 S.CardProfile = styled.div`
@@ -75,6 +77,8 @@ S.CardFooter = styled.div`
   justify-content: space-between;
   align-items: center;
   color: #777;
+  padding: 5px;
+  border-top: 1px solid #b9976d;
 `;
 
 S.CardIconWrapper = styled.div`
