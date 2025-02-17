@@ -3,9 +3,9 @@ import styled from 'styled-components';
 const S = {};
 
 export const CategoryBadge = ({ category, ...props }) => {
-  const backgroundColor = getCategoryColor(category);
+  const background = getCategoryColor(category);
   return (
-    <S.CategoryBadge backgroundColor={backgroundColor} {...props}>
+    <S.CategoryBadge background={background} {...props}>
       {category}
     </S.CategoryBadge>
   );
