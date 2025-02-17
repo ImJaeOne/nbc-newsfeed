@@ -27,6 +27,12 @@ const Post = () => {
   };
 
   const handleCategoryChange = (e) => {
+    const { name, value } = e.target;
+    setPost((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
     const selectedCategory = postCategory.map((item) => {
       return { ...item, checked: item.categoryName === e.target.value };
     });
