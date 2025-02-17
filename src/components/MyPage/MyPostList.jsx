@@ -39,6 +39,7 @@ const MyPostList = () => {
 
   useEffect(() => {
     // Supabase에서 posts 테이블의 데이터를 가져오는 함수
+    // 한번에 8개씩 불러옴
     const fetchPostData = async () => {
       try {
         const { data, error } = await supabase
@@ -69,6 +70,7 @@ const MyPostList = () => {
 
   // 더보기 버튼을 눌렀을 때
   // 다음 나올 페이지가 전체 포스트의 개수보다 크면 더보기 버튼이 사라지게 만듦
+  // 아닐 시 다음 페이지가 나오게
   const handlePageCount = () => {
     let newPage = currentPage + LIMIT;
     if (newPage >= postsLength.current) {
