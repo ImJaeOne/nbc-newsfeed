@@ -70,12 +70,12 @@ const DetailMain = ({ targetId, post, comments, setComments }) => {
           <p>{detail}</p>
         </S.PostContent>
         <S.CommentListContainer>
-          {comments.map((comment) => {
+          {comments.map((comment, idx) => {
             return (
               <div key={comment.comment_num}>
                 <div>
                   <S.ImageField
-                    src={post.comments[0].users.user_profile || profile}
+                    src={post.comments[idx].users.user_profile || profile}
                   />
                   <S.UserInfo>{comment.users.user_nickname}</S.UserInfo>
                   <div>{comment.comment_content}</div>
