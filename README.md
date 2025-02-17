@@ -1,15 +1,94 @@
-# 컴포넌트 구조
 
-- **Common Components**: 여러 곳에서 재사용되는 공통 컴포넌트들 (e.g., 버튼, 입력 필드 등)
-- **Feature-Specific Components**: 특정 기능이나 페이지에만 사용되는 컴포넌트들
-- **Layout Components**: 페이지 레이아웃을 구성하는 컴포넌트들 (e.g., Header, Footer, Sidebar 등)
-- **Pages**: 각 페이지별로 사용되는 컴포넌트들을 해당 페이지 폴더 안에 넣어 관리 
 
-# 브랜치 전략
 
-## Format
+ 이미지(Now WHAT DO 로고)
 
-`branch-type/#issue-id`
+ 
+
+## 📢프로젝트 소개
+
+
+## 📅프로젝트 기간 
+
+
+## 💏멤버 소개 
+
+<table>
+  <tbody>
+    <tr>
+      <td width="300px" align="center">
+        <a href="https://github.com/ImJaeOne">
+        <img src="https://avatars.githubusercontent.com/u/123159312?v=4" width="80" alt="Jaeone Lim"/>
+        <br />
+        <sub><b>Jaeone Lim</b></sub>
+        </a>
+        <br />
+      </td>
+         <td width="300px" align="center">
+        <a href="https://github.com/woohyuckk">
+        <img src="https://avatars.githubusercontent.com/u/192562150?v=4" width="80" alt="woohyuckk"/>
+        <br />
+        <sub><b>woohyuckk</b></sub>
+        </a>
+        <br />
+      </td>
+      <td width="300px" align="center">
+        <a href="https://github.com/K-jisu">
+        <img src="https://avatars.githubusercontent.com/u/90014581?v=4" width="80" alt="Jisu Kang"/>
+        <br />
+        <sub><b>Jisu Kang</b></sub>
+        </a>
+        <br />
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <b>자기 맡은 분야 작성</b> <br/>
+        <b>자기 맡은 분야 작성</b> <br/>
+      </td>
+      <td align="center">
+        <b>자기 맡은 분야 작성</b> <br/>
+        <b>자기 맡은 분야 작성</b> <br/>
+      </td>
+      <td align="center">
+        <b>자기 맡은 분야 작성</b> <br/>
+        <b>자기 맡은 분야 작성</b> <br/>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <a href="https://github.com/PureunKang">
+        <img src="https://avatars.githubusercontent.com/u/144876018?v=4" width="80" alt="PureunKang"/>
+        <br />
+        <sub><b>PureunKang</b></sub>
+        </a>
+        <br />
+      </td>
+      <td align="center">
+        <a href="https://github.com/lje00220">
+        <img src="https://avatars.githubusercontent.com/u/155710708?v=4" width="80" alt="Jieun Lee"/>
+        <br />
+        <sub><b>Jieun Lee</b></sub>
+        </a>
+        <br />
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <b>자기 맡은 분야 작성</b> <br/>
+        <b>자기 맡은 분야 작성</b> <br/>
+      </td>
+      <td align="center">
+        <b>자기 맡은 분야 작성</b> <br/>
+        <b>자기 맡은 분야 작성</b> <br/>
+      </td>
+      <td align="center">
+    </tr>
+  </tbody>
+</table>
+
+
+##주요기능
 
 ## Rule
 
@@ -57,6 +136,14 @@ git commit -am 'feat (#189) : 게시판 작성 기능 구현'
 
 ## 디렉토리 구조
 
+## 컴포넌트 구조
+
+예시)
+- **Common Components**: 여러 곳에서 재사용되는 공통 컴포넌트들 (e.g., 버튼, 입력 필드 등)
+- **Feature-Specific Components**: 특정 기능이나 페이지에만 사용되는 컴포넌트들
+- **Layout Components**: 페이지 레이아웃을 구성하는 컴포넌트들 (e.g., Header, Footer, Sidebar 등)
+- **Pages**: 각 페이지별로 사용되는 컴포넌트들을 해당 페이지 폴더 안에 넣어 관리 
+
 ## 네이밍 컨벤션
 
 1. **디렉토리 및 폴더명**
@@ -88,3 +175,16 @@ git commit -am 'feat (#189) : 게시판 작성 기능 구현'
 7. **프로퍼티 및 메소드명 (React)**
    - **camelCase**를 사용하여 작성.
    - 메소드명은 **handle**로 시작.
+  
+   - 
+## 와이어 프레임
+
+
+
+
+## ERD
+
+
+
+
+## 트러블 슈팅
