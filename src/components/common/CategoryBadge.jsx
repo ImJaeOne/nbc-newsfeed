@@ -13,7 +13,7 @@ export const CategoryBadge = ({ category, ...props }) => {
 
 S.CategoryBadge = styled.span`
   background-color: ${(props) => props.backgroundColor};
-  color: white;
+  color: #333;
   padding: 4px 8px;
   border-radius: 5px;
   margin-right: 5px;
