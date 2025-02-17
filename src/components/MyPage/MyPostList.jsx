@@ -4,6 +4,7 @@ import { AuthContext } from '../../contexts/AuthProvider';
 import { supabase } from '../../supabase/client';
 import { getTimeAgo } from '../../utils/dateUtils';
 import { Link } from 'react-router-dom';
+import LikeBtn from '../common/LikeBtn';
 
 const MyPostList = () => {
   const { user } = useContext(AuthContext);
@@ -43,14 +44,18 @@ const MyPostList = () => {
           <StLink key={post.post_num} to={`/detail?post_id=${post.post_num}`}>
             <CardContainer>
               <ImageWrapper>
-                {post.post_img_url && (
+                {post.post_img_url ? (
                   <PostImage src={post.post_img_url} alt="이미지" />
+                ) : (
+                  <div>No Image</div>
                 )}
               </ImageWrapper>
               <MyPostWrapper>
                 <MyPostTitle>{post.post_title}</MyPostTitle>
                 <PostDate>{post.post_date}</PostDate>
-                <Like>좋아요</Like>
+                <LikeWrapper>
+                  <LikeBtn user={user} post={post} size={12} />
+                </LikeWrapper>
               </MyPostWrapper>
             </CardContainer>
           </StLink>
@@ -134,7 +139,6 @@ const StMyPostList = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px 10px;
   gap: 30px;
-  /* overflow: scroll; */
 `;
 
 const PostDate = styled.div`
@@ -142,9 +146,6 @@ const PostDate = styled.div`
   color: #666;
 `;
 
-const Like = styled.div`
-  font-size: 14px;
-  color: #999;
-`;
+const LikeWrapper = styled.div``;
 
 export default MyPostList;

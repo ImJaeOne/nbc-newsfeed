@@ -20,10 +20,10 @@ const MyPage = () => {
 
   const uploadFileAndGetUrl = async () => {
     if (!file || !user.num) return null;
-    const filePath = `test-bucket/${crypto.randomUUID()}_${file.name}`;
+    const filePath = `user-profile/${crypto.randomUUID()}_${file.lastModified}`;
 
     const { error: uploadError } = await supabase.storage
-      .from('test-bucket')
+      .from('user-profile')
       .upload(filePath, file);
     if (uploadError) {
       console.error('파일 업로드 에러:', uploadError);
@@ -31,7 +31,7 @@ const MyPage = () => {
     }
 
     const { data, error } = supabase.storage
-      .from('test-bucket')
+      .from('user-profile')
       .getPublicUrl(filePath);
     if (error) {
       console.error('public URL 가져오기 에러:', error);
@@ -42,7 +42,7 @@ const MyPage = () => {
 
   const handleUserInfoChange = async () => {
     if (isEditing) {
-      if (!editedNickname.replaceAll(' ', '')) {
+      if (!editedNickname.trim()) {
         alert('닉네임을 1자 이상 입력해주세요!!');
         return;
       }
@@ -88,7 +88,7 @@ const MyPage = () => {
   }, [user.num, user.nickname, user.intro, user.profile]);
 
   return (
-    <div>
+    <>
       <StMyInfoChange>
         <StProfileWrapper>
           <UserProfile
@@ -108,7 +108,6 @@ const MyPage = () => {
             </>
           )}
         </StProfileWrapper>
-
         <StMyInfoWrapper>
           {!isEditing && (
             <>
@@ -116,7 +115,6 @@ const MyPage = () => {
               <StIntroduce>{user.intro}</StIntroduce>
             </>
           )}
-
           {isEditing && (
             <>
               <StInput
@@ -131,16 +129,14 @@ const MyPage = () => {
             </>
           )}
         </StMyInfoWrapper>
-
         <StEditBtn onClick={handleUserInfoChange}>
           {isEditing ? '수정 완료' : '내 정보 수정하기'}
         </StEditBtn>
       </StMyInfoChange>
-
       <StMyPostList>
         <MyPostList />
       </StMyPostList>
-    </div>
+    </>
   );
 };
 
