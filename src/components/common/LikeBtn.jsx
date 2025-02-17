@@ -21,7 +21,7 @@ const LikeBtn = ({ user, post, size, able = true }) => {
   }, [post.post_like, user.num]);
 
   const handleLikeBtn = async (e) => {
-    e.preventDefault();
+    e.stopPropagation();
     if (isLiked) {
       try {
         const { error } = await supabase

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../supabase/client';
 import { getTimeAgo } from '../utils/dateUtils';
-import PostList from '../components/Home/PostList';
+import PostCard from '../components/Home/PostCard';
 import S from '../style/Home/Home.style';
 
 const Home = () => {
@@ -46,10 +46,23 @@ const Home = () => {
     fetchPostData();
   }, []);
 
+  useEffect(() => {
+    const savedScrollY = sessionStorage.getItem('scrollPosition');
+
+    if (savedScrollY !== null) {
+      setTimeout(() => {
+        window.scroll({
+          top: parseInt(savedScrollY, 10),
+          behavior: 'smooth',
+        });
+      }, 500);
+    }
+  }, []);
+
   return (
     <S.HomeContainer>
       {posts.map((post) => {
-        return <PostList key={post.post_num} post={post} />;
+        return <PostCard key={post.post_num} post={post} />;
       })}
     </S.HomeContainer>
   );
