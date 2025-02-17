@@ -48,7 +48,6 @@ const Home = () => {
 
   useEffect(() => {
     const savedScrollY = sessionStorage.getItem('scrollPosition');
-    console.log('저장된 값', savedScrollY);
 
     if (savedScrollY !== null) {
       setTimeout(() => {
