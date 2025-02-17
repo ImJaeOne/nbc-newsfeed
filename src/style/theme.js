@@ -1,6 +1,6 @@
 export const theme = {
   colors: {
-    nav_background_color: '#FEE3A2',
+    nav_background_color: '#F7BB7C',
     body_background_color: '#FFFBF0',
     modal_background_color: '',
     button_color: '',
