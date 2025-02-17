@@ -4,7 +4,7 @@ const S = {};
 
 S.FormContainer = styled.form`
   width: 100%;
-  background-color: antiquewhite;
+  background-color: #fee3a2;
   display: flex;
   margin: 0 auto;
   gap: 75px;
@@ -52,6 +52,17 @@ S.CategoryWrapper = styled.div`
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
+`;
+
+S.CategoryLabel = styled.label`
+  /* border: 1px solid black; */
+  border-radius: 8px;
+  cursor: pointer;
+`;
+
+S.CategoryInput = styled.input`
+  position: absolute;
+  opacity: 0;
 `;
 
 S.PostPart = styled.div`

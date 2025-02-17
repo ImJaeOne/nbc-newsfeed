@@ -14,6 +14,7 @@ const resetPost = {
 const Post = () => {
   const [post, setPost] = useState(resetPost);
   const [postImg, setPostImg] = useState(null);
+  const [category, setCategory] = useState(postCategory);
   const navigate = useNavigate();
   const imgURL = postImg && URL.createObjectURL(postImg);
 
@@ -23,6 +24,13 @@ const Post = () => {
       ...prev,
       [name]: value,
     }));
+  };
+
+  const handleCategoryChange = (e) => {
+    const selectedCategory = postCategory.map((item) => {
+      return { ...item, checked: item.categoryName === e.target.value };
+    });
+    setCategory(selectedCategory);
   };
 
   const handleFileChange = (e) => {
@@ -171,19 +179,21 @@ const Post = () => {
         <S.PostPart $type="category">
           범주
           <S.CategoryWrapper>
-            {postCategory.map((item) => {
+            {category.map((item) => {
               return (
-                <label htmlFor={item.categoryName} key={item.categoryName}>
-                  <input
+                <S.CategoryLabel
+                  htmlFor={item.categoryName}
+                  key={item.categoryName}
+                >
+                  <S.CategoryInput
                     type="radio"
                     name="post_category"
                     id={item.categoryName}
                     value={item.categoryName}
-                    onChange={handleChange}
-                    style={{ display: 'none' }}
+                    onChange={handleCategoryChange}
                   />
-                  {item.categoryIcon}
-                </label>
+                  {item.checked ? item.categoryCheckedIcon : item.categoryIcon}
+                </S.CategoryLabel>
               );
             })}
           </S.CategoryWrapper>
