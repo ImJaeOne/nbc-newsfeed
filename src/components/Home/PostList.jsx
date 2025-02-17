@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import UserProfile from '../common/UserProfile';
 import { AuthContext } from '../../contexts/AuthProvider';
 import S from '../../style/Home/PostCard.style';
@@ -44,4 +44,4 @@ const PostList = ({ post }) => {
   );
 };
 
-export default PostList;
+export default React.memo(PostList);
