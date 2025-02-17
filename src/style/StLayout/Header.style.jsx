@@ -20,7 +20,7 @@ S.HeaderContainer = styled.header`
   align-items: center;
   padding: 0 20px;
   background-color: ${({ theme }) => theme.colors.nav_background_color};
-  border-bottom: 2px solid #ddd;
+  border-bottom: 2px solid #f9a751;
   z-index: 1000; /* ✅ 다른 요소 위에 배치 */
   box-sizing: border-box;
 `;
