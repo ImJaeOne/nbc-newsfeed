@@ -5,6 +5,7 @@ import FloatBtn from './FloatBtn';
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthProvider';
 import { LOGIN_STATUS } from '../../constants/login';
+import Footer from './Footer';
 
 const Layout = () => {
   const { isLogin } = useContext(AuthContext);
@@ -17,7 +18,7 @@ const Layout = () => {
         <Outlet />
       </S.Main>
       {FloatBtnStatus && <FloatBtn />}
-      <footer>📌 공통 푸터</footer>
+      <Footer />
     </S.Layout>
   );
 };
