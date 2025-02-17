@@ -1,4 +1,10 @@
-export const LOGIN = {
+export const LOGIN_PASSWORDLENGTH = {
   MIN_PASSWORD_LENGTH: 8,
   MAX_PASSWORD_LENGTH: 16,
+};
+
+export const LOGIN_STATUS = {
+  SIGN_IN: 'SIGN_IN',
+  LOGGED_IN: 'LOGGED_IN',
+  LOGGED_OUT: 'LOGGED_OUT',
 };
