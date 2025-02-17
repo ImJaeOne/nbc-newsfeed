@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { supabase } from '../supabase/client';
 import InputForAuth from '../components/InputForAuth';
-import { LOGIN } from '../constants/login';
+import { LOGIN_PASSWORDLENGTH } from '../constants/login';
 import { MdLogin } from 'react-icons/md';
 import { S } from '../style/Login/Login.style';
 import { IconBtn } from '../components/common/IconBtn';
@@ -71,8 +71,8 @@ const Login = () => {
               placeholder="비밀번호를 입력해주세요"
               onChange={(e) => setPassword(e.target.value)}
               value={password}
-              minLength={LOGIN.MIN_PASSWORD_LENGTH}
-              maxLength={LOGIN.MAX_PASSWORD_LENGTH}
+              minLength={LOGIN_PASSWORDLENGTH.MIN_PASSWORD_LENGTH}
+              maxLength={LOGIN_PASSWORDLENGTH.MAX_PASSWORD_LENGTH}
             />
           </S.FormGroup>
 

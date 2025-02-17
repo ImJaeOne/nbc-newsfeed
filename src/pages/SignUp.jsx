@@ -1,8 +1,9 @@
 import { supabase } from '../supabase/client';
 import { useNavigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
+import { LOGIN_PASSWORDLENGTH } from '../constants/login';
+import { USER } from '../constants/user';
 import InputForAuth from '../components/InputForAuth';
-import { LOGIN } from '../constants/login';
 import { FiUserPlus } from 'react-icons/fi';
 import { IconBtn } from '../components/common/IconBtn';
 import S from '../style/SignUp/SignUp.style';
@@ -82,8 +83,8 @@ const SignUp = () => {
               id="nickname"
               placeholder="닉네임을 입력해주세요"
               {...inputNickname}
-              minLength="1"
-              maxLength="16"
+              minLength={USER.MIN_NICKNAME_LENGTH}
+              maxLength={USER.MAX_NICKNAME_LENGTH}
             />
           </S.FormGroup>
           <S.FormGroup>
@@ -102,8 +103,8 @@ const SignUp = () => {
               placeholder="비밀번호를 입력해주세요 (8자 이상)"
               id="password"
               {...inputPwd}
-              minLength={LOGIN.MIN_PASSWORD_LENGTH}
-              maxLength={LOGIN.MAX_PASSWORD_LENGTH}
+              minLength={LOGIN_PASSWORDLENGTH.MIN_PASSWORD_LENGTH}
+              maxLength={LOGIN_PASSWORDLENGTH.MAX_PASSWORD_LENGTH}
             />
           </S.FormGroup>
           <S.FormGroup>
@@ -112,8 +113,8 @@ const SignUp = () => {
               type="password"
               placeholder="비밀번호를 다시 입력해주세요"
               id="confirmPwd"
-              minLength={LOGIN.MIN_PASSWORD_LENGTH}
-              maxLength={LOGIN.MAX_PASSWORD_LENGTH}
+              minLength={LOGIN_PASSWORDLENGTH.MIN_PASSWORD_LENGTH}
+              maxLength={LOGIN_PASSWORDLENGTH.MAX_PASSWORD_LENGTH}
               {...inputConfirmPwd}
             />
           </S.FormGroup>
