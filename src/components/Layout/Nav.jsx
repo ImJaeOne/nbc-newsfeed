@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { S } from '../../style/StLayout/Header.style';
 import { AuthContext } from '../../contexts/AuthProvider';
 import { supabase } from '../../supabase/client';
+import { LOGIN_STATUS } from '../../constants/login';
 
 const Nav = () => {
   const { isLogin, user } = useContext(AuthContext);
@@ -12,7 +13,7 @@ const Nav = () => {
 
   return (
     <S.NavContainer>
-      {isLogin ? (
+      {isLogin === LOGIN_STATUS.LOGGED_IN ? (
         <S.UserMenu>
           <S.UserName to="/mypage">{user.nickname}</S.UserName>
           <S.Logoutbtn onClick={handleLogout}>로그아웃</S.Logoutbtn>
