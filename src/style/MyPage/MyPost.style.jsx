@@ -76,6 +76,10 @@ S.PostDate = styled.div`
   color: #666;
 `;
 
-S.LikeWrapper = styled.div``;
+S.LikeWrapper = styled.div`
+  margin-left: 0;
+  display: flex;
+  flex-direction: row;
+`;
 
 export default S;

@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthProvider';
 import LikeBtn from '../common/LikeBtn';
 import S from '../../style/MyPage/MyPost.style';
+import CommentBtn from '../common/CommentBtn';
 
 const MyPost = ({ post }) => {
   const { user } = useContext(AuthContext);
@@ -20,6 +21,7 @@ const MyPost = ({ post }) => {
           <S.PostDate>{post.post_date}</S.PostDate>
           <S.LikeWrapper>
             <LikeBtn user={user} post={post} size={12} able={false} />
+            <CommentBtn post={post} size={12} />
           </S.LikeWrapper>
         </S.MyPostWrapper>
       </S.PostCardContainer>

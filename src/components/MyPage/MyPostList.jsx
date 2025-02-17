@@ -14,7 +14,9 @@ const MyPostList = () => {
       try {
         const { data, error } = await supabase
           .from('posts')
-          .select('*,  users: user_num(user_nickname), post_like(post_num)')
+          .select(
+            '*,  users: user_num(user_nickname), post_like(post_num), comments(post_num)',
+          )
           .eq('user_num', user.num)
           .order('post_date', { ascending: false });
 
