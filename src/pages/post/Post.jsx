@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import S from '../../style/Post/Post.style';
+import S from './postStyle/Post.style';
 import { supabase } from '../../supabase/client';
 import { useNavigate } from 'react-router-dom';
 import { validateFile } from '../../utils/validateFile';

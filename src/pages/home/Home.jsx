@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { getTimeAgo } from '../utils/dateUtils';
-import PostCard from '../components/Home/PostCard';
-import S from '../style/Home/Home.style';
-import { fetchPostsData } from '../api/api';
-import CategoryButtons from '../components/Home/CategoryButtons';
+import { getTimeAgo } from '../../utils/dateUtils';
+import S from './homeStyle/Home.style';
+import PostCard from './PostCard';
+import CategoryButtons from './CategoryButtons';
+import { fetchPostsData } from '../../api/api';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);

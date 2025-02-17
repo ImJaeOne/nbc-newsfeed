@@ -2,9 +2,10 @@ import { useState, useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthProvider';
 import { supabase } from '../../supabase/client';
 import S from './detailStyle/MainInDetail.style';
-import CommentBtn from '../../components/common/CommentBtn';
-import LikeBtn from '../../components/common/LikeBtn';
 import UserProfile from '../../components/common/UserProfile';
+import profile from '../../../public/basic-profile.png';
+import LikeBtn from '../../components/common/LikeBtn';
+import CommentBtn from '../../components/common/CommentBtn';
 
 const DetailMain = ({ targetId, post, comments, setComments }) => {
   const [newComment, setNewComment] = useState('');
@@ -68,12 +69,12 @@ const DetailMain = ({ targetId, post, comments, setComments }) => {
           <p>{detail}</p>
         </S.PostContent>
         <S.CommentListContainer>
-          {comments.map((comment) => {
+          {comments.map((comment, idx) => {
             return (
               <div key={comment.comment_num}>
                 <div>
                   <S.ImageField
-                    src={post.comments[0].users.user_profile || profile}
+                    src={post.comments[idx].users.user_profile || profile}
                   />
                   <S.UserInfo>{comment.users.user_nickname}</S.UserInfo>
                   <div>{comment.comment_content}</div>

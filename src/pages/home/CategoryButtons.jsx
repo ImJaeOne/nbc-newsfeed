@@ -1,4 +1,4 @@
-import S from '../../style/Home/CategoryButtons.style';
+import S from './homeStyle/CategoryButtons.style';
 const categories = ['전체', '취미', '일상', '운동', '기타', '맛집'];
 
 const CategoryButtons = ({ selectedCategory, setSelectedCategory }) => {

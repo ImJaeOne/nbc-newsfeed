@@ -1,11 +1,12 @@
 import { useContext } from 'react';
-import UserProfile from '../common/UserProfile';
-import { AuthContext } from '../../contexts/AuthProvider';
-import S from '../../style/Home/PostCard.style';
-import LikeBtn from '../common/LikeBtn';
-import CommentBtn from '../common/CommentBtn';
+
 import { useNavigate } from 'react-router-dom';
-import { CategoryBadge } from '../common/CategoryBadge';
+import { AuthContext } from '../../contexts/AuthProvider';
+import S from './homeStyle/PostCard.style';
+import UserProfile from '../../components/common/UserProfile';
+import { CategoryBadge } from '../../components/common/CategoryBadge';
+import LikeBtn from '../../components/common/LikeBtn';
+import CommentBtn from '../../components/common/CommentBtn';
 
 const PostCard = ({ post }) => {
   const { user } = useContext(AuthContext);

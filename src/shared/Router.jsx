@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from '../pages/Home';
+import Home from '../pages/home/Home';
 import Detail from '../pages/detail/Detail';
 import Post from '../pages/Post/Post';
 import MyPage from '../pages/myPage/MyPage';
