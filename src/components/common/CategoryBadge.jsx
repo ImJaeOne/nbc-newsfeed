@@ -22,6 +22,8 @@ S.CategoryBadge = styled.span`
 
 const getCategoryColor = (category) => {
   switch (category) {
+    case '전체':
+      return '#ffeb3b';
     case '일상':
       return '#efb2d6';
     case '운동':
