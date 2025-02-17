@@ -19,7 +19,7 @@ const MyPostList = () => {
           )
           .eq('user_num', user.num)
           .order('post_date', { ascending: false });
-
+        console.log(data);
         const sortedMyPosts = data.map((post) => ({
           ...post,
           post_date: getTimeAgo(post.post_date),
@@ -37,6 +37,16 @@ const MyPostList = () => {
     fetchPostData();
   }, []);
 
+  useEffect(() => {
+    const fetchdaechoong = async () => {
+      const { data, error } = await supabase
+        .from('post_like')
+        .select('*, posts: post_num(*)')
+        .eq('user_num', user.num);
+      console.log(data, error);
+    };
+    fetchdaechoong();
+  }, []);
   return (
     <S.PostListDashboard>
       <S.MyPostListContainer>
