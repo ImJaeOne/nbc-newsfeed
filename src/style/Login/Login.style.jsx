@@ -20,6 +20,12 @@ S.LoginBox = styled.div`
   text-align: center;
 `;
 
+S.Title = styled.h2`
+  display: inline-block;
+  font-size: 30px;
+  margin-bottom: 10px;
+`;
+
 S.Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -32,7 +38,7 @@ S.FormGroup = styled.div`
   text-align: left;
 
   label {
-    font-size: 0.9rem;
+    font-size: 1.3rem;
     margin-bottom: 5px;
     color: #333;
   }
