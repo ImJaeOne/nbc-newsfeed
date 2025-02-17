@@ -2,8 +2,9 @@ import { useState } from 'react';
 import S from '../style/Post/Post.style';
 import { supabase } from '../supabase/client';
 import { useNavigate } from 'react-router-dom';
+import { validateFile } from '../utils/validateFile';
+import { postCategory } from '../utils/category';
 
-const postCategory = ['일상', '운동', '취미', '맛집', '기타'];
 const resetPost = {
   post_title: '',
   post_category: '',
@@ -14,6 +15,7 @@ const Post = () => {
   const [post, setPost] = useState(resetPost);
   const [postImg, setPostImg] = useState(null);
   const navigate = useNavigate();
+  const imgURL = postImg && URL.createObjectURL(postImg);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,7 +26,25 @@ const Post = () => {
   };
 
   const handleFileChange = (e) => {
-    setPostImg(e.target.files[0]);
+    const file = e.target.files[0];
+    const { fileResult } = validateFile(file);
+
+    switch (fileResult) {
+      case 'undefinedFile': {
+        setPostImg(null);
+        break;
+      }
+      case 'notImageFile': {
+        alert('이미지 파일을 넣어주세요!');
+        setPostImg(null);
+        break;
+      }
+      case 'isImageFile': {
+        setPostImg(file);
+        break;
+      }
+    }
+    return;
   };
 
   // 유효성 검사
@@ -127,53 +147,74 @@ const Post = () => {
 
   return (
     <S.FormContainer onSubmit={handleSubmit}>
-      <S.PostSection>
-        <S.PostLabel htmlFor="post-title">
-          제목
-          <S.postSelect
-            name="post_category"
-            value={post.post_category}
-            onChange={handleChange}
-          >
-            <option value="">카테고리를 선택하세요</option>
-            {postCategory.map((item) => (
-              <option value={item}>{item}</option>
-            ))}
-          </S.postSelect>
-          <S.PostInput
-            id="post-title"
-            name="post_title"
-            type="text"
-            value={post.post_title}
-            onChange={handleChange}
-          />
-        </S.PostLabel>
-      </S.PostSection>
-      <S.PostSection>
-        <S.PostLabel>
-          내용
-          <S.PostInput
-            name="post_detail"
-            type="text"
-            value={post.post_detail}
-            onChange={handleChange}
-          />
-        </S.PostLabel>
-      </S.PostSection>
-      <S.PostSection>
+      <S.CommonSection $section="fileSection">
         <label htmlFor="input-file">첨부파일</label>
         <S.FileLabel htmlFor="input-file">
-          {!postImg ? null : postImg.name}
+          <img
+            style={{
+              width: '100%',
+              objectFit: 'scale-down',
+              borderRadius: '30px',
+            }}
+            src={imgURL}
+          />
         </S.FileLabel>
-        <label htmlFor="input-file">업로드</label>
         <input
           type="file"
           id="input-file"
           onChange={handleFileChange}
           style={{ display: 'none' }}
         />
-      </S.PostSection>
-      <S.PostSubmitButton type="submit">제출</S.PostSubmitButton>
+      </S.CommonSection>
+
+      <S.CommonSection>
+        <S.PostPart $type="category">
+          범주
+          <S.CategoryWrapper>
+            {postCategory.map((item) => {
+              return (
+                <label htmlFor={item.categoryName} key={item.categoryName}>
+                  <input
+                    type="radio"
+                    name="post_category"
+                    id={item.categoryName}
+                    value={item.categoryName}
+                    onChange={handleChange}
+                    style={{ display: 'none' }}
+                  />
+                  {item.categoryIcon}
+                </label>
+              );
+            })}
+          </S.CategoryWrapper>
+        </S.PostPart>
+
+        <S.PostPart>
+          <S.PostLabel htmlFor="post-title">
+            제목
+            <S.PostInput
+              id="post-title"
+              name="post_title"
+              type="text"
+              value={post.post_title}
+              onChange={handleChange}
+            />
+          </S.PostLabel>
+        </S.PostPart>
+
+        <S.PostPart>
+          <S.PostLabel>
+            내용
+            <S.PostTextArea
+              name="post_detail"
+              type="text"
+              value={post.post_detail}
+              onChange={handleChange}
+            />
+          </S.PostLabel>
+        </S.PostPart>
+        <S.PostSubmitButton type="submit">제출</S.PostSubmitButton>
+      </S.CommonSection>
     </S.FormContainer>
   );
 };
