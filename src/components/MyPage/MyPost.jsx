@@ -19,7 +19,7 @@ const MyPost = ({ post }) => {
           <S.PostTitle>{post.post_title}</S.PostTitle>
           <S.PostDate>{post.post_date}</S.PostDate>
           <S.LikeWrapper>
-            <LikeBtn user={user} post={post} size={12} />
+            <LikeBtn user={user} post={post} size={12} able={false} />
           </S.LikeWrapper>
         </S.MyPostWrapper>
       </S.PostCardContainer>

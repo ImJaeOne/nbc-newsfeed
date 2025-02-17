@@ -15,14 +15,13 @@ const MyPostList = () => {
         const { data, error } = await supabase
           .from('posts')
           .select('*,  users: user_num(user_nickname), post_like(post_num)')
-          .eq('user_num', user.num);
+          .eq('user_num', user.num)
+          .order('post_date', { ascending: false });
 
-        const sortedMyPosts = data
-          .map((post) => ({
-            ...post,
-            post_date: getTimeAgo(post.post_date),
-          }))
-          .reverse();
+        const sortedMyPosts = data.map((post) => ({
+          ...post,
+          post_date: getTimeAgo(post.post_date),
+        }));
 
         setMyPosts(sortedMyPosts);
 
