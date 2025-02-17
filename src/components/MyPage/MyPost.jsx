@@ -3,11 +3,16 @@ import { AuthContext } from '../../contexts/AuthProvider';
 import LikeBtn from '../common/LikeBtn';
 import S from '../../style/MyPage/MyPost.style';
 import CommentBtn from '../common/CommentBtn';
+import { useNavigate } from 'react-router-dom';
 
 const MyPost = ({ post }) => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handlePostClick = () => {
+    navigate(`/detail?post_id=${post.post_num}`);
+  };
   return (
-    <S.LinkToDetail to={`/detail?post_id=${post.post_num}`}>
+    <S.LinkToDetail onClick={handlePostClick}>
       <S.PostCardContainer>
         <S.ProfileWrapper>
           {post.post_img_url ? (

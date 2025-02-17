@@ -9,12 +9,22 @@ S.ProfileImgWrapper = styled.div`
 `;
 
 S.MyInfoDashboard = styled.div`
-  padding: 20px 0;
-  background-color: #fee3a2;
-  border-radius: 30px;
+  padding: 20px 30px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   display: flex;
   position: relative;
   align-items: flex-start;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+  }
 `;
 
 S.TextInfoWrapper = styled.div`
@@ -58,6 +68,7 @@ S.IntroInput = styled.textarea`
 S.FileInput = styled.input`
   display: none;
 `;
+
 S.FileLabel = styled.label`
   margin-top: 10px;
   padding: 8px 12px;
@@ -66,6 +77,7 @@ S.FileLabel = styled.label`
   font-size: 20px;
   border-radius: 8px;
   cursor: pointer;
+
   &:hover {
     background-color: #fabc3c;
   }

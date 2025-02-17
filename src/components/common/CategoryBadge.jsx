@@ -3,9 +3,9 @@ import styled from 'styled-components';
 const S = {};
 
 export const CategoryBadge = ({ category, ...props }) => {
-  const backgroundColor = getCategoryColor(category);
+  const background = getCategoryColor(category);
   return (
-    <S.CategoryBadge backgroundColor={backgroundColor} {...props}>
+    <S.CategoryBadge background={background} {...props}>
       {category}
     </S.CategoryBadge>
   );
@@ -13,7 +13,7 @@ export const CategoryBadge = ({ category, ...props }) => {
 
 S.CategoryBadge = styled.span`
   background-color: ${(props) => props.backgroundColor};
-  color: white;
+  color: #333;
   padding: 4px 8px;
   border-radius: 5px;
   margin-right: 5px;
@@ -22,6 +22,8 @@ S.CategoryBadge = styled.span`
 
 const getCategoryColor = (category) => {
   switch (category) {
+    case '전체':
+      return '#ffeb3b';
     case '일상':
       return '#efb2d6';
     case '운동':

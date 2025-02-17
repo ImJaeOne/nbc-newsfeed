@@ -62,7 +62,18 @@ S.CategoryWrapper = styled.div`
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
 `;
 
-// 입력 영역의 그룹 (레이블과 입력필드 등을 묶는 컨테이너)
+S.CategoryLabel = styled.label`
+  /* border: 1px solid black; */
+  border-radius: 8px;
+  cursor: pointer;
+`;
+
+S.CategoryInput = styled.input`
+  position: absolute;
+  opacity: 0;
+`;
+
+
 S.PostPart = styled.div`
   display: flex;
   flex-direction: ${({ $type }) => ($type === 'category' ? 'column' : 'row')};
