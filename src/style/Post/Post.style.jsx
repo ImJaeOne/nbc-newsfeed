@@ -13,6 +13,9 @@ S.FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   gap: 30px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   transition:
     transform 0.3s ease,
@@ -72,7 +75,6 @@ S.CategoryInput = styled.input`
   position: absolute;
   opacity: 0;
 `;
-
 
 S.PostPart = styled.div`
   display: flex;

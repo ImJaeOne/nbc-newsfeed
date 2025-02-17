@@ -1,14 +1,13 @@
-import { PiBowlFoodFill, PiBowlFoodLight, PiGuitarFill } from 'react-icons/pi';
+import { PiBowlFoodFill, PiGuitarFill } from 'react-icons/pi';
+import { FaCat } from 'react-icons/fa6';
 import { MdSportsEsports, MdSportsTennis } from 'react-icons/md';
 
 export const postCategory = [
   {
     categoryName: '일상',
-    categoryIcon: <PiBowlFoodFill />,
+    categoryIcon: <FaCat />,
     categoryCheckedIcon: (
-      <PiBowlFoodFill
-        style={{ backgroundColor: '#E5BA73', borderRadius: '8px' }}
-      />
+      <FaCat style={{ backgroundColor: '#E5BA73', borderRadius: '8px' }} />
     ),
     checked: false,
   },
