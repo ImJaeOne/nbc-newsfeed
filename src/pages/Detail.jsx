@@ -53,7 +53,7 @@ const Detail = () => {
           img_url: data.post_img_url,
           user_num: data.user_num,
         });
-        setComments(data.comments); // [{},{} ]
+        setComments(data.comments); // [{},{}]
       }
     };
     getPostAndComments();
@@ -148,8 +148,6 @@ const Detail = () => {
   // 포스팅 삭제
   const postDeleteHandler = async (targetId) => {
     if (!window.confirm('이 게시물을 삭제하시겠습니까?')) return;
-
-    console.log('삭제 시도 중, targetId:', typeof targetId, targetId);
 
     const { commentsError } = await supabase
       .from('comments')
@@ -446,11 +444,13 @@ const ModalBody = styled.div`
 
   input,
   textarea {
-    width: 100%;
+    width: 95%;
     padding: 8px;
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 6px;
+    justify-content: center;
+    align-items: center;
   }
 
   textarea {
