@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import UserProfile from '../common/UserProfile';
 import { AuthContext } from '../../contexts/AuthProvider';
 import S from '../../style/Home/PostCard.style';
