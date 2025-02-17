@@ -71,6 +71,7 @@ S.CommentBox = styled.div`
   padding: 15px;
   margin-top: auto;
   box-sizing: border-box;
+  display: flex;
 `;
 
 S.CommentListContainer = styled.div`

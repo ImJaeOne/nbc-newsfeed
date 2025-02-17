@@ -66,8 +66,6 @@ const Detail = () => {
     getPostAndComments();
   }, [targetId]);
 
-  console.log(post);
-
   // 디테일 창 닫기
   const closeHandler = () => {
     navigate(-1);
@@ -75,7 +73,7 @@ const Detail = () => {
 
   return (
     <S.DetailContainer>
-      <IconBtn onClick={closeHandler}>
+      <IconBtn size={20} onClick={closeHandler}>
         <IoIosClose />
       </IconBtn>
       <Header post={post} />

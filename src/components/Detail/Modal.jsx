@@ -1,6 +1,6 @@
 import { AuthContext } from '../../contexts/AuthProvider';
 import { supabase } from '../../supabase/client';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { IconBtn } from '../common/IconBtn';
 import { IoIosClose } from 'react-icons/io';
 import S from '../../style/Detail/ModalInDetail.style';

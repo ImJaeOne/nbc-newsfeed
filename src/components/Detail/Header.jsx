@@ -12,7 +12,6 @@ const Header = ({ post }) => {
         <CategoryBadge category={category} />
         {title}
       </S.TitleContainer>
-      <IoIosMore />
     </S.HeaderInDetail>
   );
 };

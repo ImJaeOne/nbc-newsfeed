@@ -5,6 +5,7 @@ import React from 'react';
 import LikeBtn from '../common/LikeBtn';
 import CommentBtn from '../common/CommentBtn';
 import S from '../../style/Detail/MainInDetail.style';
+import UserProfile from '../common/UserProfile';
 
 const CocaCola = ({ targetId, post, comments, setComments }) => {
   const [newComment, setNewComment] = useState('');
@@ -63,7 +64,7 @@ const CocaCola = ({ targetId, post, comments, setComments }) => {
       <S.ContentBox>
         <S.PostContent>
           <S.UserInfo>
-            <S.ImageField />
+            <UserProfile size="20px" src={user.profile} />
             {nickname}
           </S.UserInfo>
           <p>{detail}</p>
@@ -89,23 +90,24 @@ const CocaCola = ({ targetId, post, comments, setComments }) => {
           })}
         </S.CommentListContainer>
         <S.CommentBox>
+          <span>
+            <LikeBtn user={user} post={post} size={15} able={true} />
+          </span>
+          <span>
+            <CommentBtn post={post} size={15} />
+          </span>
           <form onSubmit={commentSubmitHandler}>
-            <div>
-              <span>
-                <LikeBtn user={user} post={post} size={15} able={true} />
-              </span>
-              <span>
-                <CommentBtn post={post} size={15} />
-              </span>
-            </div>
             <input
               name="comment_content"
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
               type="text"
               placeholder="댓글 달기..."
+              style={{ width: '350px' }}
             />
-            <button type="submit">게시</button>
+            <button type="submit" style={{}}>
+              게시
+            </button>
           </form>
         </S.CommentBox>
       </S.ContentBox>
