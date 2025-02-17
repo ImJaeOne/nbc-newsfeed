@@ -1,8 +1,8 @@
-import { useEffect, useState, useContext } from 'react';
-import styled from 'styled-components';
-import { supabase } from '../supabase/client';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
+import { supabase } from '../supabase/client';
+import { useEffect, useState, useContext } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import { theme } from '../style/theme';
 import { IoIosMore } from 'react-icons/io';
 import { IconBtn } from '../components/common/IconBtn';
@@ -145,6 +145,8 @@ const Detail = () => {
   const postDeleteHandler = async (targetId) => {
     if (!window.confirm('이 게시물을 삭제하시겠습니까?')) return;
 
+    console.log('삭제 시도 중, targetId:', typeof targetId, targetId);
+
     const { commentsError } = await supabase
       .from('comments')
       .delete()
@@ -160,7 +162,7 @@ const Detail = () => {
       .eq('post_num', targetId);
 
     if (postError) {
-      console.error(postError);
+      console.error('포스팅삭제실패', postError);
     } else {
       setPost({
         title: '',
@@ -194,7 +196,7 @@ const Detail = () => {
         {user.num == post.user_num && (
           <>
             <IconBtn onClick={openEditModal}>수정</IconBtn>
-            <IconBtn onClick={postDeleteHandler}>삭제</IconBtn>
+            <IconBtn onClick={() => postDeleteHandler(targetId)}>삭제</IconBtn>
             {isModalOpen && (
               <ModalOverlay>
                 <ModalContent>
