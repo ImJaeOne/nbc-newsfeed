@@ -5,7 +5,7 @@ const S = {};
 
 S.PostCardContainer = styled.div`
   width: 200px;
-  height: 280px;
+  height: 260px;
   background-color: #fff;
   border-radius: 8px;
   overflow: hidden;
@@ -35,7 +35,7 @@ S.PostCardContainer = styled.div`
 
 S.ProfileWrapper = styled.div`
   width: 100%;
-  height: 60%;
+  height: 65%;
   background-color: #eee;
   display: flex;
   justify-content: center;
@@ -74,10 +74,19 @@ S.PostTitle = styled.div`
 S.PostDate = styled.div`
   font-size: 14px;
   color: #666;
+  position: absolute;
+  right: 0;
 `;
 
 S.LikeWrapper = styled.div`
-  margin-left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+`;
+
+S.IconWrapper = styled.div`
+  width: 30%;
   display: flex;
   flex-direction: row;
 `;

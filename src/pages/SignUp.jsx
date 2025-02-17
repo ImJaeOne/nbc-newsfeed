@@ -1,9 +1,13 @@
 import { supabase } from '../supabase/client';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import SignUpInput from '../components/SignUp/SignUpInput';
 import useInput from '../hooks/useInput';
-import { LOGIN } from '../constants/login';
+import { LOGIN_PASSWORDLENGTH } from '../constants/login';
+import { USER } from '../constants/user';
+import InputForAuth from '../components/InputForAuth';
+import { FiUserPlus } from 'react-icons/fi';
+import { IconBtn } from '../components/common/IconBtn';
+import S from '../style/SignUp/SignUp.style';
+
 const SignUp = () => {
   const inputEmail = useInput('');
   const inputNickname = useInput('');
@@ -68,84 +72,60 @@ const SignUp = () => {
   };
 
   return (
-    <StWrapper>
-      <StSignupContainer>
-        <StTitle>회원가입</StTitle>
-        <StForm onSubmit={handleSignup}>
-          <SignUpInput
-            type="text"
-            name="닉네임"
-            id="nickname"
-            {...inputNickname}
-            minLength="1"
-            maxLength="16"
-          />
-          <SignUpInput type="email" name="이메일" id="email" {...inputEmail} />
-          <SignUpInput
-            type="password"
-            name="비밀번호"
-            id="pwd"
-            {...inputPwd}
-            minLength={LOGIN.MIN_PASSWORD_LENGTH}
-            maxLength={LOGIN.MAX_PASSWORD_LENGTH}
-          />
-          <SignUpInput
-            type="password"
-            name="비밀번호확인"
-            id="confirmPwd"
-            minLength={LOGIN.MIN_PASSWORD_LENGTH}
-            maxLength={LOGIN.MAX_PASSWORD_LENGTH}
-            {...inputConfirmPwd}
-          />
-          <StSubmitBtn type="submit">확인</StSubmitBtn>
-        </StForm>
-      </StSignupContainer>
-    </StWrapper>
+    <S.SignUpContainer>
+      <S.SignUpBox>
+        <S.Title>회원가입</S.Title>
+        <S.Form onSubmit={handleSignup}>
+          <S.FormGroup>
+            <label htmlFor="nickname">닉네임</label>
+            <InputForAuth
+              type="text"
+              id="nickname"
+              placeholder="닉네임을 입력해주세요"
+              {...inputNickname}
+              minLength={USER.MIN_NICKNAME_LENGTH}
+              maxLength={USER.MAX_NICKNAME_LENGTH}
+            />
+          </S.FormGroup>
+          <S.FormGroup>
+            <label htmlFor="email">이메일</label>
+            <InputForAuth
+              type="email"
+              placeholder="이메일을 입력해주세요"
+              id="email"
+              {...inputEmail}
+            />
+          </S.FormGroup>
+          <S.FormGroup>
+            <label htmlFor="password">비밀번호</label>
+            <InputForAuth
+              type="password"
+              placeholder="비밀번호를 입력해주세요 (8자 이상)"
+              id="password"
+              {...inputPwd}
+              minLength={LOGIN_PASSWORDLENGTH.MIN_PASSWORD_LENGTH}
+              maxLength={LOGIN_PASSWORDLENGTH.MAX_PASSWORD_LENGTH}
+            />
+          </S.FormGroup>
+          <S.FormGroup>
+            <label htmlFor="confirmPwd">비밀번호 확인</label>
+            <InputForAuth
+              type="password"
+              placeholder="비밀번호를 다시 입력해주세요"
+              id="confirmPwd"
+              minLength={LOGIN_PASSWORDLENGTH.MIN_PASSWORD_LENGTH}
+              maxLength={LOGIN_PASSWORDLENGTH.MAX_PASSWORD_LENGTH}
+              {...inputConfirmPwd}
+            />
+          </S.FormGroup>
+          <IconBtn type="submit">
+            <S.SignUpText>회원가입 하기</S.SignUpText>
+            <FiUserPlus size={20} color={'#666'} />
+          </IconBtn>
+        </S.Form>
+      </S.SignUpBox>
+    </S.SignUpContainer>
   );
 };
-
-const StTitle = styled.h2`
-  font-size: 40px;
-`;
-
-const StForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const StSubmitBtn = styled.button`
-  border: none;
-  width: 100px;
-  height: 50px;
-  font-size: 25px;
-  border-radius: 30px;
-  cursor: pointer;
-  display: block;
-  transition: all, 0.2s;
-
-  &:hover {
-    scale: 1.05;
-  }
-`;
-
-const StWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 30px 0;
-`;
-
-const StSignupContainer = styled.div`
-  width: 70%;
-  padding: 20px 0;
-  background-color: #fffefa;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-  border: 2px solid #ddd;
-`;
 
 export default SignUp;

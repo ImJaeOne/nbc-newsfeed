@@ -6,8 +6,8 @@ import S from '../../style/MyPage/MyInfo.style';
 
 const MyInfo = () => {
   const { user, setUser } = useContext(AuthContext);
-  const [editedNickname, setEditedNickname] = useState(user.nickname);
-  const [editedIntro, setEditedIntro] = useState(user.intro);
+  const [editedNickname, setEditedNickname] = useState('');
+  const [editedIntro, setEditedIntro] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [file, setFile] = useState(null);
   const [previewImg, setpreviewImg] = useState('');
@@ -44,7 +44,13 @@ const MyInfo = () => {
     return data.publicUrl;
   };
 
+  const SetInitialValue = () => {
+    setEditedNickname(user.nickname);
+    setEditedIntro(user.intro);
+  };
+
   const handleUserInfoChange = async () => {
+    SetInitialValue();
     if (isEditing) {
       if (!editedNickname.trim()) {
         alert('닉네임을 1자 이상 입력해주세요!!');
