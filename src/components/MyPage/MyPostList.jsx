@@ -3,7 +3,9 @@ import { AuthContext } from '../../contexts/AuthProvider';
 import { supabase } from '../../supabase/client';
 import { getTimeAgo } from '../../utils/dateUtils';
 import MyPost from './MyPost';
+import { MdExpandMore } from 'react-icons/md';
 import S from '../../style/MyPage/MyPostList.style';
+import { IconBtn } from '../common/IconBtn';
 
 const MyPostList = () => {
   const { user } = useContext(AuthContext);
@@ -44,6 +46,9 @@ const MyPostList = () => {
           return <MyPost post={post} key={post.post_num} />;
         })}
       </S.MyPostListContainer>
+      <IconBtn>
+        <MdExpandMore size={50} />
+      </IconBtn>
     </S.PostListDashboard>
   );
 };
