@@ -10,6 +10,7 @@ import { IconBtn } from '../common/IconBtn';
 const MyPostList = () => {
   const { user } = useContext(AuthContext);
   const [myPosts, setMyPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(4);
 
   useEffect(() => {
     const fetchPostData = async () => {
@@ -20,7 +21,8 @@ const MyPostList = () => {
             '*,  users: user_num(user_nickname), post_like(post_num), comments(post_num)',
           )
           .eq('user_num', user.num)
-          .order('post_date', { ascending: false });
+          .order('post_date', { ascending: false })
+          .limit(currentPage);
 
         const sortedMyPosts = data.map((post) => ({
           ...post,
@@ -37,7 +39,11 @@ const MyPostList = () => {
       }
     };
     fetchPostData();
-  }, []);
+  }, [currentPage]);
+
+  const handlePageCount = () => {
+    setCurrentPage(currentPage + 4);
+  };
 
   return (
     <S.PostListDashboard>
@@ -46,7 +52,7 @@ const MyPostList = () => {
           return <MyPost post={post} key={post.post_num} />;
         })}
       </S.MyPostListContainer>
-      <IconBtn>
+      <IconBtn onClick={handlePageCount}>
         <MdExpandMore size={50} />
       </IconBtn>
     </S.PostListDashboard>
