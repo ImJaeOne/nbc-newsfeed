@@ -24,4 +24,9 @@ S.PostListDashboard = styled.div`
   margin-top: 20px;
 `;
 
+S.MoreText = styled.p`
+  color: #666;
+  font-size: 15px;
+`;
+
 export default S;

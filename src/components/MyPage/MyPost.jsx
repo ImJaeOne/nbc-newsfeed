@@ -18,10 +18,12 @@ const MyPost = ({ post }) => {
         </S.ProfileWrapper>
         <S.MyPostWrapper>
           <S.PostTitle>{post.post_title}</S.PostTitle>
-          <S.PostDate>{post.post_date}</S.PostDate>
           <S.LikeWrapper>
-            <LikeBtn user={user} post={post} size={12} able={false} />
-            <CommentBtn post={post} size={12} />
+            <S.IconWrapper>
+              <LikeBtn user={user} post={post} size={12} able={false} />
+              <CommentBtn post={post} size={12} />
+            </S.IconWrapper>
+            <S.PostDate>{post.post_date}</S.PostDate>
           </S.LikeWrapper>
         </S.MyPostWrapper>
       </S.PostCardContainer>
