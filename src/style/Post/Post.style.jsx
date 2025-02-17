@@ -114,7 +114,7 @@ S.FileLabel = styled.label`
   height: 315px;
   background-color: white;
   font-size: 15px;
-  align-items: center;
+  justify-content: center;
   border-radius: 30px;
 
   @media (max-width: 480px) {
