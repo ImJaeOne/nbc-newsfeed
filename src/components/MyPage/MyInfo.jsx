@@ -10,9 +10,16 @@ const MyInfo = () => {
   const [editedIntro, setEditedIntro] = useState(user.intro);
   const [isEditing, setIsEditing] = useState(false);
   const [file, setFile] = useState(null);
+  const [img, setImg] = useState('');
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const inputFile = e.target.files;
+    if (!inputFile) {
+      return;
+    } else {
+      setImg(URL.createObjectURL(inputFile[0]));
+      setFile(inputFile[0]);
+    }
   };
 
   const uploadFileAndGetUrl = async () => {
@@ -88,7 +95,7 @@ const MyInfo = () => {
     <S.MyInfoDashboard>
       <S.ProfileImgWrapper>
         <UserProfile
-          src={user.profile}
+          src={img || user.profile}
           alt="프로필 사진"
           size="160px"
           margin="30px"
