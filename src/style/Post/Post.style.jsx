@@ -139,11 +139,12 @@ S.PostLabel = styled.label`
 `;
 
 S.PostSubmitButton = styled.button`
-  margin: 0 auto;
-  width: 100px;
-  height: 40px;
-  font-size: 30px;
+  border: 1px solid #f3c301;
   border-radius: 30px;
+  padding: 10px;
+  font-size: 20px;
+  width: 322px;
+  padding: 10px;
 
   @media (max-width: 480px) {
     width: 70px;
