@@ -50,7 +50,7 @@ export default function AuthProvider({ children }) {
     if (isLogin) {
       getAdditionalUserInfo();
     }
-  }, [isLogin, user.id]);
+  }, [isLogin, user.num]);
 
   return (
     <AuthContext.Provider value={{ isLogin, user, setIsLogin, setUser }}>

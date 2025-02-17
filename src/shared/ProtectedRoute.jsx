@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthProvider';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { LOGIN_STATUS } from '../constants/login';
+import Loading from '../components/common/Loading';
 
 const ProtectedRoute = () => {
   const { isLogin } = useContext(AuthContext);
@@ -23,6 +24,7 @@ const ProtectedRoute = () => {
         return <Navigate to="/login" replace />;
     }
   }
+  return <Loading />;
 };
 
 export default ProtectedRoute;
