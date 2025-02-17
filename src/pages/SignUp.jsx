@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import SignUpInput from '../components/SignUp/SignUpInput';
 import useInput from '../hooks/useInput';
 import { LOGIN_PASSWORDLENGTH } from '../constants/login';
+import { USER } from '../constants/user';
 const SignUp = () => {
   const inputEmail = useInput('');
   const inputNickname = useInput('');
@@ -77,8 +78,8 @@ const SignUp = () => {
             name="닉네임"
             id="nickname"
             {...inputNickname}
-            minLength="1"
-            maxLength="16"
+            minLength={USER.MIN_NICKNAME_LENGTH}
+            maxLength={USER.MAX_NICKNAME_LENGTH}
           />
           <SignUpInput type="email" name="이메일" id="email" {...inputEmail} />
           <SignUpInput

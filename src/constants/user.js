@@ -1,0 +1,5 @@
+export const USER = {
+  DEFAULT_PROFILE: '',
+  MAX_NICKNAME_LENGTH: 1,
+  MIN_NICKNAME_LENGTH: 16,
+};
