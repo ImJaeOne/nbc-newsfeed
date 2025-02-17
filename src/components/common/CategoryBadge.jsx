@@ -3,16 +3,16 @@ import styled from 'styled-components';
 const S = {};
 
 export const CategoryBadge = ({ category, ...props }) => {
-  const backgroundColor = getCategoryColor(category);
+  const background = getCategoryColor(category);
   return (
-    <S.CategoryBadge backgroundColor={backgroundColor} {...props}>
+    <S.CategoryBadge background={background} {...props}>
       {category}
     </S.CategoryBadge>
   );
 };
 
 S.CategoryBadge = styled.span`
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.background};
   color: white;
   padding: 4px 8px;
   border-radius: 5px;

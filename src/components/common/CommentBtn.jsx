@@ -11,7 +11,7 @@ const CommentBtn = ({ post, size }) => {
   return (
     <IconBtn>
       <FaRegComment size={size} />
-      <LenSpan $size={size}>{post.comments.length}</LenSpan>
+      <LenSpan $size={size}>{post.comments?.length}</LenSpan>
     </IconBtn>
   );
 };

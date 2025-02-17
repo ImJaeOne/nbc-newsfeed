@@ -20,8 +20,12 @@ const LikeBtn = ({ user, post, size, able = true }) => {
     }
   }, [post.post_like, user.num]);
 
+  useEffect(() => {
+    setLikesCount(post.post_like.length);
+  }, [post]);
+
   const handleLikeBtn = async (e) => {
-    e.preventDefault();
+    e.stopPropagation();
     if (isLiked) {
       try {
         const { error } = await supabase
@@ -52,6 +56,9 @@ const LikeBtn = ({ user, post, size, able = true }) => {
       }
     }
   };
+
+  console.log('post찍히는거확인', post);
+  console.log('라잌스카운트', likesCount);
 
   return (
     <IconBtn>
