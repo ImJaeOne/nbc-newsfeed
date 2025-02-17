@@ -30,17 +30,46 @@ const Detail = () => {
     user_num: '',
   });
 
-  // 수정 모달 관련
+  // 게시글 및 댓글 불러오기
+  useEffect(() => {
+    const getPostAndComments = async () => {
+      const { data, error } = await supabase
+        .from('posts')
+        .select(
+          '*, users: user_num(user_nickname), comments: comments(*, users: user_num(user_nickname))',
+        )
+        .eq('post_num', targetId)
+        .single();
+      // data.comments => [{},{},{}]
+      if (error) {
+        console.error('포스팅에러', error);
+      } else {
+        setPost({
+          title: data.post_title,
+          detail: data.post_detail,
+          date: data.post_date,
+          category: data.post_category,
+          nickname: data.users.user_nickname,
+          img_url: data.post_img_url,
+          user_num: data.user_num,
+        });
+        setComments(data.comments); // [{},{} ]
+      }
+    };
+    getPostAndComments();
+  }, []);
+
+  // 게시물 수정 모달 관련
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalContent, setModalContent] = useState('');
-  // 수정 모달 관련
+  // 게시물 수정 모달 관련
   const openEditModal = () => {
     setModalTitle(post.title);
     setModalContent(post.detail);
     setIsModalOpen(true);
   };
-  // 수정 모달 관련
+  // 게시물 수정 모달 관련
   const saveHandler = async () => {
     if (!modalTitle.trim() || !modalContent.trim()) {
       alert('제목과 내용 모두 입력해 주세요.');
@@ -73,34 +102,7 @@ const Detail = () => {
     setIsModalOpen(false);
   };
 
-  useEffect(() => {
-    const getPostAndComments = async () => {
-      const { data, error } = await supabase
-        .from('posts')
-        .select(
-          '*, users: user_num(user_nickname), comments: comments(*, users: user_num(user_nickname))',
-        )
-        .eq('post_num', targetId)
-        .single();
-      // data.comments => [{},{},{}]
-      if (error) {
-        console.error('포스팅에러', error);
-      } else {
-        setPost({
-          title: data.post_title,
-          detail: data.post_detail,
-          date: data.post_date,
-          category: data.post_category,
-          nickname: data.users.user_nickname,
-          img_url: data.post_img_url,
-          user_num: data.user_num,
-        });
-        setComments(data.comments); // [{},{} ]
-      }
-    };
-    getPostAndComments();
-  }, []);
-
+  // 코멘트 입력
   const commentSubmitHandler = async (e) => {
     e.preventDefault();
 
@@ -126,6 +128,7 @@ const Detail = () => {
     setNewComment('');
   };
 
+  // 코멘트 삭제
   const commetDeleteHandler = async (commentId) => {
     const { error } = await supabase
       .from('comments')
@@ -142,6 +145,7 @@ const Detail = () => {
     }
   };
 
+  // 포스팅 삭제
   const postDeleteHandler = async (targetId) => {
     if (!window.confirm('이 게시물을 삭제하시겠습니까?')) return;
 
@@ -176,6 +180,7 @@ const Detail = () => {
     }
   };
 
+  // 디테일 창 닫기
   const closeHandler = () => {
     navigate(-1);
   };
