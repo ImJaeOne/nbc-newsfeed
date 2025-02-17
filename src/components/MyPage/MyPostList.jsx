@@ -80,6 +80,16 @@ const MyPostList = () => {
     setCurrentPage(newPage);
   };
 
+  useEffect(() => {
+    const fetchdaechoong = async () => {
+      const { data, error } = await supabase
+        .from('post_like')
+        .select('*, posts: post_num(*)')
+        .eq('user_num', user.num);
+      console.log(data, error);
+    };
+    fetchdaechoong();
+  }, []);
   return (
     <S.PostListDashboard>
       <S.MyPostListContainer>
