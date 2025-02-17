@@ -1,10 +1,13 @@
-import { useEffect, useState, useContext } from 'react';
-import styled from 'styled-components';
-import { supabase } from '../supabase/client';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
+import { supabase } from '../supabase/client';
+import { useEffect, useState, useContext } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import { theme } from '../style/theme';
 import { IoIosMore } from 'react-icons/io';
+import { IconBtn } from '../components/common/IconBtn';
+import { IoIosClose } from 'react-icons/io';
+import { CategoryBadge } from '../components/common/CategoryBadge';
 
 const Detail = () => {
   const location = useLocation();
@@ -17,10 +20,6 @@ const Detail = () => {
   const [comments, setComments] = useState([]);
   const { user } = useContext(AuthContext);
 
-  const [editedTitle, setEditedTitle] = useState('');
-  const [editedContent, setEditedContent] = useState('');
-  const [isEditing, setIsEditing] = useState(false);
-
   const [post, setPost] = useState({
     title: '',
     detail: '',
@@ -31,6 +30,7 @@ const Detail = () => {
     user_num: '',
   });
 
+  // 게시글 및 댓글 불러오기
   useEffect(() => {
     const getPostAndComments = async () => {
       const { data, error } = await supabase
@@ -53,12 +53,56 @@ const Detail = () => {
           img_url: data.post_img_url,
           user_num: data.user_num,
         });
-        setComments(data.comments); // [{},{} ]
+        setComments(data.comments); // [{},{}]
       }
     };
     getPostAndComments();
   }, []);
 
+  // 게시물 수정 모달 관련
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalContent, setModalContent] = useState('');
+  // 게시물 수정 모달 관련
+  const openEditModal = () => {
+    setModalTitle(post.title);
+    setModalContent(post.detail);
+    setIsModalOpen(true);
+  };
+  // 게시물 수정 모달 관련
+  const saveHandler = async () => {
+    if (!modalTitle.trim() || !modalContent.trim()) {
+      alert('제목과 내용 모두 입력해 주세요.');
+      return;
+    }
+
+    const { editError } = await supabase
+      .from('posts')
+      .update({
+        post_title: modalTitle,
+        post_detail: modalContent,
+      })
+      .eq('post_num', targetId);
+
+    if (editError) {
+      console.error('게시물 수정 에러', editError);
+    }
+
+    setPost((prev) => ({
+      ...prev,
+      title: modalTitle,
+      detail: modalContent,
+    }));
+
+    alert('게시물 수정 완료');
+    setIsModalOpen(false);
+  };
+
+  const modalCloseHandler = () => {
+    setIsModalOpen(false);
+  };
+
+  // 코멘트 입력
   const commentSubmitHandler = async (e) => {
     e.preventDefault();
 
@@ -84,6 +128,7 @@ const Detail = () => {
     setNewComment('');
   };
 
+  // 코멘트 삭제
   const commetDeleteHandler = async (commentId) => {
     const { error } = await supabase
       .from('comments')
@@ -100,99 +145,91 @@ const Detail = () => {
     }
   };
 
-  // // 현재 오류
-  // const postDeleteHandler = async (targetId) => {
-  //   if (!window.confirm('이 게시물을 삭제하시겠습니까?')) return;
+  // 포스팅 삭제
+  const postDeleteHandler = async (targetId) => {
+    if (!window.confirm('이 게시물을 삭제하시겠습니까?')) return;
 
-  //   const { error } = await supabase
-  //     .from('posts')
-  //     .delete()
-  //     .eq('post_num', targetId);
-
-  //   if (error) {
-  //     console.error(error);
-  //   } else {
-  //     setPost({
-  //       title: '',
-  //       detail: '',
-  //       date: '',
-  //       category: '',
-  //       nickname: '',
-  //       url: '',
-  //     });
-  //     navigate('/');
-  //   }
-  // };
-
-  const postingChangeHandler = async () => {
-    if (!editedTitle.trim() || !editedContent.trim()) {
-      alert('제목과 내용 모두 입력해 주세요.');
-      return;
-    }
-
-    const { error } = await supabase
-      .from('posts')
-      .update({
-        post_title: editedTitle,
-        post_detail: editedContent,
-        post_date: new Date().toISOString(),
-      })
+    const { commentsError } = await supabase
+      .from('comments')
+      .delete()
       .eq('post_num', targetId);
 
-    if (error) {
-      console.error('수정에러', error);
-    } else {
-      alert('수정성공');
-      setPost((prev) => ({
-        ...prev,
-        title: editedTitle,
-        detail: editedContent,
-      }));
-      setIsEditing(false);
+    if (commentsError) {
+      console.error('포스팅삭제전 댓글삭제실패', commentsError);
     }
+
+    const { postError } = await supabase
+      .from('posts')
+      .delete()
+      .eq('post_num', targetId);
+
+    if (postError) {
+      console.error('포스팅삭제실패', postError);
+    } else {
+      setPost({
+        title: '',
+        detail: '',
+        date: '',
+        category: '',
+        nickname: '',
+        url: '',
+      });
+      navigate('/');
+    }
+  };
+
+  // 디테일 창 닫기
+  const closeHandler = () => {
+    navigate(-1);
   };
 
   const { title, detail, category, nickname, img_url } = post;
 
   return (
     <StDetailContainer>
+      <IconBtn onClick={closeHandler}>
+        <IoIosClose />
+      </IconBtn>
       <StHeaderInDetail>
         <StTitleContainer>
-          <StBadge>{category}</StBadge>
-          {isEditing ? (
-            <input
-              type="text"
-              value={editedTitle}
-              placeholder="제목"
-              onChange={(e) => setEditedTitle(e.target.value)}
-            />
-          ) : (
-            <>{title}</>
-          )}
+          <CategoryBadge category={category} />
+          {title}
         </StTitleContainer>
         <IoIosMore />
         {user.num == post.user_num && (
           <>
-            {isEditing ? (
-              <>
-                <button onClick={postingChangeHandler}>완료</button>
-                <button onClick={() => setIsEditing(false)}>취소</button>
-              </>
-            ) : (
-              <>
-                <button
-                  onClick={() => {
-                    setEditedTitle(post.title);
-                    setEditedContent(post.detail);
-                    setIsEditing(true);
-                  }}
-                >
-                  수정
-                </button>
-                {/* <button onClick={() => postDeleteHandler(targetId)}>
-                  삭제
-                </button> */}
-              </>
+            <IconBtn onClick={openEditModal}>수정</IconBtn>
+            <IconBtn onClick={() => postDeleteHandler(targetId)}>삭제</IconBtn>
+            {isModalOpen && (
+              <ModalOverlay>
+                <ModalContent>
+                  <ModalHeader>
+                    <h3>게시물 수정</h3>
+                    <CloseButton onClick={modalCloseHandler}>
+                      <IoIosClose size="24" />
+                    </CloseButton>
+                  </ModalHeader>
+                  <ModalBody>
+                    <label>제목</label>
+                    <input
+                      type="text"
+                      value={modalTitle}
+                      onChange={(e) => setModalTitle(e.target.value)}
+                      placeholder="제목을 입력하세요"
+                    />
+                    <label>내용</label>
+                    <textarea
+                      value={modalContent}
+                      onChange={(e) => setModalContent(e.target.value)}
+                      placeholder="내용을 입력하세요"
+                    />
+                  </ModalBody>
+                  <ModalFooter>
+                    <button onClick={saveHandler}>저장</button>
+                    <button onClick={modalCloseHandler}>취소</button>
+                  </ModalFooter>
+                </ModalContent>
+              </ModalOverlay>
             )}
           </>
         )}
@@ -208,15 +245,6 @@ const Detail = () => {
               {nickname}
             </StUserInfo>
             <p>{detail}</p>
-            {isEditing ? (
-              <input
-                type="text"
-                value={editedContent}
-                onChange={(e) => setEditedContent(e.target.value)}
-              />
-            ) : (
-              ''
-            )}
           </StPostContent>
           <StCommentListContainer>
             {comments.map((comment) => {
@@ -241,8 +269,8 @@ const Detail = () => {
           <StCommentBox>
             <form onSubmit={commentSubmitHandler}>
               <div>
-                <span>좋아요 |</span>
-                <span> 코멘트</span>
+                <span>좋아요</span>
+                <span>코멘트</span>
               </div>
               <div>좋아요 갯수</div>
               <input
@@ -287,6 +315,7 @@ const StDetailContainer = styled.div`
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.nav_background_color};
   border-radius: 30px;
+  box-sizing: border-box;
 `;
 
 const StHeaderInDetail = styled.div`
@@ -295,9 +324,9 @@ const StHeaderInDetail = styled.div`
   justify-content: space-between;
   align-items: center;
   /* background-color: blue; */
-  padding: 10px 20px;
-  color: #424242
   /* color: white; */
+  padding: 10px 20px;
+  color: #424242;
   border-radius: 30px;
   margin-bottom: 0px;
   box-sizing: border-box;
@@ -310,7 +339,6 @@ const StTitleContainer = styled.div`
 `;
 
 const StUserInfo = styled.div`
-  /* margin-top: 7px; */
   display: flex;
   align-items: center;
   font-size: 15px;
@@ -325,14 +353,7 @@ const StImageField = styled.div`
   border-radius: 50%;
   background-color: lightgray;
   margin-left: 10px;
-`;
-
-const StBadge = styled.span`
-  background-color: green;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 5px;
-  margin-right: 5px;
+  box-sizing: border-box;
 `;
 
 const StMainContent = styled.div`
@@ -340,18 +361,18 @@ const StMainContent = styled.div`
   width: 100%;
   height: 100%;
   gap: 20px;
+  box-sizing: border-box;
 `;
 
 const StPhotoBox = styled.div`
-  /* flex: 1; */
   width: 50%;
   max-height: 534px;
-  /* background-color: #fff; */
   border-radius: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  box-sizing: border-box;
 
   img {
     width: 100%;
@@ -362,7 +383,6 @@ const StPhotoBox = styled.div`
 `;
 
 const StContentBox = styled.div`
-  /* flex: 1; */
   display: flex;
   width: 50%;
   min-height: 100%;
@@ -375,17 +395,106 @@ const StContentBox = styled.div`
 `;
 
 const StPostContent = styled.div`
-  /* flex: 1; */
   margin-bottom: 20px;
   border-bottom: 1px solid #ccc;
   min-height: 60px;
 `;
 
 const StCommentBox = styled.div`
-  /* flex: 1; */
   background-color: #f3f3f3;
   border-radius: 30px;
   padding: 15px;
   margin-top: auto;
   box-sizing: border-box;
+`;
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+`;
+
+const ModalContent = styled.div`
+  background-color: white;
+  width: 400px;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+`;
+
+const ModalHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+`;
+
+const ModalBody = styled.div`
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  input,
+  textarea {
+    width: 95%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  textarea {
+    height: 100px;
+    resize: none;
+  }
+`;
+
+const ModalFooter = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+  button {
+    padding: 6px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  button:first-child {
+    background-color: #f2c450;
+    color: white;
+    transition: background 0.3s;
+
+    &:hover {
+      background-color: #f2c950;
+    }
+  }
+
+  button:last-child {
+    background-color: ${({ theme }) => theme.colors.haeder_text_color};
+    color: white;
+    transition: background 0.3s;
+
+    &:hover {
+      background-color: #f25151;
+    }
+  }
+`;
+
+const CloseButton = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
 `;

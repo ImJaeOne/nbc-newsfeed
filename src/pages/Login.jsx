@@ -50,14 +50,14 @@ const Login = () => {
   return (
     <S.LoginContainer>
       <S.LoginBox>
-        <h2>로그인</h2>
+        <S.Title>로그인</S.Title>
         <S.Form onSubmit={submitHandler}>
           <S.FormGroup>
             <label htmlFor="email">이메일</label>
             <InputForAuth
               id="email"
               type="email"
-              placeholder="이메일을 입력하세요"
+              placeholder="이메일을 입력해주세요"
               onChange={(e) => setInputEmail(e.target.value)}
               value={inputEmail}
             />
@@ -68,7 +68,7 @@ const Login = () => {
             <InputForAuth
               id="password"
               type="password"
-              placeholder="비밀번호를 입력하세요"
+              placeholder="비밀번호를 입력해주세요"
               onChange={(e) => setPassword(e.target.value)}
               value={password}
               minLength={LOGIN_PASSWORDLENGTH.MIN_PASSWORD_LENGTH}

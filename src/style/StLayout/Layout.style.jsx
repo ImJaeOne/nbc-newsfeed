@@ -13,12 +13,7 @@ S.Layout = styled.div`
 S.Main = styled.main`
   flex: 1;
   padding: 20px;
-  margin: 0 10%;
+  margin: 0 auto;
   margin-top: 100px;
   width: 80%;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    padding: 10px;
-  }
 `;
