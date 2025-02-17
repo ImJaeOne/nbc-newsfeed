@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IconBtn } from './IconBtn';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import styled from 'styled-components';
