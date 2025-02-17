@@ -1,11 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { supabase } from '../supabase/client';
-import InputForAuth from '../components/InputForAuth';
-import { LOGIN_PASSWORDLENGTH } from '../constants/login';
 import { MdLogin } from 'react-icons/md';
-import { S } from '../style/Login/Login.style';
-import { IconBtn } from '../components/common/IconBtn';
+import { supabase } from '../../supabase/client';
+import { S } from './loginStyle/Login.style';
+import { IconBtn } from '../../components/common/IconBtn';
+import { LOGIN_PASSWORDLENGTH } from '../../constants/login';
+import InputForAuth from '../../components/InputForAuth';
 
 const Login = () => {
   const [inputEmail, setInputEmail] = useState('');

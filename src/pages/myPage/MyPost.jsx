@@ -1,9 +1,10 @@
 import { useContext } from 'react';
-import { AuthContext } from '../../contexts/AuthProvider';
-import LikeBtn from '../common/LikeBtn';
-import S from '../../style/MyPage/MyPost.style';
-import CommentBtn from '../common/CommentBtn';
+
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthProvider';
+import S from './myPageStyle/MyPost.style';
+import CommentBtn from '../../components/common/CommentBtn';
+import LikeBtn from '../../components/common/LikeBtn';
 
 const MyPost = ({ post }) => {
   const { user } = useContext(AuthContext);

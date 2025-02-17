@@ -1,8 +1,8 @@
 import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthProvider';
 import { supabase } from '../../supabase/client';
-import UserProfile from '../common/UserProfile';
-import S from '../../style/MyPage/MyInfo.style';
+import S from './myPageStyle/MyInfo.style';
+import UserProfile from '../../components/common/UserProfile';
 
 const MyInfo = () => {
   const { user, setUser } = useContext(AuthContext);

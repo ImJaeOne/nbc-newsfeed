@@ -1,11 +1,11 @@
 import { useState, useEffect, useContext, useRef } from 'react';
+import { MdExpandMore } from 'react-icons/md';
 import { AuthContext } from '../../contexts/AuthProvider';
 import { supabase } from '../../supabase/client';
 import { getTimeAgo } from '../../utils/dateUtils';
+import S from './myPageStyle/MyPostList.style';
+import { IconBtn } from '../../components/common/IconBtn';
 import MyPost from './MyPost';
-import { MdExpandMore } from 'react-icons/md';
-import S from '../../style/MyPage/MyPostList.style';
-import { IconBtn } from '../common/IconBtn';
 
 const LIMIT = 8;
 
