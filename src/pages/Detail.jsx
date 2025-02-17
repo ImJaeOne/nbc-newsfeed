@@ -473,13 +473,23 @@ const ModalFooter = styled.div`
   }
 
   button:first-child {
-    background-color: #4caf50;
+    background-color: #f2c450;
     color: white;
+    transition: background 0.3s;
+
+    &:hover {
+      background-color: #f2c950;
+    }
   }
 
   button:last-child {
-    background-color: #f44336;
+    background-color: ${({ theme }) => theme.colors.haeder_text_color};
     color: white;
+    transition: background 0.3s;
+
+    &:hover {
+      background-color: #f25151;
+    }
   }
 `;
 
