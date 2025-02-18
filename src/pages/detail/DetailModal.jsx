@@ -93,7 +93,7 @@ const DetailModal = ({ post, setPost, targetId }) => {
   return (
     <>
       {user.num == post.user_num && (
-        <>
+        <S.ModalContainer>
           <IconBtn onClick={openEditModal}>수정</IconBtn>
           <IconBtn onClick={() => postDeleteHandler(targetId)}>삭제</IconBtn>
           {isModalOpen && (
@@ -127,7 +127,7 @@ const DetailModal = ({ post, setPost, targetId }) => {
               </S.ModalContent>
             </S.ModalOverlay>
           )}
-        </>
+        </S.ModalContainer>
       )}
     </>
   );

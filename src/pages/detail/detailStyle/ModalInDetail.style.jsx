@@ -1,7 +1,10 @@
 import styled from 'styled-components';
-import { theme } from '../../../style/theme';
 
 const S = {};
+
+S.ModalContainer = styled.div`
+  display: flex;
+`;
 
 S.ModalOverlay = styled.div`
   position: fixed;

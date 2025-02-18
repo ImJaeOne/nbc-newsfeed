@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-
-import { IoIosClose } from 'react-icons/io';
 import { supabase } from '../../supabase/client';
 import S from './detailStyle/Detail.style';
 import DetailMain from './DetailMain';
 import DetailModal from './DetailModal';
 import DetailHeader from './DetailHeader';
-import { IconBtn } from '../../components/common/IconBtn';
 
 const Detail = () => {
   const [searchParam] = useSearchParams();
@@ -67,20 +64,15 @@ const Detail = () => {
   }, [targetId]);
 
   // 디테일 창 닫기
-  const closeHandler = () => {
-    navigate(-1);
-  };
 
   return (
     <S.DetailContainer>
-      <IconBtn size={20} onClick={closeHandler}>
-        <IoIosClose />
-      </IconBtn>
       <DetailHeader post={post} />
-      <DetailModal post={post} setPost={setPost} targetId={targetId} />
+
       <DetailMain
         targetId={targetId}
         post={post}
+        setPost={setPost}
         comments={comments}
         setComments={setComments}
       />

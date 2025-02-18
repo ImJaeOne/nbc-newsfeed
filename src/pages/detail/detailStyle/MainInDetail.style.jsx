@@ -10,13 +10,13 @@ S.UserInfo = styled.div`
   font-weight: bold;
   box-sizing: border-box;
   gap: 5px;
+  margin-bottom: 5px;
 `;
 
 S.ImageField = styled.img`
   width: 21px;
   height: 21px;
   border-radius: 50%;
-  margin-left: 10px;
   box-sizing: border-box;
 `;
 
@@ -59,9 +59,11 @@ S.ContentBox = styled.div`
 `;
 
 S.PostContent = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border-bottom: 1px solid #ccc;
-  min-height: 60px;
+  min-height: 70px;
+  display: flex;
+  justify-content: space-between;
 `;
 
 S.CommentBox = styled.div`
@@ -78,6 +80,7 @@ S.CommentListContainer = styled.div`
   flex-direction: column;
   overflow-y: auto;
   box-sizing: border-box;
+  padding: 15px 0;
 
   &::-webkit-scrollbar-thumb {
     background-color: #ccc;
@@ -86,6 +89,43 @@ S.CommentListContainer = styled.div`
   &::-webkit-scrollbar-track {
     background-color: gray;
   }
+`;
+
+S.CommentField = styled.div`
+  margin-top: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+`;
+
+S.CommentUserInfo = styled.div`
+  display: flex;
+  gap: 5px;
+  margin-bottom: 5px;
+  align-items: center;
+`;
+
+S.CommentContentField = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  width: 80%;
+  max-height: 100px;
+`;
+
+S.DetailMainUserWrapper = styled.div``;
+
+S.CommentDeleteBtn = styled.button`
+  cursor: pointer;
+  padding: 5px;
+  width: 40px;
+  height: 25px;
+  border: none;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 0 0 1px rgb(0, 0, 0, 0.1);
 `;
 
 export default S;

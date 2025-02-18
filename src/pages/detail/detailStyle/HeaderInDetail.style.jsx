@@ -19,15 +19,14 @@ S.HeaderInDetail = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 10px 20px 20px 20px;
   color: #424242;
-  border-radius: 30px;
+  border-radius: 5px;
   margin-bottom: 0px;
   box-sizing: border-box;
 `;
 
 S.TitleContainer = styled.div`
-  box-sizing: border-box;
   font-weight: bold;
   font-size: 20px;
 `;

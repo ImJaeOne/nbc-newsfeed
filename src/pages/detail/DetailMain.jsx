@@ -6,10 +6,12 @@ import UserProfile from '../../components/common/UserProfile';
 import profile from '../../../public/basic-profile.png';
 import LikeBtn from '../../components/common/LikeBtn';
 import CommentBtn from '../../components/common/CommentBtn';
+import DetailModal from './DetailModal';
 
-const DetailMain = ({ targetId, post, comments, setComments }) => {
+const DetailMain = ({ targetId, post, setPost, comments, setComments }) => {
   const [newComment, setNewComment] = useState('');
   const { user } = useContext(AuthContext);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   // 코멘트 입력
   const commentSubmitHandler = async (e) => {
@@ -28,14 +30,15 @@ const DetailMain = ({ targetId, post, comments, setComments }) => {
         user_num: user.num,
       })
       .select('*, users: user_num(user_nickname)');
+
     if (error) {
       console.error(error);
     }
 
     setComments((prev) => [...prev, ...data]);
+
     setNewComment('');
   };
-  console.log(post);
   // 코멘트 삭제
   const commentDeleteHandler = async (commentId) => {
     const { error } = await supabase
@@ -62,30 +65,53 @@ const DetailMain = ({ targetId, post, comments, setComments }) => {
       </S.PhotoBox>
       <S.ContentBox>
         <S.PostContent>
-          <S.UserInfo>
-            <UserProfile size="20px" src={post.users?.user_profile} />
-            {nickname}
-          </S.UserInfo>
-          <p>{detail}</p>
+          <S.DetailMainUserWrapper>
+            <S.UserInfo>
+              <UserProfile
+                size="20px"
+                src={post.users?.user_profile}
+                loading="lazy"
+              />
+              {nickname}
+            </S.UserInfo>
+            <p>{detail}</p>
+          </S.DetailMainUserWrapper>
+          <DetailModal
+            post={post}
+            setPost={setPost}
+            comments={comments}
+            setComments={setComments}
+            targetId={targetId}
+          />
         </S.PostContent>
         <S.CommentListContainer>
           {comments.map((comment, idx) => {
             return (
               <div key={comment.comment_num}>
-                <div>
-                  <S.ImageField
-                    src={post.comments[idx].users.user_profile || profile}
-                  />
-                  <S.UserInfo>{comment.users.user_nickname}</S.UserInfo>
-                  <div>{comment.comment_content}</div>
+                <S.CommentField>
+                  <S.CommentContentField>
+                    <S.CommentUserInfo>
+                      <S.ImageField
+                        src={
+                          isImageLoaded
+                            ? post?.comments[idx]?.users?.user_profile
+                            : profile
+                        }
+                        onLoad={() => setIsImageLoaded(true)}
+                        onError={() => setIsImageLoaded(false)}
+                      />
+                      <S.UserInfo>{comment.users.user_nickname}</S.UserInfo>
+                    </S.CommentUserInfo>
+                    <div>{comment.comment_content}</div>
+                  </S.CommentContentField>
                   {comment.user_num == user.num && (
-                    <button
+                    <S.CommentDeleteBtn
                       onClick={() => commentDeleteHandler(comment.comment_num)}
                     >
                       삭제
-                    </button>
+                    </S.CommentDeleteBtn>
                   )}
-                </div>
+                </S.CommentField>
               </div>
             );
           })}
