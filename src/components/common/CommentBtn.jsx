@@ -9,7 +9,6 @@ import styled from 'styled-components';
 // size는 숫자만 적어주시면 됩니다.
 
 const CommentBtn = ({ post, size }) => {
-  console.log(post);
   return (
     <IconBtn>
       <FaRegComment size={size} />
