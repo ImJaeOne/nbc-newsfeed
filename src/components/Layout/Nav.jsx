@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import { S } from '../../style/StLayout/Header.style';
-import { AuthContext } from '../../contexts/AuthProvider';
-import { supabase } from '../../supabase/client';
+import S from './layoutStyle/Header.style';
 import { LOGIN_STATUS } from '../../constants/login';
+import { supabase } from '../../supabase/client';
+import { AuthContext } from '../../contexts/AuthProvider';
 
 const Nav = () => {
   const { isLogin, user } = useContext(AuthContext);

@@ -5,7 +5,7 @@ import { supabase } from '../../supabase/client';
 import { S } from './loginStyle/Login.style';
 import { IconBtn } from '../../components/common/IconBtn';
 import { LOGIN_PASSWORDLENGTH } from '../../constants/login';
-import InputForAuth from '../../components/InputForAuth';
+import InputForAuth from '../../components/common/InputForAuth';
 
 const Login = () => {
   const [inputEmail, setInputEmail] = useState('');

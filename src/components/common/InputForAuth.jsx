@@ -1,4 +1,4 @@
-import S from '../style/Auth/Auth.Input.style';
+import S from '../../style/Auth/Auth.Input.style';
 
 const InputForAuth = (props) => {
   return <S.AuthInput {...props} />;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const S = {};
+const S = {};
 
 S.Layout = styled.div`
   width: 100%;
@@ -17,3 +17,5 @@ S.Main = styled.main`
   margin-top: 100px;
   width: 80%;
 `;
+
+export default S;

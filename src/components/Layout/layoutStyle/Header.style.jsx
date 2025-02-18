@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const S = {};
+const S = {};
 
 S.NavContainer = styled.nav`
   display: flex;
@@ -81,3 +81,5 @@ S.AuthLink = styled(Link)`
     scale: 1.2;
   }
 `;
+
+export default S;

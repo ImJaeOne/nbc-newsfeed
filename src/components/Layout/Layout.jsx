@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router-dom';
-import { S } from '../../style/StLayout/Layout.style';
-import Header from './Header';
-import FloatBtn from './FloatBtn';
+import S from './layoutStyle/Layout.style';
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthProvider';
 import { LOGIN_STATUS } from '../../constants/login';
+import Header from './Header';
+import FloatBtn from './FloatBtn';
 import Footer from './Footer';
 
 const Layout = () => {

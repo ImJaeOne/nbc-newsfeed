@@ -1,7 +1,6 @@
-import Nav from './Nav';
+import S from './layoutStyle/Header.style';
 import logo from '/logo.png';
-import { S } from '../../style/StLayout/Header.style';
-
+import Nav from './Nav';
 const LOGO_IMAGE = logo;
 
 const Header = () => {

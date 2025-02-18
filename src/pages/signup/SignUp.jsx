@@ -4,9 +4,9 @@ import { supabase } from '../../supabase/client';
 import S from './signupStyle/SignUp.style';
 import { IconBtn } from '../../components/common/IconBtn';
 import { LOGIN_PASSWORDLENGTH } from '../../constants/login';
-import InputForAuth from '../../components/InputForAuth';
 import useInput from '../../hooks/useInput';
 import USER from '../../constants/user';
+import InputForAuth from '../../components/common/InputForAuth';
 
 const SignUp = () => {
   const inputEmail = useInput('');

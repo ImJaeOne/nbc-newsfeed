@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export const S = {};
+const S = {};
 
 S.FloatBtnContainer = styled.div`
   position: fixed;
@@ -70,3 +70,5 @@ S.IconButton = styled.button`
     background-color: #27ae60;
   }
 `;
+
+export default S;
