@@ -118,7 +118,6 @@ Now What Do (나와뚜)는 현재 자신이 남들과 나누고 싶은 순간이
   - **인증:** 사용자 로그인 및 회원가입 관리
   - **Storage:** 프로필 이미지 등 파일 업로드 관리
 
-
 ### 🗃️ **버전 관리**
 
 - **Git/GitHub**
@@ -191,7 +190,6 @@ Now What Do (나와뚜)는 현재 자신이 남들과 나누고 싶은 순간이
 ## ERD
 
 ![ERD](https://github.com/user-attachments/assets/9bb4803d-ba23-4ba0-8c70-37a51c8ba23d)
-
 
 ## 🛠️ 트러블 슈팅
 
