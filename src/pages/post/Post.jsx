@@ -170,8 +170,10 @@ const Post = () => {
           <img
             style={{
               width: '100%',
-              objectFit: 'scale-down',
-              borderRadius: '30px',
+              minHeight: '180px',
+              maxHeight: '220px',
+              objectFit: 'contain',
+              borderRadius: '8px',
             }}
             src={imgURL}
           />

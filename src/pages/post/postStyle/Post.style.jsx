@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 const S = {};
 
-// Form 컨테이너: 카드 형태의 깔끔한 디자인
 S.FormContainer = styled.form`
   width: 100%;
   max-width: 600px;
@@ -30,13 +29,16 @@ S.FormContainer = styled.form`
     padding: 30px;
   }
 
+  @media (max-width: 768px) {
+    width: auto;
+  }
+
   @media (max-width: 480px) {
     width: auto;
     padding: 20px;
   }
 `;
 
-// 섹션 컨테이너
 S.CommonSection = styled.section`
   display: flex;
   flex-direction: column;
@@ -54,7 +56,6 @@ S.CommonSection = styled.section`
   }
 `;
 
-// 카테고리 영역 (칩 스타일 느낌)
 S.CategoryWrapper = styled.div`
   display: flex;
   gap: 20px;
@@ -66,7 +67,6 @@ S.CategoryWrapper = styled.div`
 `;
 
 S.CategoryLabel = styled.label`
-  /* border: 1px solid black; */
   border-radius: 8px;
   cursor: pointer;
 `;
@@ -87,7 +87,6 @@ S.PostPart = styled.div`
   }
 `;
 
-// 📌 부드러운 오목한(눌린) 효과가 적용된 입력 필드
 S.PostInput = styled.input`
   width: 100%;
   padding: 15px;
@@ -116,7 +115,6 @@ S.PostInput = styled.input`
   }
 `;
 
-// 📌 부드러운 오목한(눌린) 효과가 적용된 텍스트 에어리어
 S.PostTextArea = styled.textarea`
   width: 100%;
   height: 180px;
@@ -144,7 +142,6 @@ S.PostTextArea = styled.textarea`
   }
 `;
 
-// 파일 업로드 영역: 대시 테두리와 호버 효과로 고급스러운 느낌
 S.FileLabel = styled.label`
   width: 100%;
   height: 220px;
@@ -171,7 +168,6 @@ S.FileLabel = styled.label`
   }
 `;
 
-// Post Label: 입력 필드와 관련 라벨들을 모아놓는 컨테이너
 S.PostLabel = styled.label`
   display: flex;
   flex-direction: column;
@@ -191,7 +187,6 @@ S.PostLabel = styled.label`
   }
 `;
 
-// 제출 버튼: 그라데이션 효과와 부드러운 변환 효과
 S.PostSubmitButton = styled.button`
   background: linear-gradient(135deg, #f3c301, #f7d150);
   border: none;
