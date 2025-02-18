@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import S from '../style/Post/Post.style';
-import { supabase } from '../supabase/client';
+import S from './postStyle/Post.style';
+import { supabase } from '../../supabase/client';
 import { useNavigate } from 'react-router-dom';
-import { validateFile } from '../utils/validateFile';
-import { postCategory } from '../utils/category';
+import { validateFile } from '../../utils/validateFile';
+import { postCategory } from '../../utils/category';
 
 const resetPost = {
   post_title: '',

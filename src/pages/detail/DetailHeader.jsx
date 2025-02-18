@@ -1,6 +1,5 @@
-import { CategoryBadge } from '../common/CategoryBadge';
-
-import S from '../../style/Detail/HeaderInDetail.style';
+import { CategoryBadge } from '../../components/common/CategoryBadge';
+import S from './detailStyle/HeaderInDetail.style';
 
 const DetailHeader = ({ post }) => {
   const { title, category } = post;

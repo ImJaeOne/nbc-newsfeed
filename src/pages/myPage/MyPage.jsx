@@ -1,6 +1,6 @@
-import MyPostList from '../components/MyPage/MyPostList';
-import MyInfo from '../components/MyPage/MyInfo';
-import S from '../style/MyPage/MyPage.style';
+import MyInfo from './MyInfo';
+import S from './myPageStyle/MyPage.style';
+import MyPostList from './MyPostList';
 
 const MyPage = () => {
   return (

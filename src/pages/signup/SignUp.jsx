@@ -1,12 +1,12 @@
-import { supabase } from '../supabase/client';
 import { useNavigate } from 'react-router-dom';
-import useInput from '../hooks/useInput';
-import { LOGIN_PASSWORDLENGTH } from '../constants/login';
-import { USER } from '../constants/user';
-import InputForAuth from '../components/InputForAuth';
 import { FiUserPlus } from 'react-icons/fi';
-import { IconBtn } from '../components/common/IconBtn';
-import S from '../style/SignUp/SignUp.style';
+import { supabase } from '../../supabase/client';
+import S from './signUpStyle/SignUp.style';
+import { IconBtn } from '../../components/common/IconBtn';
+import { LOGIN_PASSWORDLENGTH } from '../../constants/login';
+import InputForAuth from '../../components/InputForAuth';
+import useInput from '../../hooks/useInput';
+import USER from '../../constants/user';
 
 const SignUp = () => {
   const inputEmail = useInput('');

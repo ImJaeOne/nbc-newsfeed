@@ -1,12 +1,11 @@
+import { useState, useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthProvider';
 import { supabase } from '../../supabase/client';
-import { useState, useContext } from 'react';
-import React from 'react';
-import LikeBtn from '../common/LikeBtn';
-import CommentBtn from '../common/CommentBtn';
-import S from '../../style/Detail/MainInDetail.style';
-import UserProfile from '../common/UserProfile';
+import S from './detailStyle/MainInDetail.style';
+import UserProfile from '../../components/common/UserProfile';
 import profile from '../../../public/basic-profile.png';
+import LikeBtn from '../../components/common/LikeBtn';
+import CommentBtn from '../../components/common/CommentBtn';
 
 const DetailMain = ({ targetId, post, comments, setComments }) => {
   const [newComment, setNewComment] = useState('');

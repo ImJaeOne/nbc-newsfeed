@@ -1,10 +1,12 @@
+import { useState, useContext } from 'react';
+
+import { IoIosClose } from 'react-icons/io';
+
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
 import { supabase } from '../../supabase/client';
-import { useState, useContext, useEffect } from 'react';
-import { IconBtn } from '../common/IconBtn';
-import { IoIosClose } from 'react-icons/io';
-import S from '../../style/Detail/ModalInDetail.style';
-import { useNavigate } from 'react-router-dom';
+import { IconBtn } from '../../components/common/IconBtn';
+import S from './detailStyle/ModalInDetail.style';
 
 const DetailModal = ({ post, setPost, targetId }) => {
   const { user } = useContext(AuthContext);

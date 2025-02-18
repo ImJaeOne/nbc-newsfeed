@@ -1,12 +1,13 @@
-import { supabase } from '../supabase/client';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { IconBtn } from '../components/common/IconBtn';
+
 import { IoIosClose } from 'react-icons/io';
-import S from '../style/Detail/Detail.style';
-import DetailMain from '../components/Detail/DetailMain';
-import DetailModal from '../components/Detail/DetailModal';
-import DetailHeader from '../components/Detail/DetailHeader';
+import { supabase } from '../../supabase/client';
+import S from './detailStyle/Detail.style';
+import DetailMain from './DetailMain';
+import DetailModal from './DetailModal';
+import DetailHeader from './DetailHeader';
+import { IconBtn } from '../../components/common/IconBtn';
 
 const Detail = () => {
   const [searchParam] = useSearchParams();
