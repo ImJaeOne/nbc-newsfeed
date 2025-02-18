@@ -1,14 +1,15 @@
-이미지(Now WHAT DO 로고)
+
+![logo](https://github.com/user-attachments/assets/3b874db8-04e5-49f4-a599-40dc16680b86)
 
 ## 📢프로젝트 소개
 
-Now What Do (나왓뚜)는 현재 자신이 남들과 나누고 싶은 순간이나 정보를 올려 소통할 수 있는 애플리케이션 입니다. 사용자는 작성 및 수정 외에도 공감하는 게시물이나 좋은 정보라고 생각되는 게시물에는 '좋아요' 버튼을 통해 작성자에게 표현할 수 있습니다.
+Now What Do (나와뚜)는 현재 자신이 남들과 나누고 싶은 순간이나 정보를 올려 소통할 수 있는 웹사이트입니다. 사용자는 작성 및 수정 외에도 공감하는 게시물이나 좋은 정보라고 생각되는 게시물에는 '좋아요' 버튼을 통해 작성자에게 표현할 수 있습니다.
 관심사에 해당하는 카테고리를 골라 조회할 수 있습니다.
 또한, 마이페이지에서 프로필, 닉네임, 작성한 게시물을 관리하는 기능을 통해 원활하게 소통할 수 있습니다.
 
 ## 📅프로젝트 기간
 
-- **2025.02.12 ~ 2025.02.19**
+- **2025.02.12 ~ 2025.02.18**
 
 ## [프로젝트 계기]
 
@@ -49,16 +50,16 @@ Now What Do (나왓뚜)는 현재 자신이 남들과 나누고 싶은 순간이
     </tr>
     <tr>
       <td align="center">
-        <b>자기 맡은 분야 작성</b> <br/>
-        <b>자기 맡은 분야 작성</b> <br/>
+        <b>홈 페이지</b> <br/>
+        <b>코드 총괄</b> <br/>
       </td>
       <td align="center">
-        <b>자기 맡은 분야 작성</b> <br/>
-        <b>자기 맡은 분야 작성</b> <br/>
+        <b>전체적인 레이아웃</b> <br/>
+        <b>(헤더, 푸터, 플로팅 버튼 등)</b> <br/>
       </td>
       <td align="center">
-        <b>자기 맡은 분야 작성</b> <br/>
-        <b>자기 맡은 분야 작성</b> <br/>
+        <b>글 작성 페이지</b> <br/>
+        <b>스토리지 관리</b> <br/>
       </td>
     </tr>
     <tr>
@@ -81,12 +82,12 @@ Now What Do (나왓뚜)는 현재 자신이 남들과 나누고 싶은 순간이
     </tr>
     <tr>
       <td align="center">
-        <b>자기 맡은 분야 작성</b> <br/>
-        <b>자기 맡은 분야 작성</b> <br/>
+        <b>상세 페이지</b> <br/>
+        <b>로그인 페이지</b> <br/>
       </td>
       <td align="center">
-        <b>자기 맡은 분야 작성</b> <br/>
-        <b>자기 맡은 분야 작성</b> <br/>
+        <b>마이 페이지</b> <br/>
+        <b>회원가입 페이지</b> <br/>
       </td>
       <td align="center">
     </tr>
@@ -97,12 +98,12 @@ Now What Do (나왓뚜)는 현재 자신이 남들과 나누고 싶은 순간이
 
 ### 📌 **프로그래밍 언어 및 프레임워크**
 
-- **JavaScript**
-- **React**
+![js](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white)
+![react](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 
 ### 🎨 **UI 프레임워크 및 스타일링**
 
-- **Styled-components**
+- **Styled Components**
 - **React-icons**
 
 ### ✅ **코드 품질 및 포맷팅**
@@ -151,6 +152,81 @@ Now What Do (나왓뚜)는 현재 자신이 남들과 나누고 싶은 순간이
 
 ## 와이어 프레임
 
+![image (2)](https://github.com/user-attachments/assets/ab66fd1b-c868-4f66-8d7e-dfeb43868674)
+
 ## ERD
 
-## 트러블 슈팅
+![ERD](https://github.com/user-attachments/assets/72e99e3f-630e-49de-b9bc-cccc7c983dbc)
+
+## 🛠️ 트러블 슈팅
+
+### 🔹 새로고침 시 로그인 페이지로 리다이렉트되는 문제
+
+#### 🚨 문제 상황  
+React 프로젝트에서 로그인 상태를 관리하는 `isLogin` 변수를 사용했는데, 새로고침 시 항상 로그인 페이지로 이동하는 문제가 발생했다.  
+
+#### 🔍 원인  
+- `isLogin`의 초기값을 `false`로 설정했다.  
+- React가 상태를 불러오기 전에 `isLogin`이 `false`로 평가되면서, 로그인되지 않은 것으로 간주되어 리다이렉트가 발생했다.  
+
+#### 💡 해결 방법  
+1. `isLogin`의 초기값을 `'initial'`로 변경하여 상태 확인 전까지는 로그인 여부를 확정하지 않도록 수정했다.  
+2. 상태가 결정될 때까지 로딩 화면을 표시하도록 구현하여 불필요한 리다이렉트를 방지했다.  
+
+```jsx
+const [isLogin, setIsLogin] = useState('initial');
+
+useEffect(() => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    setIsLogin(true);
+  } else {
+    setIsLogin(false);
+  }
+}, []);
+
+if (isLogin === 'initial') {
+  return <LoadingScreen />; // 로딩 화면 표시
+}
+
+return isLogin ? <MainPage /> : <LoginPage />;
+```
+
+#### ✅ 결과
+
+•	새로고침 시 로그인 여부를 정확히 판단할 때까지 로그인 페이지로 이동하는 문제 해결
+
+•	불필요한 리다이렉트 없이 자연스럽게 로그인 여부 판별
+
+<hr>
+
+### 🔹 로그인 후 'PGRST116' 오류 발생
+
+#### 문제 상황
+로그인 후에 users 테이블에서 정상적으로 데이터를 가져오지 못하고, 아래와 같은 **PGRST116** 오류가 발생
+
+<img width="576" alt="스크린샷 2025-02-18 09 47 50" src="https://github.com/user-attachments/assets/aaa90f86-493a-43ce-8699-3d93982820ae" />
+
+```
+  "code": "PGRST116" // PostgREST에서 발생한 특정 오류 코드
+  "details": "The result contains 0 rows" // 쿼리 실행 결과가 0개의 행을 반환했음
+  "message": "JSON object requested, multiple (or no) rows returned" // JSON 객체를 요청했지만, 여러 개의 행이 반환되었거나(1개 이상) 아무 행도 반환되지 않음
+```
+
+### 🔍 원인: RLS(Row-Level Security) policy 정책이 누락됨
+
+- 특정 테이블에 대해 `SELECT` 권한이 부여되지 않으면, 로그인 후 데이터를 조회할 때 결과가 반환되지 않음
+
+#### 💡 해결 방법
+
+1.	RLS 정책 설정 추가
+   
+•	users 테이블의 SELECT 권한을 확인하고 정책 추가
+
+<img width="1141" alt="image" src="https://github.com/user-attachments/assets/ee287c0d-dbd7-44b7-9b5f-4440f56ff7bd" />
+
+
+#### ✅ 결과
+
+• users 테이블에서 정상적으로 데이터를 갖고 오는 것을 확인
+
