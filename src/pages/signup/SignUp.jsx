@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { FiUserPlus } from 'react-icons/fi';
 import { supabase } from '../../supabase/client';
-import S from './signUpStyle/SignUp.style';
+import S from './signupStyle/SignUp.style';
 import { IconBtn } from '../../components/common/IconBtn';
 import { LOGIN_PASSWORDLENGTH } from '../../constants/login';
 import InputForAuth from '../../components/InputForAuth';
