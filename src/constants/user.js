@@ -1,0 +1,7 @@
+const USER = {
+  DEFAULT_PROFILE: '',
+  MAX_NICKNAME_LENGTH: 16,
+  MIN_NICKNAME_LENGTH: 1,
+};
+
+export default USER;
