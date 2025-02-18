@@ -1,10 +1,10 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from '../pages/home/Home';
 import Detail from '../pages/detail/Detail';
-import Post from '../pages/Post/Post';
+import Post from '../pages/post/Post';
 import MyPage from '../pages/myPage/MyPage';
 import Login from '../pages/login/Login';
-import SignUp from '../pages/signUp/SignUp';
+import SignUp from '../pages/signup/SignUp';
 import Layout from '../components/Layout/Layout';
 import ProtectedRoute from './ProtectedRoute';
 
