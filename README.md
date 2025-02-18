@@ -123,8 +123,7 @@ Now What Do (나와뚜)는 현재 자신이 남들과 나누고 싶은 순간이
 - **Git/GitHub**
 
 ### 🚀 **배포**
-
-- **Vercel**
+[![now-what-do](https://img.shields.io/badge/now--what--do-deployed-blue)](https://now-what-do.vercel.app/)
 
 ## 📝 **주요 기능**
 
